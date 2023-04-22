@@ -1,0 +1,136 @@
+<div class="p-5" fxLayout="column" fxLayoutGap="30">
+  <mat-card>
+    <mat-card-header class="text-blue fz-3 fw-500">Tham số thống kê</mat-card-header>
+    <mat-card-content class="mt-3">
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Thời gian</div>
+        <div fxFlex="45" class="full-width">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Từ ngày</mat-label>
+            <input matInput name="date_from" [value]="beforeDay"
+                   [matDatepicker]="pickerFrom">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="45" class="full-width">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Đến ngày</mat-label>
+            <input matInput name="date_to" [value]="toDay"
+                   [matDatepicker]="pickerTo">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Khu vực quản lý</div>
+        <mat-form-field fxFlex="45" class="full-width" appearance="outline">
+          <mat-label>Quận, huyện</mat-label>
+          <mat-select name="district"
+                      (selectionChange)="districtEffect($event)">
+            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="45" class="full-width" appearance="outline">
+          <mat-label>Xã, phường</mat-label>
+          <mat-select name="ward">
+            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Trạm</div>
+        <mat-form-field fxFlex="30" appearance="outline">
+          <mat-label>Mã trạm</mat-label>
+          <input matInput>
+        </mat-form-field>
+        <button fxFlex="10" class="btn-blue" mat-flat-button
+                (click)="showTable = true">
+          Xem
+        </button>
+        <div fxFlex="45"></div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  <div *ngIf="showTable"
+        class="mat-elevation-z2 bg-white" fxFlex="65" fxLayout="column"
+       fxLayoutAlign="space-between stretch">
+    <table mat-table [dataSource]="dataSource"
+           matSort>
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef> STT</th>
+        <td mat-cell *matCellDef="let element; let i = index;">
+          {{( paginator.pageIndex * paginator.pageSize) + (i + 1) }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="station">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Trạm</th>
+        <td mat-cell *matCellDef="let element">{{element.station}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="speaker">
+        <th mat-header-cell *matHeaderCellDef> Loa</th>
+        <td mat-cell *matCellDef="let element"> {{element.speaker}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef> Khu vực </th>
+        <td mat-cell *matCellDef="let element"> {{element.district}} &gt; {{element.ward}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="location">
+        <th mat-header-cell *matHeaderCellDef> Vị trí </th>
+        <td mat-cell *matCellDef="let element"> {{element.latitude}} - {{element.longitude}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="news">
+        <th mat-header-cell *matHeaderCellDef> Bản tin </th>
+        <td mat-cell *matCellDef="let element">
+          {{ calculateRatio(element.play_successful, element.total) + '%' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="urgent_bulletin">
+        <th mat-header-cell *matHeaderCellDef> Vị trí </th>
+        <td mat-cell *matCellDef="let element">
+          {{ calculateRatio(element.urgent_bulletin, element.total) + '%'  }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="play_time">
+        <th mat-header-cell *matHeaderCellDef> Thời lượng phát </th>
+        <td mat-cell *matCellDef="let element"> {{ (element.play_time / 60).toFixed(0) + 'phút'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="request_duration">
+        <th mat-header-cell *matHeaderCellDef> Thời lượng yêu cầu </th>
+        <td mat-cell *matCellDef="let element"> {{ (element.request_duration / 60).toFixed(0) + 'phút'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="ratio">
+        <th mat-header-cell *matHeaderCellDef> Tỷ lệ </th>
+        <td mat-cell *matCellDef="let element">
+          {{ calculateRatio(element.play_time, element.request_duration) + '%' }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn;"
+          [ngClass]="{'bg-table': even}"></tr>
+    </table>
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+      <div >Số bản ghi của bảng là: {{dataSource.data.length}}</div>
+      <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[10]"
+                     #paginator></mat-paginator>
+    </div>
+
+  </div>
+</div>

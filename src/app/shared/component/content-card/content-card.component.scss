@@ -1,0 +1,17 @@
+.mat-mdc-card {
+  box-shadow: none;
+  border: solid 1px #08B1BD;
+  border-radius: 12px;
+}
+
+.status-text {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  .icon-status {
+    font-size: 20px;
+    height: 20px;
+    width: 20px;
+  }
+}

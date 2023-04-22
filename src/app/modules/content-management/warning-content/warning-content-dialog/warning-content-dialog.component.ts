@@ -2,9 +2,6 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY} from "../../../app.constants";
-import {ScheduleContentComponent} from "../../source-info-management/schedule-dialog/schedule-dialog.component";
 
 @Component({
   selector: 'warning-content-component',
@@ -42,7 +39,6 @@ export class WarningContentComponent implements OnInit {
   constructor(
     // private eventManager: JhiEventManager,
     private formBuilder: FormBuilder,
-    private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<WarningContentComponent>,
   ) {
   }

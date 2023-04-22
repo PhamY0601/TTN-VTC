@@ -1,0 +1,165 @@
+<div class="p-5" fxLayout="column" fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px">
+    <mat-card class="p-1" fxFlex="35" fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
+      <mat-card-header>
+        <mat-card-title class="text-blue fz-3">Số lượng thiết bị</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-install-management-chart></app-install-management-chart>
+      </mat-card-content>
+    </mat-card>
+    <div class="mat-elevation-z2 bg-white" fxFlex="65" fxLayout="column" fxLayoutAlign="space-between stretch">
+      <table mat-table
+             #tableFirstSort="matSort"
+             [dataSource]="dataSourceFirst"
+             matSort>
+        <ng-container matColumnDef="stt">
+          <th mat-header-cell *matHeaderCellDef> STT</th>
+          <td mat-cell *matCellDef="let element; let i = index;">
+            {{( paginatorFirst.pageIndex * paginatorFirst.pageSize) + (i + 1) }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="district">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>{{param ? 'Xã' : 'Quận/Huyện'}} </th>
+          <td mat-cell
+              *matCellDef="let element"> {{param ? (element.ward | replaceStr) : (element.district | replaceStr)}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="speaker">
+          <th mat-header-cell *matHeaderCellDef> Loa</th>
+          <td mat-cell *matCellDef="let element"> {{element.speaker}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="video">
+          <th mat-header-cell *matHeaderCellDef> Bản tin điện tử</th>
+          <td mat-cell *matCellDef="let element"> {{element.video}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="transmitter">
+          <th mat-header-cell *matHeaderCellDef> Bộ tiếp âm</th>
+          <td mat-cell *matCellDef="let element"> {{element.transmitter}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumn1"></tr>
+        <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn1;"
+            [routerLink]="[row.district]"
+            [ngClass]="{'bg-table': even, 'link-active': true}"></tr>
+      </table>
+
+      <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+        <div >Số bản ghi của bảng là: {{dataSourceFirst.data.length}}</div>
+        <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[10]"
+                       #paginatorFirst></mat-paginator>
+      </div>
+
+    </div>
+  </div>
+  <mat-card class="px-4 py-5" fxLayout="column">
+    <div fxLayout="column" fxLayoutGap="10px">
+      <div class="text-blue fz-3 fw-500">Vị trí cụm loa</div>
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+        <div class="text-gray" fxLayout="row">
+          <button [ngClass]="display ? 'text-blue' : 'text-gray'"
+                  mat-icon-button (click)="display=true">
+            <mat-icon>grid_on</mat-icon>
+          </button>
+          <button [ngClass]="display ? 'text-gray' : 'text-blue'"
+                  mat-icon-button (click)="display=false">
+            <mat-icon>map</mat-icon>
+          </button>
+        </div>
+        <mat-form-field *ngIf="display" class="text-blue" appearance="outline">
+          <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+    <div [hidden]="!display">
+      <div class="mat-elevation-z2 bg-white full-width" fxLayout="column" fxLayoutAlign="space-between stretch">
+        <table mat-table #tableSecondSort="matSort"
+               [dataSource]="dataSourceSecond"
+               matSort>
+          <ng-container matColumnDef="stt">
+            <th mat-header-cell *matHeaderCellDef>STT</th>
+            <td mat-cell *matCellDef="let element; let i = index;">
+              {{( paginatorSecond.pageIndex * paginatorSecond.pageSize) + (i + 1) }}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="city">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Tỉnh/Thành phố</th>
+            <td mat-cell *matCellDef="let element"> {{element.city | replaceStr}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="district">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>Quận/Huyện</th>
+            <td mat-cell *matCellDef="let element"> {{element.district | replaceStr}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="ward">
+            <th mat-header-cell *matHeaderCellDef
+                mat-sort-header [ngStyle]="{'text-align': 'left'}">
+              Xã/Phường
+            </th>
+            <td mat-cell *matCellDef="let element"
+                [ngStyle]="{'text-align': 'left'}"> {{element.ward | replaceStr}} </td>
+          </ng-container>
+
+
+          <ng-container matColumnDef="c_endpointtype">
+            <th mat-header-cell *matHeaderCellDef>Loại thiết bị</th>
+            <td mat-cell *matCellDef="let element" [ngSwitch]="element.endpointtype">
+              <div *ngSwitchCase="'BOX'">Loa</div>
+              <div *ngSwitchCase="'TRANS'">Bản tin điện tử</div>
+              <div></div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="position">
+            <th mat-header-cell *matHeaderCellDef>Địa lý</th>
+            <td mat-cell *matCellDef="let element">
+              {{element.latitude}}, {{element.longitude}}
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="createDate">
+            <th mat-header-cell *matHeaderCellDef>Ngày lắp</th>
+            <td mat-cell *matCellDef="let element"> {{element.createDate * 1000 | date:'dd/MM/yyyy'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Trạng thái</th>
+            <td mat-cell *matCellDef="let element" [ngSwitch]="element.status">
+              <div *ngSwitchCase="'-1'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchCase="'1'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchCase="'3'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchCase="'4'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchCase="'5'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchCase="'100'" class="status status-wait">OFFLINE</div>
+              <div *ngSwitchDefault class="status status-play">ONLINE</div>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumn2"></tr>
+          <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn2;"
+              [ngClass]="{'bg-table': even}"></tr>
+
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+          </tr>
+        </table>
+
+        <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+          <div >Số bản ghi của bảng là: {{dataSourceSecond.data.length}}</div>
+          <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[10]"
+                         #paginatorSecond></mat-paginator>
+        </div>
+
+      </div>
+    </div>
+    <div [hidden]="display" style="height: 500px; width: 800px">
+      <app-map style="height: 500px; width: 800px" [coords]="coords"></app-map>
+    </div>
+  </mat-card>
+</div>

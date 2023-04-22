@@ -1,0 +1,36 @@
+<div class="p-5" fxLayout="column" fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px">
+    <div class="full-width" *ngFor="let item of overviewData">
+      <app-overview-card [title]="item.title"
+                         [count]="item.count"
+                         [icon]="item.icon"
+      >
+      </app-overview-card>
+    </div>
+  </div>
+  <div fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
+    <mat-card fxFlex="30" class="p-1">
+      <app-news-card></app-news-card>
+    </mat-card>
+    <div fxFlex="70">
+      <app-pie-chart></app-pie-chart>
+    </div>
+  </div>
+  <mat-card class="p-4" fxLayout="column" fxLayoutAlign="space-around strecth" fxLayoutGap="30">
+    <div class="text-blue fz-3 fw-500">{{param ? (param | replaceStr) : (title_country | replaceStr)  }}</div>
+    <div class="parent">
+      <div class="child" *ngFor="let item of installData">
+        <app-content-card [district]="param ? (item.ward | replaceStr)  : (item.district | replaceStr)"
+                          [speaker_establish]="item.speaker_establish"
+                          [speaker_on]="item.speaker_on"
+                          [speaker_off]="item.speaker_off"
+                          [video_onl]="item.video_onl"
+                          [video_off]="item.video_off"
+                          [routerLink]="[ item.district]"
+                          [ngClass]=" param ? '': 'link-active'"
+        >
+        </app-content-card>
+      </div>
+    </div>
+  </mat-card>
+</div>

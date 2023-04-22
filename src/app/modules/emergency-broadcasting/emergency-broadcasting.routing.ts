@@ -1,15 +1,22 @@
 import { Routes } from '@angular/router';
-import {WarningContentListComponent} from "./warning-content-list/warning-content-list.component";
-import {WarningContentDialogComponent} from "./warning-content-dialog/warning-content-dialog.component";
+import {EmergencyBroadcastingListComponent} from "./emergency-broadcasting-list/emergency-broadcasting-list.component";
+import {
+  EmergencyBroadcastingDialogComponent
+} from "./emergency-broadcasting-dialog/emergency-broadcasting-dialog.component";
+import {BroadcastingDetailDialogComponent} from "./broadcasting-detail-dialog/broadcasting-detail-dialog.component";
 
-export const WarningContentRoutes: Routes = [
+export const EmergencyBroadcastingRoutes: Routes = [
   {
     path: '',
-    component: WarningContentListComponent,
+    component: EmergencyBroadcastingListComponent,
     children: [
       {
-        path: 'add',
-        component: WarningContentDialogComponent
+        path:'add',
+        component:  EmergencyBroadcastingDialogComponent
+      },
+      {
+        path:'detail/:id',
+        component: BroadcastingDetailDialogComponent
       }
     ]
 

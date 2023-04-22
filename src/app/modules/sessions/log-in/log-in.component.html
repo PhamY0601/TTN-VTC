@@ -1,0 +1,54 @@
+<div fxLayout="row" >
+  <div fxFlex="50">
+    <img src="../../../../../assets/image/img/Picture1.jpg">
+  </div>
+  <div class="bg-white h-full" fxFlex="50"
+       fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="80">
+    <div class="text-blue fz-5 fw-600">HỆ THỐNG THÔNG TIN NGUỒN</div>
+    <form class="w-70"
+          fxLayout="column" fxLayoutGap="10"
+          [formGroup]="logInForm"
+          (ngSubmit)="submit(logInForm.value)">
+
+      <mat-label>Tên tài khoản</mat-label>
+      <mat-form-field class="full-width" appearance="outline">
+        <input
+          matInput
+          formControlName="username"
+          type="text"
+          name="username"
+          placeholder="Nhập tên tài khoản"
+        />
+        <mat-error *ngIf="logInForm.controls['username'].hasError('required')">
+          Vui lòng nhập tên tài khoản
+        </mat-error>
+      </mat-form-field>
+
+      <mat-label>Mật khẩu</mat-label>
+      <mat-form-field class="full-width" appearance="outline">
+        <input
+          matInput
+          formControlName="password"
+          [type]="showPassword ? 'text' : 'password'"
+          name="password"
+          placeholder="Nhập mật khẩu"
+        />
+        <mat-icon matSuffix (click)="togglePasswordVisibility()">
+          {{showPassword?'visibility_off':'visibility'}}
+        </mat-icon>
+        <mat-error *ngIf="logInForm.controls['password'].hasError('required')">
+          Vui lòng nhập mật khẩu
+        </mat-error>
+      </mat-form-field>
+
+      <div class="text-red fz-3 fw-400" *ngIf="loginError">
+        Tên đăng nhập hoặc mật khẩu không đúng. Vui lòng đăng nhập lại.
+      </div>
+
+      <button mat-raised-button class="btn-blue full-width"
+              [disabled]="this.logInForm.invalid">Đăng nhập
+      </button>
+
+    </form>
+  </div>
+</div>

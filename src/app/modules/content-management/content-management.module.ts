@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {WarningContentRoutes} from "./warning-content.routing";
+
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
-import { WarningContentListComponent } from './warning-content-list/warning-content-list.component';
+import {ContentManagementRoutes} from "./content-management.routing";
+import {WarningContentListComponent} from "./warning-content/warning-content-list/warning-content-list.component";
 import {
   WarningContentComponent,
   WarningContentDialogComponent
-} from "./warning-content-dialog/warning-content-dialog.component";
-
+} from "./warning-content/warning-content-dialog/warning-content-dialog.component";
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(WarningContentRoutes),
+    RouterModule.forChild(ContentManagementRoutes),
     SharedComponentModule,
     SharedMaterialModule,
     FormsModule,
@@ -31,5 +31,5 @@ import {
     WarningContentDialogComponent
   ]
 })
-export class WarningContentModule {
+export class ContentManagementModule {
 }
