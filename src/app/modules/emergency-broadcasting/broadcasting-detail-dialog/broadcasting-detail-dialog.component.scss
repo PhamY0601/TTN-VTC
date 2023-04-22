@@ -1,0 +1,10 @@
+
+:host ::ng-deep .mat-expansion-panel-header {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  color: unset !important;
+}
+
+.mat-column-time, .mat-column-time_request, .mat-column-speaker {
+  text-align: center;
+}

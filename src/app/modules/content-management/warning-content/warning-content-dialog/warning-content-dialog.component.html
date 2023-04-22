@@ -1,0 +1,62 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">Thêm nội dung cảnh báo</h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+  <form (ngSubmit)="save()" novalidate #form="ngForm">
+    <div mat-dialog-content>
+      <div>
+        <mat-label>Từ khóa</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput placeholder="Từ khóa abc">
+        </mat-form-field>
+      </div>
+      <div>
+        <mat-label>Nội dung cảnh báo</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput placeholder="Nội dung">
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" fxLayoutGap="20">
+        <div>
+          <mat-label>Mức cảnh báo</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select [(value)]="levelData[0].name">
+              <!--            <mat-option value="">Chọn mức cảnh báo</mat-option>-->
+              <mat-option *ngFor="let item of levelData" [value]="item.name">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-label>Phương thức</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select [(value)]="methodData[0]">
+              <mat-option *ngFor="let item of methodData" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-label>Nơi nhận</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select [(value)]="receiverData[0]">
+              <mat-option *ngFor="let item of receiverData" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+    <div mat-dialog-actions class="mt-1 px-4">
+      <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
+      <span fxFlex></span>
+      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+    </div>
+  </form>
+
+
