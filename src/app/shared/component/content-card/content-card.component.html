@@ -1,0 +1,43 @@
+<mat-card class="p-1">
+  <mat-card-header class="fz-3 fw-500 py-3">{{district}}</mat-card-header>
+  <mat-card-content fxLayout="column" fxLayoutGap="10px">
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+      <mat-icon svgIcon="speaker_gray"></mat-icon>
+      <div class="status-text text-green fw-500"
+           matTooltip="Online">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{speaker_on}}</div>
+      </div>
+      <div class="status-text text-dark-blue fw-500"
+           matTooltip="Đang phát">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{speaker_establish}}</div>
+      </div>
+      <div class="status-text text-gray fw-500"
+           matTooltip="Offline">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{speaker_off}}</div>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+      <mat-icon svgIcon="youtube_gray"></mat-icon>
+      <div class="status-text text-green fw-500"
+           matTooltip="Online">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{video_onl}}</div>
+      </div>
+      <div class="status-text fw-500 text-gray"
+           matTooltip="Offline">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{video_off}}</div>
+      </div>
+    </div>
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+      <mat-icon svgIcon="transmitter"></mat-icon>
+      <div class="status status-play">
+       Tiếp âm
+      </div>
+
+    </div>
+  </mat-card-content>
+</mat-card>

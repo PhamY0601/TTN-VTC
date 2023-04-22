@@ -1,0 +1,27 @@
+<div style="height: 100%;">
+  <table mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="content">
+      <th class="fz-3 text-blue text-left" mat-header-cell *matHeaderCellDef>Bản tin đang phát</th>
+      <td class="mt-3" mat-cell *matCellDef="let element"
+          fxLayout="column" fxLayoutAlign="space-around start">
+        <p class="fw-500">{{element.name}}</p>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-icon class="text-gray fz-3">query_builder</mat-icon>
+          <p>{{element.starttime*1000 | date:'dd/MM/yyyy, h:mm a'}} - {{element.endtime*1000 | date:'dd/MM/yyyy, h:mm a'}}</p>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-icon class="text-gray fz-3">location_on</mat-icon>
+          <p>{{element.ward | replaceStr}} - {{element.district | replaceStr}}</p>
+        </div>
+      </td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[3]"
+                 aria-label="Select page of users"></mat-paginator>
+</div>

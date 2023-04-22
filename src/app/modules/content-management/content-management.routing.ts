@@ -1,10 +1,10 @@
 import { Routes } from '@angular/router';
-import {WarningContentListComponent} from "./warning-content-list/warning-content-list.component";
-import {WarningContentDialogComponent} from "./warning-content-dialog/warning-content-dialog.component";
+import {WarningContentListComponent} from "./warning-content/warning-content-list/warning-content-list.component";
+import {WarningContentDialogComponent} from "./warning-content/warning-content-dialog/warning-content-dialog.component";
 
-export const WarningContentRoutes: Routes = [
+export const ContentManagementRoutes: Routes = [
   {
-    path: '',
+    path: 'warning-content',
     component: WarningContentListComponent,
     children: [
       {

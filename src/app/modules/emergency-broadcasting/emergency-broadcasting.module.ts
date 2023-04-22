@@ -1,22 +1,25 @@
 import { NgModule } from '@angular/core';
 import {CommonModule} from "@angular/common";
 import {RouterModule} from "@angular/router";
-import {WarningContentRoutes} from "./warning-content.routing";
+import {EmergencyBroadcastingRoutes} from "./emergency-broadcasting.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
-import { WarningContentListComponent } from './warning-content-list/warning-content-list.component';
+import {EmergencyBroadcastingListComponent} from "./emergency-broadcasting-list/emergency-broadcasting-list.component";
 import {
-  WarningContentComponent,
-  WarningContentDialogComponent
-} from "./warning-content-dialog/warning-content-dialog.component";
+  EmergencyBroadcastingContentComponent, EmergencyBroadcastingDialogComponent
+} from "./emergency-broadcasting-dialog/emergency-broadcasting-dialog.component";
+import {
+  BroadcastingDetailContentComponent,
+  BroadcastingDetailDialogComponent
+} from "./broadcasting-detail-dialog/broadcasting-detail-dialog.component";
 
 
 
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forChild(WarningContentRoutes),
+    RouterModule.forChild(EmergencyBroadcastingRoutes),
     SharedComponentModule,
     SharedMaterialModule,
     FormsModule,
@@ -26,10 +29,12 @@ import {
 
   ],
   declarations: [
-    WarningContentListComponent,
-    WarningContentComponent,
-    WarningContentDialogComponent
+    EmergencyBroadcastingListComponent,
+    EmergencyBroadcastingContentComponent,
+    EmergencyBroadcastingDialogComponent,
+    BroadcastingDetailContentComponent,
+    BroadcastingDetailDialogComponent
   ]
 })
-export class WarningContentModule {
+export class EmergencyBroadcastingModule {
 }

@@ -1,0 +1,96 @@
+<router-outlet></router-outlet>
+<div class="p-5" fxLayout="column" fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div>
+      <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
+    </div>
+    <mat-form-field class="text-blue" appearance="outline">
+      <input matInput placeholder="Từ khóa">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+
+  </div>
+  <div class="mat-elevation-z2 bg-white full-width" fxLayout="column" fxLayoutAlign="space-between stretch">
+    <table mat-table matSort [dataSource]="dataSource">
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef>STT</th>
+        <td mat-cell *matCellDef="let element; let i = index;">
+          {{(paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1)}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="title">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Tiêu đề</th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="content">
+        <th mat-header-cell *matHeaderCellDef>Nội dung</th>
+        <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="start_time">
+        <th mat-header-cell *matHeaderCellDef>Giờ phát</th>
+        <td mat-cell *matCellDef="let element">{{ (element.start_time * 1000)  | date: 'HH:mm'}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="end_time">
+        <th mat-header-cell *matHeaderCellDef>Kết thúc</th>
+        <td mat-cell *matCellDef="let element">{{ (element.end_time * 1000)  | date: 'HH:mm'}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="area">
+        <th mat-header-cell *matHeaderCellDef>Khu vực</th>
+        <td mat-cell *matCellDef="let element"> {{element.district}} &gt; {{element.ward}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="station">
+        <th mat-header-cell *matHeaderCellDef>Trạm phát</th>
+        <td mat-cell *matCellDef="let element">
+         <div class="status" [ngClass] =
+                 "{'status-increase': calculateRatio(element.broadcast_station,element.station ) >= '80'
+                                    || calculateRatio(element.play_successful,element.speaker) === '100',
+                  'status-decrease':calculateRatio(element.broadcast_station,element.station ) <= '60',
+                   'status-wait':
+                   calculateRatio(element.broadcast_station,element.station ) > '60' &&
+                   calculateRatio(element.broadcast_station,element.station ) < '80',
+                  }">
+           {{element.broadcast_station}} &#47; {{element.station}}
+         </div>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="speaker">
+        <th mat-header-cell *matHeaderCellDef>Loa phát</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status" [ngClass] =
+            "{'status-increase': calculateRatio(element.play_successful,element.speaker) >= '80'
+                              || calculateRatio(element.play_successful,element.speaker) === '100' ,
+                  'status-decrease':calculateRatio(element.play_successful,element.speaker) <= '60',
+                   'status-wait':
+                   calculateRatio(element.play_successful,element.speaker ) > '60' &&
+                   calculateRatio(element.play_successful,element.speaker) < '80',
+                  }">
+            {{element.play_successful}} &#47; {{element.speaker}}
+          </div>
+        </td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"
+          [routerLink]="['detail',row.id]"
+          [ngClass]="{'bg-table': even, 'link-active': true}"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+      </tr>
+    </table>
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+      <div>Số bản ghi của bảng là: {{dataSource.data.length}}</div>
+      <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[15]"
+                     #paginatorRef></mat-paginator>
+    </div>
+  </div>
+</div>

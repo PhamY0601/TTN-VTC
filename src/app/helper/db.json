@@ -1,0 +1,349 @@
+{
+  "overview": [
+    {
+      "id": 0,
+      "title": "Loa",
+      "count": "356",
+      "icon": "speaker"
+    },
+    {
+      "id": 1,
+      "title": "Bản tin điện tử",
+      "count": "296",
+      "icon": "youtube"
+    },
+    {
+      "id": 2,
+      "title": "Bản tin phát hành",
+      "count": "26",
+      "icon": "document"
+    },
+    {
+      "id": 3,
+      "title": "Nhà cung cấp",
+      "count": "265",
+      "icon": "supplier"
+    }
+  ],
+  "news": [
+    {
+      "id": 0,
+      "title": "Thầy giáo miền Tây làm nông nghiệp giỏi",
+      "content": "Được đồng nghiệp và học trò quý mến, đạt nhiều thành tích, nhà giáo ưu tú Đỗ Trung Lai còn đi đầu trong làm ruộng, nuôi cá."
+    },
+    {
+      "id": 1,
+      "title": "Microsoft dùng GPT-4 làm trợ lý chuyên gia an ninh mạng",
+      "content": "MSP có giao diện hộp thoại giống các loại chatbot khác hiện nay, nhưng ẩn sau đó là công nghệ AI (trí tuệ nhân tạo) tạo sinh..."
+    },
+    {
+      "id": 2,
+      "title": "Tương lai y học nằm tuốt trên... không gian?",
+      "content": "Lực hấp dẫn của Trái đất khiến việc nuôi cấy các protein cần thiết để nghiên cứu bệnh tật và mầm bệnh trở nên khó khăn."
+    }
+  ],
+  "install-info": [
+    {
+      "id": 0,
+      "name": "Bá Thước",
+      "loudspeaker": 100,
+      "news": 20,
+      "transmitter": 30
+    },
+    {
+      "id": 1,
+      "name": "Cẩm Thủy",
+      "loudspeaker": 60,
+      "news": 34,
+      "transmitter": 26
+    },
+    {
+      "id": 3,
+      "name": "Đông Sơn",
+      "loudspeaker": 40,
+      "news": 20,
+      "transmitter": 30
+    },
+    {
+      "id": 4,
+      "name": "Hà Trung",
+      "loudspeaker": 174,
+      "news": 20,
+      "transmitter": 30
+    },{
+      "id": 5,
+      "name": "Hậu Lộc",
+      "loudspeaker": 100,
+      "news": 20,
+      "transmitter": 30
+    },{
+      "id": 6,
+      "name": "Hoằng Hóa",
+      "loudspeaker": 100,
+      "news": 20,
+      "transmitter": 30
+    },{
+      "id": 7,
+      "name": "Hậu Lộc",
+      "loudspeaker": 100,
+      "news": 20,
+      "transmitter": 30
+    },{
+      "id": 8,
+      "name": "Hoằng Hóa",
+      "loudspeaker": 100,
+      "news": 20,
+      "transmitter": 30
+    }
+
+
+  ],
+  "field-source-info": [
+    {
+      "id": 0,
+      "name": "Kinh tế",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 1,
+      "name": "Kinh tế",
+      "type": "Media",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 30,
+      "status": "Đang phát"
+    },
+    {
+      "id": 2,
+      "name": "Chính trị",
+      "type": "Media",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 230,
+      "status": "Đang phát"
+    },
+    {
+      "id": 3,
+      "name": "Kinh tế",
+      "type": "Media",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 4,
+      "name": "Kinh tế",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Đang phát"
+    },
+    {
+      "id": 5,
+      "name": "Chính trị",
+      "type": "Media",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    }
+  ],
+  "geographic-source": [
+    {
+      "id": 0,
+      "district": "Bá Thước",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 1,
+      "district": "Cẩm Thủy",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 2,
+      "district": "Đông Sơn",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Đang phát"
+    },
+    {
+      "id": 3,
+      "district": "Hà Trung",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 4,
+      "district": "Hậu Lộc",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 5,
+      "district": "Hoằng Hóa",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    },
+    {
+      "id": 6,
+      "district": "Lang Chánh",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Đang phát"
+    },
+    {
+      "id": 7,
+      "district": "Nga Sơn",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Đang phát"
+    },
+    {
+      "id": 8,
+      "district": "Ngọc Lặc",
+      "type": "Phát thanh",
+      "url": "http://thanhhoa.gov.vn/mediasource_12",
+      "listens": 100,
+      "status": "Chờ phát"
+    }
+  ],
+  "install-management": [
+    {
+      "id": 0,
+      "district": "Bá Thước",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "223"
+    },
+    {
+      "id": 2,
+      "district": "Cẩm Thủy",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "228"
+    },
+    {
+      "id": 3,
+      "district": "Đông Sơn",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "012"
+    }, {
+      "id": 4,
+      "district": " Hà Trung",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "102"
+    }, {
+      "id": 5,
+      "district": "Hậu Lộc",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "013"
+    }, {
+      "id": 6,
+      "district": "Hoằng Hóa",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "203"
+    }, {
+      "id": 7,
+      "district": "Lang Chánh",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "210"
+    }, {
+      "id": 8,
+      "district": "Nga Sơn",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "213"
+    }, {
+      "id": 9,
+      "district": "Ngọc Lặc",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "244"
+    }, {
+      "id": 10,
+      "district": "Như Xuân",
+      "device": "AUDIOX",
+      "mic": 30,
+      "speaker": 40,
+      "code": "210"
+    }, {
+      "id": 11,
+      "district": "Nông Cống",
+      "device": "VTC",
+      "mic": 23,
+      "speaker": 43,
+      "code": "213"
+    }, {
+      "id": 12,
+      "district": "Quan Hóa",
+      "device": "VTC",
+      "mic": 23,
+      "speaker": 64,
+      "code": "224"
+    }, {
+      "id": 13,
+      "district": "Quảng Xương",
+      "device": "AUDIBOX",
+      "mic": 30,
+      "speaker": 40,
+      "code": "253"
+    }, {
+      "id": 14,
+      "district": "Thạch Thành",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "423"
+    }, {
+      "id": 15,
+      "district": "Thiệu Hóa",
+      "device": "VTC",
+      "mic": 30,
+      "speaker": 40,
+      "code": "223"
+    }, {
+      "id": 16,
+      "district": "Thiệu Hóa",
+      "device": "VTC",
+      "mic": 20,
+      "speaker": 10,
+      "code": "353"
+    }, {
+      "id": 17,
+      "district": "Thường Xuân",
+      "device": "AUDIBOX",
+      "mic": 30,
+      "speaker": 60,
+      "code": "234"
+    }
+  ]
+}

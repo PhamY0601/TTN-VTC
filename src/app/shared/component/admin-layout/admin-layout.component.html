@@ -1,0 +1,20 @@
+<mat-drawer-container class="bg-background full-height">
+  <mat-drawer mode="side" opened style="width: 280px">
+    <app-sidenav></app-sidenav>
+  </mat-drawer>
+  <div class="app-admin" fxLayout="column" fxLayoutAlign="space-between stretch">
+    <div class="header mat-elevation-z2">
+      <app-header></app-header>
+    </div>
+      <div class="px-3 pt-2">
+        <xng-breadcrumb></xng-breadcrumb>
+      </div>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    <div class="footer">
+      <app-footer></app-footer>
+    </div>
+
+  </div>
+</mat-drawer-container>

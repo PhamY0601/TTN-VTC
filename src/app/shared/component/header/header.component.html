@@ -1,0 +1,16 @@
+<div class="bg-white py-2 px-3" fxLayout="row" fxLayoutAlign="space-between center">
+  <div class="text-blue fz-4 fw-500 px-2">HỆ THỐNG THÔNG TIN NGUỒN {{title_country | replaceStr | uppercase}}</div>
+  <div class="cursor" fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10px"
+       [matMenuTriggerFor]="accountMenu">
+    <app-avatar matListItemAvatar [size]="40"></app-avatar>
+    <div matListItemTitle fxLayout="row">
+      <div class="fw-500">{{title_country | replaceStr}}</div>
+      <mat-icon>expand_more</mat-icon>
+    </div>
+  </div>
+  <mat-menu #accountMenu>
+    <menu mat-menu-item>Trang cá nhân</menu>
+    <menu mat-menu-item>Đổi mật khẩu</menu>
+    <menu mat-menu-item (click)="logOut()">Đăng xuất</menu>
+  </mat-menu>
+</div>

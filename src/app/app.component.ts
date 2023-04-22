@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {IconService} from "./shared/services/icon.service";
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'TTN';
+  constructor(private iconService: IconService) {
+    iconService.init();
+  }
+  title = 'VTC-ICS';
+
+
 }

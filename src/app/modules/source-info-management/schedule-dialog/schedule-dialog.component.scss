@@ -1,0 +1,16 @@
+
+.mdc-form-field>label {
+  padding-left: 0 !important;
+}
+.box {
+  padding: 10px;
+  border: solid 1px #08B1BD;
+  border-radius: 5px;
+}
+:host ::ng-deep .mat-expansion-panel-header:hover {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  color: unset !important;
+
+}
+

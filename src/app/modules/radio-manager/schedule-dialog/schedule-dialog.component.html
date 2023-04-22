@@ -1,0 +1,186 @@
+  <div fxLayout="row" fxLayoutAlign="space-between center">
+    <h1 matDialogTitle class="text-blue">Lịch phát sóng</h1>
+    <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+
+    <form (ngSubmit)="save()" novalidate #form="ngForm">
+      <div mat-dialog-content >
+        <div fxLayout="column" fxLayoutGap="20">
+          <div fxLayout="row" fxLayoutGap="20">
+            <div class="full-width">
+              <mat-label>Từ ngày</mat-label>
+              <mat-form-field class="full-width" appearance="outline">
+                <input matInput name="date_from" readonly
+                       [matDatepicker]="pickerFrom" [(ngModel)]="data.date_from">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+                <mat-datepicker #pickerFrom></mat-datepicker>
+              </mat-form-field>
+            </div>
+
+            <div class="full-width">
+              <mat-label>Đến ngày</mat-label>
+              <mat-form-field class="full-width" appearance="outline">
+                <input matInput name="date_to" readonly
+                       [matDatepicker]="pickerTo" [(ngModel)]="data.date_to">
+                <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+                <mat-datepicker #pickerTo></mat-datepicker>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+                Khung giờ
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row" fxLayoutGap="20">
+              <div class="full-width">
+                <mat-label>Giờ từ</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="hour_from" type="time" readonly
+                        [(ngModel)]="data.hour_from">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="full-width">
+                <mat-label>Đến</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="hour_to" type="time"
+                         readonly [(ngModel)]="data.hour_to">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxLayout="row" fxLayoutGap="20">
+              <div class="full-width">
+                <mat-label>Giờ từ</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="hour_from1" type="time"
+                         readonly [(ngModel)]="data.hour_from1">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="full-width">
+                <mat-label>Đến</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="hour_to1" type="time"
+                         readonly [(ngModel)]="data.hour_to1">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxLayout="row" fxLayoutGap="20">
+              <div class="full-width">
+                <mat-label>Giờ từ</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_from2" type="time"
+                         readonly [(ngModel)]="data.c_hour_from2">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="full-width">
+                <mat-label>Đến</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_to2" type="time"
+                         readonly [(ngModel)]="data.c_hour_to2">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxLayout="row" fxLayoutGap="20">
+              <div class="full-width">
+                <mat-label>Giờ từ</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_from3" type="time"
+                         readonly [(ngModel)]="data.c_hour_from3">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="full-width">
+                <mat-label>Đến</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_to3" type="time"
+                         readonly [(ngModel)]="data.c_hour_to3">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+            <div fxLayout="row" fxLayoutGap="20">
+              <div class="full-width">
+                <mat-label>Giờ từ</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_from4" type="time"
+                         readonly [(ngModel)]="data.c_hour_from4">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+              <div class="full-width">
+                <mat-label>Đến</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput name="c_hour_to4" type="time"
+                         readonly [(ngModel)]="data.c_hour_to4">
+                  <mat-icon matSuffix>query_builder</mat-icon>
+                </mat-form-field>
+              </div>
+
+            </div>
+
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+                Ngày trong tuần
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+              <div *ngFor="let item of week_day">
+                <mat-checkbox [checked]="item.checked" disabled
+                              name="week_day">{{item.name}}</mat-checkbox>
+              </div>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+                Ngày
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row wrap" fxLayoutAlign=" center">
+              <div *ngFor="let item of days">
+                <mat-checkbox [checked]="item.checked"  disabled
+                              name="week_day">{{item.value}}</mat-checkbox>
+              </div>
+            </div>
+          </mat-expansion-panel>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+                Tháng
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div fxLayout="row wrap" fxLayoutGap="20">
+              <div *ngFor="let item of months">
+                <mat-checkbox [checked]="item.checked" disabled
+                              name="month">{{item.name}}</mat-checkbox>
+              </div>
+            </div>
+          </mat-expansion-panel>
+        </div>
+      </div>
+      <div mat-dialog-actions class="mt-1 px-4">
+        <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
+        <span fxFlex></span>
+        <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+      </div>
+    </form>
+
+

@@ -1,41 +1,181 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Thêm nội dung cảnh báo</h1>
+  <h1 matDialogTitle class="text-blue">Tạo bản tin khẩn cấp</h1>
   <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div class="p-3">
   <form (ngSubmit)="save()" novalidate #form="ngForm">
     <div mat-dialog-content>
+      <mat-expansion-panel expanded="true">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+           Nội dung bản tin
+          </mat-panel-title>
+        </mat-expansion-panel-header>
       <div>
-        <mat-label>Từ khóa</mat-label>
+        <mat-label>Tiêu đề</mat-label>
         <mat-form-field class="full-width" appearance="outline">
-          <input matInput placeholder="Từ khóa abc">
+          <input matInput placeholder="Tiêu đề bản tin">
         </mat-form-field>
       </div>
       <div>
-        <mat-label>Nội dung cảnh báo</mat-label>
-        <mat-form-field class="full-width" appearance="outline" style="height: 150px">
-          <textarea matInput rows="4" placeholder="Nội dung abc"></textarea>
+        <mat-label>Ghi chú</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput placeholder="Nội dung">
         </mat-form-field>
       </div>
-      <div>
-        <mat-label>Mức cảnh báo</mat-label>
-        <mat-form-field class="full-width" appearance="outline" >
-          <mat-select  [(value)]="levelData[0].name">
-<!--            <mat-option value="">Chọn mức cảnh báo</mat-option>-->
-            <mat-option *ngFor="let item of levelData" [value]="item.name">
-              {{item.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="30">
+        <div class="full-width">
+          <mat-label>Bắt đầu</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput name="hour_from" type="time" >
+            <mat-icon matSuffix>query_builder</mat-icon>
+          </mat-form-field>
+        </div>
+        <div class="full-width">
+          <mat-label>Kết thúc</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput name="hour_to" type="time">
+            <mat-icon matSuffix>query_builder</mat-icon>
+          </mat-form-field>
+        </div>
       </div>
+      <div fxLayout="row" fxLayoutGap="30">
+        <div fxLayout="column" class="full-width">
+          <mat-label>Quận, huyện</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select name="district" [value]="-1"
+                        (selectionChange)="districtEffect($event)">
+              <mat-option  [value]="-1" >
+                 Tất cả
+              </mat-option>
+              <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="column" class="full-width">
+          <mat-label>Xã, phường</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select name="ward">
+              <mat-option  [value]="-1">
+                Tất cả
+              </mat-option>
+              <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+      </div>
+        <div fxLayout="row">
+          <div>
+            <mat-label>Chọn nguồn phát</mat-label>
+            <mat-form-field class="full-width" appearance="outline">
+              <mat-select name="source" [value]="-1" (selectionChange)="test($event)">
+                <mat-option *ngFor="let item of sourceData.subtasks" [value]="item.value" >
+                  {{item.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div fxLayout="column" class="full-width"
+               *ngIf="sourceData.subtasks[0].completed === true">
+            <mat-label>Transmitter</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select>
+                <mat-option *ngFor="let item of transmitterData" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
+      <mat-expansion-panel class="mt-5">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Nguồn phát
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <section>
+          <div class="fz-3">
+            <mat-checkbox [checked]="allComplete"
+                          [indeterminate]="someComplete()"
+                          (change)="setAll($event.checked)">
+              {{sourceData.name}}
+            </mat-checkbox>
+          </div>
+          <span>
+             <div fxLayout="row">
+                <p *ngFor="let subtask of sourceData.subtasks">
+                  <mat-checkbox [(ngModel)]="subtask.completed"
+                                (ngModelChange)="updateAllComplete()"
+                                name='checkbox'>
+                    {{subtask.name}}
+                  </mat-checkbox>
+                </p>
+             </div>
+          </span>
+        </section>
+        <div>
+
+        </div>
+        <div fxLayout="row" fxLayoutGap="30">
+
+          <div fxLayout="column" class="full-width"
+               *ngIf="sourceData.subtasks[1].completed === true">
+            <mat-label>Thư viện</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select>
+                <mat-option *ngFor="let item of libraryData" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div fxLayout="row" fxLayoutGap="30">
+          <div fxLayout="column" fxLayoutGap="10" class="full-width"
+               *ngIf="sourceData.subtasks[2].completed === true">
+            <div class="text-gray">File âm thanh</div>
+            <div fxLayout="row" fxLayoutGap="10">
+              <audio fxFlex="80" controls *ngIf="audSrc">
+                <source [src]="audSrc" type="audio/ogg">
+                <source [src]="audSrc" type="audio/mpeg">
+                <source [src]="audSrc" type="audio/wav">
+              </audio>
+              <input type="file" class="file-input"
+                     (change)="onFileSelected($event)" #fileUpload>
+              <button mat-icon-button class="btn-blue"
+                      (click)="fileUpload.click()">
+                <mat-icon class="fz-3">attach_file</mat-icon>
+              </button>
+            </div>
+
+          </div>
+          <div  fxLayout="column" class="full-width"
+               *ngIf="sourceData.subtasks[3].completed === true">
+            <mat-label> Tiếp âm</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select>
+                <mat-option *ngFor="let item of libraryData" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+
+      </mat-expansion-panel>
     </div>
-    <div mat-dialog-actions class="mt-4">
+    <div mat-dialog-actions class="mt-1 px-4">
       <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
       <span fxFlex></span>
       <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
     </div>
   </form>
-</div>
+
 

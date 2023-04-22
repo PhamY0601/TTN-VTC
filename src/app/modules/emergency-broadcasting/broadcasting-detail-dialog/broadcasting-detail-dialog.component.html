@@ -1,59 +1,25 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Chi tiết phát thanh</h1>
+  <h1 matDialogTitle class="text-blue">Chi tiết bản tin</h1>
   <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
     <mat-icon>close</mat-icon>
   </button>
 </div>
-<div class="p-3">
-  <div mat-dialog-content>
-<!--    <div fxLayout="column" fxLayoutGap="10">-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500">ID:</div>-->
-<!--        <div class="text-gray">01</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500"> Tiêu đề:</div>-->
-<!--        <div class="text-gray">Tiêu đề 1</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500">Nội dung:</div>-->
-<!--        <div class="text-gray">Nội dung 1</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500"> Người thực hiện:</div>-->
-<!--        <div class="text-gray">Lãnh đạo cấp huyện</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500"> Thời gian:</div>-->
-<!--        <div class="text-gray">16:08</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500"> Thời lượng:</div>-->
-<!--        <div class="text-gray">60 phút</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500"> Trạm tiếp nhận:</div>-->
-<!--        <div class="text-gray">Trạm tiếp nhận huyện</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500">Loa đã phát</div>-->
-<!--        <div class="text-gray">9/10 ~ 90%</div>-->
-<!--      </div>-->
-<!--      <div fxLayout="row" fxLayoutGap="5">-->
-<!--        <div class="text-blue fw-500">Tổng thời lương phát</div>-->
-<!--        <div class="text-gray">9/10 ~ 90%</div>-->
-<!--      </div>-->
-<!--    </div>-->
+
+<div mat-dialog-content>
+  <mat-expansion-panel expanded="true">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        1. Nội dung
+      </mat-panel-title>
+    </mat-expansion-panel-header>
     <table mat-table [dataSource]="dataSourceThird">
-
-
       <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-header-cell *matHeaderCellDef style="width:200px">ID</th>
         <td mat-cell *matCellDef="let element"> {{element.title}} </td>
       </ng-container>
 
       <ng-container matColumnDef="content">
-        <th mat-header-cell *matHeaderCellDef></th>
+        <th mat-header-cell *matHeaderCellDef>01</th>
         <td mat-cell *matCellDef="let element"> {{element.content}} </td>
       </ng-container>
 
@@ -61,86 +27,120 @@
       <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnThird;"
           [ngClass]="{'bg-table': even}"></tr>
     </table>
+  </mat-expansion-panel>
+<!--  <div class="mat-elevation-z2 bg-white mt-2" fxLayout="column" fxLayoutAlign="space-between stretch">-->
+<!--  -->
+<!--  </div>-->
+  <mat-expansion-panel class="mt-5">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        2. Danh sách trạm
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table mat-table [dataSource]="dataSourceFirst">
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef> STT</th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+      </ng-container>
 
-    <mat-expansion-panel class="mt-3">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          1.Chi tiết theo trạm
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <table mat-table [dataSource]="dataSourceFirst">
-        <ng-container matColumnDef="stt">
-          <th mat-header-cell *matHeaderCellDef> STT</th>
-          <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
-        </ng-container>
+      <ng-container matColumnDef="station">
+        <th mat-header-cell *matHeaderCellDef> Trạm phát</th>
+        <td mat-cell *matCellDef="let element"> {{element.station}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="station">
-          <th mat-header-cell *matHeaderCellDef> Trạm phát</th>
-          <td mat-cell *matCellDef="let element"> {{element.station}} </td>
-        </ng-container>
+      <ng-container matColumnDef="speaker">
+        <th mat-header-cell *matHeaderCellDef>Tổng loa phát</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status" [ngClass] =
+            "{'status-increase': calculateRatio(element.play_successful,element.speaker) >= '80',
+                  'status-decrease':calculateRatio(element.play_successful,element.speaker) <= '60',
+                   'status-wait':
+                   calculateRatio(element.play_successful,element.speaker ) > '60' &&
+                   calculateRatio(element.play_successful,element.speaker) < '80',
+                  }">
+            {{element.play_successful}} &#47; {{element.speaker}}
+          </div>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="speaker">
-          <th mat-header-cell *matHeaderCellDef>Tổng loa phát</th>
-          <td mat-cell *matCellDef="let element"> {{element.speaker}} </td>
-        </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
+        <td mat-cell *matCellDef="let element"> {{element.time}} phút</td>
+      </ng-container>
 
-        <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
-          <td mat-cell *matCellDef="let element"> {{element.time}} phút</td>
-        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnFirst"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnFirst;"
+          [ngClass]="{'bg-table': even}"></tr>
+    </table>
+  </mat-expansion-panel>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumnFirst"></tr>
-        <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnFirst;"
-            [ngClass]="{'bg-table': even}"></tr>
-      </table>
-    </mat-expansion-panel>
+  <mat-expansion-panel class="mt-5">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        3. Danh sách loa
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <table mat-table [dataSource]="dataSourceSecond">
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef> STT</th>
+        <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+      </ng-container>
 
-    <mat-expansion-panel class="mt-3">
-      <mat-expansion-panel-header>
-        <mat-panel-title>
-          2.Chi tiết theo loa
-        </mat-panel-title>
-      </mat-expansion-panel-header>
-      <table mat-table [dataSource]="dataSourceSecond">
-        <ng-container matColumnDef="stt">
-          <th mat-header-cell *matHeaderCellDef> STT</th>
-          <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
-        </ng-container>
+      <ng-container matColumnDef="station">
+        <th mat-header-cell *matHeaderCellDef> Trạm phát</th>
+        <td mat-cell *matCellDef="let element"> {{element.station}} </td>
+      </ng-container>
 
-        <ng-container matColumnDef="station">
-          <th mat-header-cell *matHeaderCellDef> Trạm phát</th>
-          <td mat-cell *matCellDef="let element"> {{element.station}} </td>
-        </ng-container>
+      <ng-container matColumnDef="speaker">
+        <th mat-header-cell *matHeaderCellDef>Loa</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status" [ngClass] =
+            "{'status-increase': calculateRatio(element.play_successful,element.speaker) >= '80'
+                            || calculateRatio(element.play_successful,element.speaker) === '100',
+                  'status-decrease':calculateRatio(element.play_successful,element.speaker) <= '60',
+                   'status-wait':
+                   calculateRatio(element.play_successful,element.speaker ) > '60' &&
+                   calculateRatio(element.play_successful,element.speaker) < '80',
+                  }">
+            {{element.play_successful}} &#47; {{element.speaker}}
+          </div>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="speaker">
-          <th mat-header-cell *matHeaderCellDef>Loa</th>
-          <td mat-cell *matCellDef="let element"> {{element.speaker}} </td>
-        </ng-container>
+      <ng-container matColumnDef="time">
+        <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
+        <td mat-cell *matCellDef="let element"> {{element.time}} phút</td>
+      </ng-container>
 
-        <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
-          <td mat-cell *matCellDef="let element"> {{element.time}} phút</td>
-        </ng-container>
+      <ng-container matColumnDef="time_request">
+        <th mat-header-cell *matHeaderCellDef>Thời lượng yêu cầu</th>
+        <td mat-cell *matCellDef="let element"> {{element.time_request}} phút</td>
+      </ng-container>
 
-        <ng-container matColumnDef="time_request">
-          <th mat-header-cell *matHeaderCellDef>Thời lượng yêu cầu</th>
-          <td mat-cell *matCellDef="let element"> {{element.time_request}} phút</td>
-        </ng-container>
+      <ng-container matColumnDef="ratio">
+        <th mat-header-cell *matHeaderCellDef>Tỉ lệ</th>
+        <td mat-cell *matCellDef="let element">
+          <div class="status" [ngClass] =
+            "{'status-increase': calculateRatio(element.time,element.time_request) >= '80'
+                              || calculateRatio(element.time,element.time_request) === '100',
+                  'status-decrease':calculateRatio(element.time,element.time_request) <= '60',
+                   'status-wait':
+                   calculateRatio(element.time,element.time_request ) > '60' &&
+                   calculateRatio(element.time,element.time_request) < '80',
+                  }">
+            {{ calculateRatio(element.time,element.time_request )}} %
+          </div>
+        </td>
+      </ng-container>
 
-        <ng-container matColumnDef="ratio">
-          <th mat-header-cell *matHeaderCellDef>Tỉ lệ</th>
-          <td mat-cell *matCellDef="let element"> {{((element.time_request / element.time) * 100).toFixed(0)}} %</td>
-        </ng-container>
+      <tr mat-header-row *matHeaderRowDef="displayedColumnSecond"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnSecond;"
+          [ngClass]="{'bg-table': even}"></tr>
+    </table>
+  </mat-expansion-panel>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumnSecond"></tr>
-        <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnSecond;"
-            [ngClass]="{'bg-table': even}"></tr>
-      </table>
-    </mat-expansion-panel>
-
-  </div>
-  <div mat-dialog-actions align="end">
-    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
-  </div>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
 </div>
 

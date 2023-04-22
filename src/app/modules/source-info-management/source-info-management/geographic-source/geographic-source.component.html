@@ -1,0 +1,75 @@
+<router-outlet></router-outlet>
+<div class="p-5" fxLayout="column" fxLayoutAlign="space-around stretch">
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <mat-form-field class="text-blue" appearance="outline">
+      <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+  </div>
+  <div class="mat-elevation-z2 bg-white full-width" fxLayout="column" fxLayoutAlign="space-between stretch">
+    <table mat-table matSort [dataSource]="dataSource">
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef>STT</th>
+        <td mat-cell *matCellDef="let element; let i = index;">
+          {{(paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1)}}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="district">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Huyện</th>
+        <td mat-cell *matCellDef="let element"> {{element.district}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Loại bản tin</th>
+        <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="schedule">
+        <th mat-header-cell *matHeaderCellDef> Lịch</th>
+        <td mat-cell *matCellDef="let element">
+          <a mat-icon-button mat-sm-button class="text-blue"
+             [routerLink]="['schedule']">
+            <mat-icon>event</mat-icon>
+          </a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="url">
+        <th mat-header-cell *matHeaderCellDef>URL</th>
+        <td mat-cell *matCellDef="let element">
+          <a href="{{element.url}}" target="_blank">{{element.url}}</a>
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="listens">
+        <th mat-header-cell *matHeaderCellDef>Lượt nghe</th>
+        <td mat-cell *matCellDef="let element"> {{element.listens}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef>Tình trạng</th>
+        <td mat-cell *matCellDef="let element">
+          <span
+            [ngClass]="element.status ==='Chờ phát' ? 'status status-wait' : 'status status-play' ">{{element.status}}</span>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"
+          [ngClass]="{'bg-table': even}"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+      </tr>
+    </table>
+<div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+  <div >Số bản ghi của bảng là: {{dataSource.data.length}}</div>
+  <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[15]"
+                 #paginatorRef></mat-paginator>
+</div>
+
+  </div>
+</div>
+
+

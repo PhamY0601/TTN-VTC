@@ -1,0 +1,133 @@
+<div class="bg-white full-height" fxLayout="column" fxLayoutAlign=" stretch" fxLayoutGap="30px">
+  <div class="img-logo" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="30px">
+    <img src="../../../../../assets/logo/vnpt.svg">
+    <img src="../../../../../assets/logo/vtc.svg">
+  </div>
+  <perfect-scrollbar [config]="config">
+    <div class="pe-2">
+      <mat-nav-list>
+        <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./dashboard']">
+          <mat-icon matListItemIcon svgIcon="dashboard"></mat-icon>
+          <div matListItemTitle>Tổng quan</div>
+        </mat-list-item>
+
+        <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./install-management']">
+          <mat-icon matListItemIcon svgIcon="exclude"></mat-icon>
+          <div matListItemTitle>Quản lý lắp đặt</div>
+        </mat-list-item>
+
+        <mat-list-item [routerLinkActive]="['is-active']">
+          <mat-icon matListItemIcon svgIcon="youtube_gray"></mat-icon>
+          <div matListItemTitle>Lịch quảng bá</div>
+        </mat-list-item>
+
+        <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./radio-management']">
+          <mat-icon class="text-gray" matListItemIcon >event</mat-icon>
+          <div matListItemTitle>Quản lý lịch phát thanh</div>
+        </mat-list-item>
+
+        <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./emergency-broadcasting']">
+          <mat-icon matListItemIcon svgIcon="speaker_gray"></mat-icon>
+          <div matListItemTitle>Phát thanh khẩn cấp</div>
+        </mat-list-item>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="fz-2 fw-400">
+            <mat-icon matListItemIcon svgIcon="task_square"></mat-icon>
+            <div>Quản lý URI-TTN</div>
+          </mat-expansion-panel-header>
+          <mat-list-item>
+            <ul>
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./source-info-management/field-source-info']">
+                Nguồn lĩnh vực
+              </li>
+            </ul>
+          </mat-list-item>
+          <mat-list-item>
+            <ul>
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./source-info-management/geographic-source-info']">
+                Nguồn theo cấp địa lý
+              </li>
+            </ul>
+          </mat-list-item>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="fz-2 fw-400">
+            <mat-icon matListItemIcon svgIcon="warning"></mat-icon>
+            <div>Quản lý nội dung</div>
+          </mat-expansion-panel-header>
+          <mat-list-item>
+            <ul>
+              <li>Nội dung đăng ký</li>
+            </ul>
+          </mat-list-item>
+          <mat-list-item>
+            <ul>
+              <li [routerLinkActive]="['active']" [routerLink]="['./warning-content']">
+                Cảnh báo từ khóa
+              </li>
+            </ul>
+          </mat-list-item>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+          <mat-expansion-panel-header class="fz-2 fw-400">
+            <mat-icon matListItemIcon color="warn" svgIcon="document_text"></mat-icon>
+            <div>Báo cáo</div>
+          </mat-expansion-panel-header>
+          <mat-list-item>
+            <ul>
+              <li [routerLinkActive]="['active']" [routerLink]="['./report/broadcast-time']">
+              Thời lượng phát
+              </li>
+            </ul>
+          </mat-list-item>
+
+          <mat-expansion-panel>
+            <mat-expansion-panel-header class="fz-2 fw-400">
+                <ul>
+                  <li>Hoạt động phát thanh</li>
+                </ul>
+            </mat-expansion-panel-header>
+            <mat-list-item class="ps-4">
+              <ul style="list-style-type: circle">
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/date']">Theo ngày</li>
+              </ul>
+            </mat-list-item>
+            <mat-list-item class="ps-4">
+              <ul style="list-style-type: circle">
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/daily']">Hằng ngày</li>
+              </ul>
+            </mat-list-item>
+            <mat-list-item class="ps-4">
+              <ul style="list-style-type: circle">
+                <li  [routerLinkActive]="['active']" [routerLink]="['./report/weekly']">Hằng tuần</li>
+              </ul>
+            </mat-list-item>
+            <mat-list-item class="ps-4">
+              <ul style="list-style-type: circle">
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/monthly']">Hằng tháng</li>
+              </ul>
+            </mat-list-item>
+            <mat-list-item class="ps-4">
+              <ul style="list-style-type: circle">
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/yearly']">Hằng năm</li>
+              </ul>
+            </mat-list-item>
+
+          </mat-expansion-panel>
+
+        </mat-expansion-panel>
+
+        <a href="http://ttn.vtctelecom.com.vn/index.php/" target="_blank">
+          <mat-list-item>
+            <mat-icon matListItemIcon svgIcon="setting"></mat-icon>
+            <div matListItemTitle>Hệ thống</div>
+          </mat-list-item>
+        </a>
+      </mat-nav-list>
+    </div>
+  </perfect-scrollbar>
+</div>

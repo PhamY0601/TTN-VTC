@@ -2,9 +2,17 @@
 :host ::ng-deep .mat-expansion-panel-header {
   background: #FFFFFF !important;
   border-right: none !important;
-  color: unset !important;
+  font-size: 18px;
+  font-weight: 500;
+  .mat-expansion-panel-header-title {
+    color: #08B1BD !important;
+  }
 }
 
-.mat-column-time, .mat-column-time_request, .mat-column-speaker {
+.mat-column-time, .mat-column-time_request,
+.mat-column-speaker, .mat-column-ratio {
   text-align: center;
+}
+.mat-column-speaker {
+  width: 120px;
 }
