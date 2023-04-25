@@ -312,7 +312,6 @@ export class RadioManagerContentComponent implements OnInit {
 })
 export class RadioManagerDialogComponent implements OnInit, OnDestroy {
 
-
   private dialogRef: MatDialogRef<RadioManagerContentComponent> | undefined;
 
   constructor(

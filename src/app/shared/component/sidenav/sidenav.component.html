@@ -16,9 +16,9 @@
           <div matListItemTitle>Quản lý lắp đặt</div>
         </mat-list-item>
 
-        <mat-list-item [routerLinkActive]="['is-active']">
+        <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./advertising-calendar']">
           <mat-icon matListItemIcon svgIcon="youtube_gray"></mat-icon>
-          <div matListItemTitle>Lịch quảng bá</div>
+          <div matListItemTitle>Lịch quảng bá hình ảnh</div>
         </mat-list-item>
 
         <mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./radio-management']">
@@ -39,7 +39,7 @@
             <ul>
               <li [routerLinkActive]="['active']"
                   [routerLink]="['./source-info-management/field-source-info']">
-                Nguồn lĩnh vực
+                TTN theo lĩnh vực
               </li>
             </ul>
           </mat-list-item>
@@ -47,7 +47,7 @@
             <ul>
               <li [routerLinkActive]="['active']"
                   [routerLink]="['./source-info-management/geographic-source-info']">
-                Nguồn theo cấp địa lý
+              TTN theo cấp địa lý
               </li>
             </ul>
           </mat-list-item>
@@ -60,13 +60,23 @@
           </mat-expansion-panel-header>
           <mat-list-item>
             <ul>
-              <li>Nội dung đăng ký</li>
+              <li [routerLinkActive]="['active']" [routerLink]="['./content-management/editorial-content']">
+                Nội dung biên tập
+              </li>
             </ul>
           </mat-list-item>
           <mat-list-item>
             <ul>
-              <li [routerLinkActive]="['active']" [routerLink]="['./warning-content']">
-                Cảnh báo từ khóa
+              <li [routerLinkActive]="['active']" [routerLink]="['./content-management/registration-content']">
+                Lịch phát đăng ký
+              </li>
+            </ul>
+          </mat-list-item>
+
+          <mat-list-item>
+            <ul>
+              <li [routerLinkActive]="['active']" [routerLink]="['./content-management/warning-content']">
+               Thiết lập cảnh báo từ khóa
               </li>
             </ul>
           </mat-list-item>

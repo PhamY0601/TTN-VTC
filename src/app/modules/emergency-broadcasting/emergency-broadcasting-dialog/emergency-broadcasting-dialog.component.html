@@ -4,178 +4,171 @@
     <mat-icon>close</mat-icon>
   </button>
 </div>
-  <form (ngSubmit)="save()" novalidate #form="ngForm">
-    <div mat-dialog-content>
-      <mat-expansion-panel expanded="true">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-           Nội dung bản tin
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-      <div>
-        <mat-label>Tiêu đề</mat-label>
+<form (ngSubmit)="save()" novalidate #form="ngForm">
+  <div mat-dialog-content>
+    <div>
+      <mat-label>Tiêu đề</mat-label>
+      <mat-form-field class="full-width" appearance="outline">
+        <input matInput placeholder="Tiêu đề bản tin">
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-label>Ghi chú</mat-label>
+      <mat-form-field class="full-width" appearance="outline">
+        <input matInput placeholder="Nội dung">
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="30">
+      <div fxLayout="column" class="full-width">
+        <mat-label>Bắt đầu</mat-label>
         <mat-form-field class="full-width" appearance="outline">
-          <input matInput placeholder="Tiêu đề bản tin">
+          <input matInput
+                 name="selected_time_B"
+                 [format]="24"
+                 [ngxMatTimepicker]="pickerA"
+                 placeholder="10:00"
+          />
+          <mat-icon matSuffix
+                    (click)="pickerA.open()">
+            watch_later
+          </mat-icon>
+        </mat-form-field>
+        <ngx-mat-timepicker color="accent"
+                            #pickerA></ngx-mat-timepicker>
+
+      </div>
+      <div class="full-width">
+        <mat-label>Kết thúc</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput
+                 name="selected_time_B"
+                 [format]="24"
+                 [ngxMatTimepicker]="pickerB"
+                 placeholder="10:00"
+          />
+          <mat-icon matSuffix
+                    (click)="pickerB.open()">
+            watch_later
+          </mat-icon>
+        </mat-form-field>
+        <ngx-mat-timepicker color="accent"
+                            #pickerB></ngx-mat-timepicker>
+      </div>
+    </div>
+<!--    <div fxLayout="row" fxLayoutGap="30">-->
+<!--      <div fxLayout="column" class="full-width">-->
+<!--        <mat-label>Quận, huyện</mat-label>-->
+<!--        <mat-form-field appearance="outline">-->
+<!--          <mat-select name="district" [value]="-1"-->
+<!--                      (selectionChange)="districtEffect($event)">-->
+<!--            <mat-option [value]="-1">-->
+<!--              Tất cả-->
+<!--            </mat-option>-->
+<!--            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">-->
+<!--              {{item.name}}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--      <div fxLayout="column" class="full-width">-->
+<!--        <mat-label>Xã, phường</mat-label>-->
+<!--        <mat-form-field class="full-width" appearance="outline">-->
+<!--          <mat-select name="ward">-->
+<!--            <mat-option [value]="-1">-->
+<!--              Tất cả-->
+<!--            </mat-option>-->
+<!--            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
+<!--              {{item.name}}-->
+<!--            </mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+<!--      </div>-->
+<!--    </div>-->
+    <tree-root [nodes]="nodeItems" [options]="treeOptions"></tree-root>
+    <div [fxLayout]="selected===4 ? 'column' : 'row'" fxLayoutGap="30">
+      <div fxLayout="column" class="full-width">
+        <mat-label>Chọn nguồn phát</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select name="source" (selectionChange)="select($event)"
+                      placeholder=" Chọn nguồn phát ">
+            <mat-option *ngFor="let item of sourceData.subtasks" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
-      <div>
-        <mat-label>Ghi chú</mat-label>
-        <mat-form-field class="full-width" appearance="outline">
-          <input matInput placeholder="Nội dung">
-        </mat-form-field>
-      </div>
-      <div fxLayout="row" fxLayoutGap="30">
-        <div class="full-width">
-          <mat-label>Bắt đầu</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <input matInput name="hour_from" type="time" >
-            <mat-icon matSuffix>query_builder</mat-icon>
-          </mat-form-field>
-        </div>
-        <div class="full-width">
-          <mat-label>Kết thúc</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <input matInput name="hour_to" type="time">
-            <mat-icon matSuffix>query_builder</mat-icon>
-          </mat-form-field>
-        </div>
-      </div>
-      <div fxLayout="row" fxLayoutGap="30">
-        <div fxLayout="column" class="full-width">
-          <mat-label>Quận, huyện</mat-label>
+      <div *ngIf="selected !== -1"
+           [ngSwitch]="selected" fxLayout="column" class="full-width">
+        <ng-container *ngSwitchCase="1">
+          <mat-label>Transmitter</mat-label>
           <mat-form-field appearance="outline">
-            <mat-select name="district" [value]="-1"
-                        (selectionChange)="districtEffect($event)">
-              <mat-option  [value]="-1" >
-                 Tất cả
-              </mat-option>
-              <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
-                {{item.name}}
+            <mat-select>
+              <mat-option *ngFor="let item of transmitterData" [value]="item">
+                {{item}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div fxLayout="column" class="full-width">
-          <mat-label>Xã, phường</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-select name="ward">
-              <mat-option  [value]="-1">
-                Tất cả
-              </mat-option>
-              <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
-                {{item.name}}
+        </ng-container>
+
+        <ng-container *ngSwitchCase="2">
+          <mat-label>Thư viện</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option *ngFor="let item of libraryData" [value]="item">
+                {{item}}
               </mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
+        </ng-container>
+
+        <ng-container *ngSwitchCase="3">
+          <div class="text-gray">File âm thanh</div>
+          <div fxLayout="row" fxLayoutGap="10">
+            <audio fxFlex="80" controls *ngIf="audSrc">
+              <source [src]="audSrc" type="audio/ogg">
+              <source [src]="audSrc" type="audio/mpeg">
+              <source [src]="audSrc" type="audio/wav">
+            </audio>
+            <input type="file" class="file-input"
+                   (change)="onFileSelected($event)" #fileUpload>
+            <button mat-icon-button class="btn-blue"
+                    (click)="fileUpload.click()">
+              <mat-icon class="fz-3">attach_file</mat-icon>
+            </button>
+          </div>
+
+        </ng-container>
+
+        <ng-container *ngSwitchCase="4">
+          <div fxLayout="column">
+            <mat-label> Văn bản</mat-label>
+            <mat-form-field appearance="outline" style="height: 100px">
+              <textarea matInput placeholder="Nội dung văn bản"></textarea>
+            </mat-form-field>
+          </div>
+
+        </ng-container>
+
+        <ng-container *ngSwitchCase="5">
+          <mat-label> Tiếp âm</mat-label>
+          <mat-form-field appearance="outline">
+            <mat-select>
+              <mat-option *ngFor="let item of libraryData" [value]="item">
+                {{item}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </ng-container>
       </div>
-        <div fxLayout="row">
-          <div>
-            <mat-label>Chọn nguồn phát</mat-label>
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-select name="source" [value]="-1" (selectionChange)="test($event)">
-                <mat-option *ngFor="let item of sourceData.subtasks" [value]="item.value" >
-                  {{item.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div fxLayout="column" class="full-width"
-               *ngIf="sourceData.subtasks[0].completed === true">
-            <mat-label>Transmitter</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select>
-                <mat-option *ngFor="let item of transmitterData" [value]="item">
-                  {{item}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
 
-      </mat-expansion-panel>
-      <mat-expansion-panel class="mt-5">
-        <mat-expansion-panel-header>
-          <mat-panel-title>
-            Nguồn phát
-          </mat-panel-title>
-        </mat-expansion-panel-header>
-        <section>
-          <div class="fz-3">
-            <mat-checkbox [checked]="allComplete"
-                          [indeterminate]="someComplete()"
-                          (change)="setAll($event.checked)">
-              {{sourceData.name}}
-            </mat-checkbox>
-          </div>
-          <span>
-             <div fxLayout="row">
-                <p *ngFor="let subtask of sourceData.subtasks">
-                  <mat-checkbox [(ngModel)]="subtask.completed"
-                                (ngModelChange)="updateAllComplete()"
-                                name='checkbox'>
-                    {{subtask.name}}
-                  </mat-checkbox>
-                </p>
-             </div>
-          </span>
-        </section>
-        <div>
-
-        </div>
-        <div fxLayout="row" fxLayoutGap="30">
-
-          <div fxLayout="column" class="full-width"
-               *ngIf="sourceData.subtasks[1].completed === true">
-            <mat-label>Thư viện</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select>
-                <mat-option *ngFor="let item of libraryData" [value]="item">
-                  {{item}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-        <div fxLayout="row" fxLayoutGap="30">
-          <div fxLayout="column" fxLayoutGap="10" class="full-width"
-               *ngIf="sourceData.subtasks[2].completed === true">
-            <div class="text-gray">File âm thanh</div>
-            <div fxLayout="row" fxLayoutGap="10">
-              <audio fxFlex="80" controls *ngIf="audSrc">
-                <source [src]="audSrc" type="audio/ogg">
-                <source [src]="audSrc" type="audio/mpeg">
-                <source [src]="audSrc" type="audio/wav">
-              </audio>
-              <input type="file" class="file-input"
-                     (change)="onFileSelected($event)" #fileUpload>
-              <button mat-icon-button class="btn-blue"
-                      (click)="fileUpload.click()">
-                <mat-icon class="fz-3">attach_file</mat-icon>
-              </button>
-            </div>
-
-          </div>
-          <div  fxLayout="column" class="full-width"
-               *ngIf="sourceData.subtasks[3].completed === true">
-            <mat-label> Tiếp âm</mat-label>
-            <mat-form-field appearance="outline">
-              <mat-select>
-                <mat-option *ngFor="let item of libraryData" [value]="item">
-                  {{item}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-
-      </mat-expansion-panel>
     </div>
-    <div mat-dialog-actions class="mt-1 px-4">
-      <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
-      <span fxFlex></span>
-      <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
-    </div>
-  </form>
+
+  </div>
+  <div mat-dialog-actions class="mt-1 px-4">
+    <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
+    <span fxFlex></span>
+    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+  </div>
+</form>
 
 

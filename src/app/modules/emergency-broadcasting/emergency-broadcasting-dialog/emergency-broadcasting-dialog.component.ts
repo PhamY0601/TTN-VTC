@@ -4,6 +4,7 @@ import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
 import {COUNTRY} from "../../../app.constants";
+import { ITreeOptions } from '@circlon/angular-tree-component';
 
 @Component({
   selector: 'emergency-broadcasting-component',
@@ -20,25 +21,63 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   libraryData = ['Thư viện 1', 'Thư viện 2', 'Thư viện 3', 'Thư viện 4', 'Thư viện 5'];
   audSrc: any;
   //store [{district,wards}]
-  selected: any;
+  selected = -1;
   sourceData = {
     name: 'Nguồn phát',
     completed: false,
     value: '10',
     subtasks: [
+      {name: 'File âm thanh', completed: false, value: 3},
+      {name: 'Văn bản', completed: false, value: 4},
       {name: 'Transmitter', completed: false, value: 1},
       {name: 'Thư viện', completed: false, value: 2},
-      {name: 'File âm thanh', completed: false, value: 3},
-      {name: 'Tiếp âm', completed: false, value: 4},
+      {name: 'Tiếp âm', completed: false, value: 5},
     ],
   };
-
+  nodeItems = [
+    {
+      name: 'Khu vực TP.Hồ Chí Minh',
+      children: [
+        {
+          name: 'Quận 1',
+          children: [
+            { name: 'Phường 1' },
+            { name: 'Phường 2' },
+            { name: 'Phường 3' },
+            { name: 'Phường 4' },
+          ]
+        },
+        {
+          name: 'Quận 2',
+          children: [
+            { name: 'Phường 1' },
+            { name: 'Phường 2' },
+            { name: 'Phường 3' },
+            { name: 'Phường 4' },
+          ]
+        },
+        {
+          name: 'Quận 3',
+          children: [
+            { name: 'Phường 1' },
+            { name: 'Phường 2' },
+            { name: 'Phường 3' },
+            { name: 'Phường 4' },
+          ]
+        },
+      ]
+    },
+  ];
+  treeOptions: ITreeOptions = {
+    useCheckbox: true
+  };
   constructor(
     // private eventManager: JhiEventManager,
     private formBuilder: FormBuilder,
     private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.getDistrict(COUNTRY())
@@ -47,6 +86,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   save() {
     console.log(this.data)
   }
+
   getDistrict(city: any) {
     this.citiesService$.getDistricts(city).subscribe((data) => {
       this.districtsData = data;
@@ -60,7 +100,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     })
   }
 
-  onFileSelected(event:any) {
+  onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       const audSrc = URL.createObjectURL(event.target.files[0]);
       this.audSrc = audSrc;
@@ -80,30 +120,9 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     this.isSaving = false;
   }
 
-  allComplete: boolean = false;
-
-  updateAllComplete() {
-    this.allComplete = this.sourceData.subtasks != null && this.sourceData.subtasks.every(t => t.completed);
-  }
-
-  someComplete(): boolean {
-    if (this.sourceData.subtasks == null) {
-      return false;
-    }
-    return this.sourceData.subtasks.filter(t => t.completed).length > 0 && !this.allComplete;
-  }
-
-  setAll(completed: boolean) {
-    console.log(completed)
-    this.allComplete = completed;
-    if (this.sourceData.subtasks == null) {
-      return;
-    }
-    this.sourceData.subtasks.forEach(t => (t.completed = completed));
-  }
-
-  test(event: any) {
-   this.selected = event.value
+  select(event: any) {
+    console.log(event.value)
+    this.selected = event.value;
   }
 }
 
@@ -120,7 +139,8 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-  ) {}
+  ) {
+  }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {

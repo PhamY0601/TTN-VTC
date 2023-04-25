@@ -1,14 +1,18 @@
-<div class="p-5" fxLayout="column" fxLayoutGap="20">
-  <div>
-    <div class="text-blue text-center fz-4 fw-500">Báo cáo quản lý phát thanh {{title_country | replaceStr}} </div>
+<div class="p-5" fxLayout="column" fxLayoutGap="30">
 
-    <div class="p-3 mt-3" fxLayout="row" style="align-items: baseline">
-      <div fxFlex="20"></div>
+    <div class="text-blue text-center fz-4 fw-500">Báo cáo quản lý phát thanh {{title_country | replaceStr}} </div>
+<!--    <div fxLayout="row" fxLayoutGap="30">-->
+<!--      <button mat-raised-button class="btn-blue">Báo cáo ngày</button>-->
+<!--      <button mat-raised-button class="btn-blue">Báo cáo ngày yêu cầu</button>-->
+<!--      <button mat-raised-button class="btn-blue">Báo cáo tháng</button>-->
+<!--      <button mat-raised-button class="btn-blue">Báo cáo năm</button>-->
+<!--    </div>-->
+    <div fxLayout="row" style="align-items: baseline">
       <div class="w-70" fxLayout="row" fxLayoutGap="20"
            style="align-items: baseline">
         <mat-label>Từ ngày</mat-label>
         <mat-form-field class="w-70" appearance="outline">
-          <input matInput name="date_from" [matDatepicker]="pickerFrom" >
+          <input matInput name="date_from" [matDatepicker]="pickerFrom">
           <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
           <mat-datepicker #pickerFrom></mat-datepicker>
         </mat-form-field>
@@ -25,9 +29,9 @@
       </div>
 
       <button mat-raised-button class="btn-blue mb-1">Xem</button>
-      <div fxFlex="20"></div>
+      <div fxFlex="40"></div>
     </div>
-  </div>
+
   <div fxLayout="column" fxLayoutGap="30">
 
     <app-readio-streaming-table></app-readio-streaming-table>

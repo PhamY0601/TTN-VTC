@@ -5,6 +5,8 @@ import {EmergencyBroadcastingRoutes} from "./emergency-broadcasting.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
+import {NgxMatTimepickerModule} from "ngx-mat-timepicker";
+
 import {EmergencyBroadcastingListComponent} from "./emergency-broadcasting-list/emergency-broadcasting-list.component";
 import {
   EmergencyBroadcastingContentComponent, EmergencyBroadcastingDialogComponent
@@ -13,7 +15,8 @@ import {
   BroadcastingDetailContentComponent,
   BroadcastingDetailDialogComponent
 } from "./broadcasting-detail-dialog/broadcasting-detail-dialog.component";
-
+import { DistrictChecklistComponent } from './district-checklist/district-checklist.component';
+import {TreeModule} from "@circlon/angular-tree-component";
 
 
 @NgModule({
@@ -23,7 +26,9 @@ import {
     SharedComponentModule,
     SharedMaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxMatTimepickerModule,
+    TreeModule
   ],
   exports: [
 
@@ -33,7 +38,8 @@ import {
     EmergencyBroadcastingContentComponent,
     EmergencyBroadcastingDialogComponent,
     BroadcastingDetailContentComponent,
-    BroadcastingDetailDialogComponent
+    BroadcastingDetailDialogComponent,
+    DistrictChecklistComponent
   ]
 })
 export class EmergencyBroadcastingModule {

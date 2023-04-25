@@ -1,6 +1,9 @@
 import {Routes} from '@angular/router';
 import {AdminLayoutComponent} from "./shared/component/admin-layout/admin-layout.component";
 import {AuthGuard} from "./shared/auth/auth.guard";
+import {
+  ChangePasswordFormDialogComponent
+} from "./shared/component/change-password-form-dialog/change-password-form-dialog.component";
 
 export const rootRouterConfig: Routes = [
   {
@@ -48,6 +51,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./modules/emergency-broadcasting/emergency-broadcasting.module').then(m => m.EmergencyBroadcastingModule),
         data: { breadcrumb: 'Phát thanh khẩn cấp' }
       },
+      {
+        path: 'advertising-calendar',
+        loadChildren: () => import('./modules/advertising-calendar/advertising-calendar.module').then(m => m.AdvertisingCalendarModule),
+        data: { breadcrumb: 'Lịch quảng bá' }
+      },
     ]
   },
   {
@@ -59,6 +67,11 @@ export const rootRouterConfig: Routes = [
 
       }
     ]
-  }
+  },
+  {
+    path: 'change-password',
+    component: ChangePasswordFormDialogComponent,
+    outlet: 'popup'
+  },
 ]
 

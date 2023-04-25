@@ -1,0 +1,11 @@
+.mat-column-content, .mat-column-status, .mat-column-date {
+  text-align: center;
+}
+
+:host ::ng-deep .mat-sort-header-container {
+  display: flex;
+  justify-content: center;
+}
+.mat-column-content {
+  width: 200px;
+}

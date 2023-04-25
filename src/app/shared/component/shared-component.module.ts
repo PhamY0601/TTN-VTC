@@ -16,6 +16,11 @@ import {FooterComponent} from "./footer/footer.component";
 import {AdminLayoutComponent} from "./admin-layout/admin-layout.component";
 import {MapComponent} from "./map/map.component";
 import {ReplaceStrPipe} from "../pipes/replace-str.pipe";
+import {
+  ChangePasswordFormContentComponent,
+  ChangePasswordFormDialogComponent
+} from "./change-password-form-dialog/change-password-form-dialog.component";
+import {ReactiveFormsModule} from "@angular/forms";
 
 
 // const components = [
@@ -42,18 +47,19 @@ import {ReplaceStrPipe} from "../pipes/replace-str.pipe";
       FooterComponent,
       AdminLayoutComponent,
       MapComponent,
-      ReplaceStrPipe
+      ReplaceStrPipe,
+      ChangePasswordFormContentComponent,
+      ChangePasswordFormDialogComponent
     ],
-    imports: [
-        CommonModule,
-        SharedMaterialModule,
-        RouterModule,
-        // NgChartsModule,
-
-        PerfectScrollbarModule,
-        BreadcrumbModule,
-        NgxSpinnerModule,
-    ],
+  imports: [
+    CommonModule,
+    SharedMaterialModule,
+    RouterModule,
+    PerfectScrollbarModule,
+    BreadcrumbModule,
+    NgxSpinnerModule,
+    ReactiveFormsModule,
+  ],
     exports: [
       HeaderComponent,
       SidenavComponent,
@@ -64,7 +70,9 @@ import {ReplaceStrPipe} from "../pipes/replace-str.pipe";
       FooterComponent,
       AdminLayoutComponent,
       MapComponent,
-      ReplaceStrPipe
+      ReplaceStrPipe,
+      ChangePasswordFormContentComponent,
+      ChangePasswordFormDialogComponent
     ],
 
 })

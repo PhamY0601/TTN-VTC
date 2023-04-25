@@ -8,4 +8,19 @@ import {PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 })
 export class SidenavComponent {
   public config: PerfectScrollbarConfigInterface = {};
+  navigateData = [
+    {
+      title: 'Tổng quan',
+      url: './dashboard'
+    },
+    {
+      title: 'Quản lý lắp đặt',
+      url: './install-management'
+    },
+    {
+      title: 'Lịch quảng bá hình ảnh',
+      url: './dashboard'
+    },
+
+  ]
 }

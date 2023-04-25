@@ -11,6 +11,25 @@ import {
   WarningContentComponent,
   WarningContentDialogComponent
 } from "./warning-content/warning-content-dialog/warning-content-dialog.component";
+import {RegistrationContentComponent} from "./registration-content/registration-content.component";
+import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+import {MomentDateAdapter} from "@angular/material-moment-adapter";
+import { EditorialContentComponent } from './editorial-content/editorial-content.component';
+
+
+
+export const MY_FORMATS = {
+  parse: {
+    dateInput: 'LL',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'YYYY',
+    dateA11yLabel: 'LL',
+    monthYearA11yLabel: 'YYYY',
+  },
+};
 
 
 @NgModule({
@@ -28,8 +47,14 @@ import {
   declarations: [
     WarningContentListComponent,
     WarningContentComponent,
-    WarningContentDialogComponent
-  ]
+    WarningContentDialogComponent,
+    RegistrationContentComponent,
+    EditorialContentComponent
+  ],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+  ],
 })
 export class ContentManagementModule {
 }

@@ -26,3 +26,10 @@
 .file-input {
   display: none;
 }
+:host ::ng-deep.angular-tree-component {
+  color: #000000;
+}
+:host ::ng-deep.node-wrapper {
+  display: flex;
+  align-items: flex-start;
+}

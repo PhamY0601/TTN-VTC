@@ -21,6 +21,8 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import {FormsModule} from "@angular/forms";
 import {NgxMatTimepickerModule} from "ngx-mat-timepicker";
 import {MatDatepickerModule} from "@angular/material/datepicker";
+import {MatBadgeModule} from "@angular/material/badge";
+import {MatTreeModule} from "@angular/material/tree";
 
 
 
@@ -48,7 +50,9 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
     MatNativeDateModule,
     NgxMatTimepickerModule,
     MatCheckboxModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatBadgeModule,
+    MatTreeModule
   ]
 })
 export class SharedMaterialModule {}

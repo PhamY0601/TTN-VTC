@@ -2,7 +2,6 @@ import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/c
 import {CitiesService} from "../../../shared/services/cities.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-// import {JhiEventManager} from "ng-jhipster";
 import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {COUNTRY} from "../../../app.constants";
