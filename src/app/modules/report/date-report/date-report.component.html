@@ -1,42 +1,80 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30">
 
-    <div class="text-blue text-center fz-4 fw-500">Báo cáo quản lý phát thanh {{title_country | replaceStr}} </div>
-<!--    <div fxLayout="row" fxLayoutGap="30">-->
-<!--      <button mat-raised-button class="btn-blue">Báo cáo ngày</button>-->
-<!--      <button mat-raised-button class="btn-blue">Báo cáo ngày yêu cầu</button>-->
-<!--      <button mat-raised-button class="btn-blue">Báo cáo tháng</button>-->
-<!--      <button mat-raised-button class="btn-blue">Báo cáo năm</button>-->
-<!--    </div>-->
-    <div fxLayout="row" style="align-items: baseline">
-      <div class="w-70" fxLayout="row" fxLayoutGap="20"
-           style="align-items: baseline">
-        <mat-label>Từ ngày</mat-label>
-        <mat-form-field class="w-70" appearance="outline">
-          <input matInput name="date_from" [matDatepicker]="pickerFrom">
-          <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-          <mat-datepicker #pickerFrom></mat-datepicker>
+  <div class="text-blue text-center fz-4 fw-500">Báo cáo quản lý phát thanh
+    <span *ngIf="(title_country | replaceStr) === 'Hồ Chí Minh'">
+      TP. {{title_country | replaceStr }}
+    </span>
+    <span *ngIf="(title_country | replaceStr) !== 'Hồ Chí Minh'">
+     tỉnh {{title_country | replaceStr}}
+    </span>
+  </div>
+
+  <mat-card>
+    <mat-card-header class="text-blue fz-3 fw-500">Tham số thống kê</mat-card-header>
+    <mat-card-content class="mt-3">
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Thời gian</div>
+        <div fxFlex="45" class="full-width">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Từ ngày</mat-label>
+            <input matInput name="date_from" [value]="beforeDay"
+                   [matDatepicker]="pickerFrom">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
+          </mat-form-field>
+        </div>
+
+        <div fxFlex="45" class="full-width">
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-label>Đến ngày</mat-label>
+            <input matInput name="date_to" [value]="toDay"
+                   [matDatepicker]="pickerTo">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </div>
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Khu vực quản lý</div>
+        <mat-form-field fxFlex="45" class="full-width" appearance="outline">
+          <mat-label>Quận, huyện</mat-label>
+          <mat-select name="district"
+                      (selectionChange)="districtEffect($event)">
+            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field fxFlex="45" class="full-width" appearance="outline">
+          <mat-label>Xã, phường</mat-label>
+          <mat-select name="ward">
+            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
-
-      <div class="w-70" fxLayout="row" fxLayoutGap="20"
-           style="align-items: baseline">
-        <mat-label>Đến ngày</mat-label>
-        <mat-form-field class="w-70" appearance="outline">
-          <input matInput name="date_to" [matDatepicker]="pickerTo">
-          <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
-          <mat-datepicker #pickerTo></mat-datepicker>
+      <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
+        <div fxFlex="10" class="fz-2">Trạm</div>
+        <mat-form-field fxFlex="30" appearance="outline">
+          <mat-label>Mã trạm</mat-label>
+          <input matInput>
         </mat-form-field>
+        <button fxFlex="10" class="btn-blue" mat-flat-button
+                (click)="showTable = true">
+          Xem
+        </button>
+        <div fxFlex="45"></div>
       </div>
-
-      <button mat-raised-button class="btn-blue mb-1">Xem</button>
-      <div fxFlex="40"></div>
-    </div>
-
-  <div fxLayout="column" fxLayoutGap="30">
-
+    </mat-card-content>
+  </mat-card>
+  <div  *ngIf="showTable"
+        fxLayout="column" fxLayoutGap="30">
     <app-readio-streaming-table></app-readio-streaming-table>
     <app-media-table></app-media-table>
     <app-equipment-table></app-equipment-table>
+    <app-warning-content-table></app-warning-content-table>
     <app-installation-activity-table></app-installation-activity-table>
+
   </div>
 </div>

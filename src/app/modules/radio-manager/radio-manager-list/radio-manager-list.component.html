@@ -27,6 +27,13 @@
             *matCellDef="let element">{{element.district | replaceStr}}</td>
       </ng-container>
 
+      <ng-container matColumnDef="type">
+        <th mat-header-cell *matHeaderCellDef>Loại</th>
+        <td mat-cell
+            *matCellDef="let element">{{element.type}}</td>
+      </ng-container>
+
+
       <ng-container matColumnDef="schedule">
         <th mat-header-cell *matHeaderCellDef> Lịch</th>
         <td mat-cell *matCellDef="let element">

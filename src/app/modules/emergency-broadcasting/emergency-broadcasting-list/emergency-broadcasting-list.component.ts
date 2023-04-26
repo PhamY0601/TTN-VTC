@@ -1,7 +1,10 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
+import {EmergencyBroadcastingService} from "../../../shared/services/emergency-broadcasting.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-emergency-broadcasting-list',
@@ -12,105 +15,15 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'title', 'content', 'start_time', 'end_time', 'area', 'station', 'speaker'];
+  displayedColumns: string[] = ['stt', 'title', 'content', 'start_time', 'end_time', 'area', 'station', 'speaker', 'action'];
   dataSource: any;
+  dataDialog: any[] = []
 
-  data = [
-    {
-      id: 0,
-      title: 'Tiêu đề 1',
-      content: 'Nội dung 1',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện A',
-      ward: 'Xã A',
-      station: 100,
-      broadcast_station: 34,
-      speaker: 120,
-      play_successful: 70,
-    },
-    {
-      id: 1,
-      title: 'Tiêu đề 2',
-      content: 'Nội dung 2',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện B',
-      ward: 'Xã B',
-      station: 120,
-      broadcast_station: 54,
-      speaker: 100,
-      play_successful: 80,
-    },
-    {
-      id: 2,
-      title: 'Tiêu đề 3',
-      content: 'Nội dung 3',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện C',
-      ward: 'Xã C',
-      station: 160,
-      broadcast_station: 150,
-      speaker: 125,
-      play_successful: 100,
-    },
-    {
-      id: 3,
-      title: 'Tiêu đề 4',
-      content: 'Nội dung 4',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện A',
-      ward: 'Xã A',
-      station: 60,
-      broadcast_station: 34,
-      speaker: 190,
-      play_successful: 140,
-    },
-    {
-      id: 4,
-      title: 'Tiêu đề 5',
-      content: 'Nội dung 5',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện E',
-      ward: 'Xã E',
-      station: 100,
-      broadcast_station: 70,
-      speaker: 120,
-      play_successful: 80,
-    },
-    {
-      id: 5,
-      title: 'Tiêu đề 6',
-      content: 'Nội dung 6',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện A',
-      ward: 'Xã A',
-      station: 130,
-      broadcast_station: 34,
-      speaker: 70,
-      play_successful: 60,
-    },
-    {
-      id: 6,
-      title: 'Tiêu đề 7',
-      content: 'Nội dung 7',
-      start_time: '1658699914',
-      end_time: '1719786694',
-      district: 'Huyện A',
-      ward: 'Xã A',
-      station: 100,
-      broadcast_station: 34,
-      speaker: 120,
-      play_successful: 120,
-    },
 
-  ]
-
-  constructor() {
+  constructor(
+    private emergencyBroadcastingService$: EmergencyBroadcastingService,
+    public dialog: MatDialog
+  ) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -124,11 +37,50 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
   }
 
   loadData() {
-    this.dataSource.data = this.data;
+    this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
+      this.dataSource.data = data;
+    });
   }
 
 
-  calculateRatio (a:number, b: number) {
-    return ((a/b)*100).toFixed(0);
+  calculateRatio(a: number, b: number) {
+    return ((a / b) * 100).toFixed(0);
   }
+
+  openDialog(id:any): void {
+    this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
+      this.dataDialog = data.filter((item: any) => item.id === id);
+      this.dataDialog  = this.dataDialog[0].area;
+      console.log(this.dataDialog)
+      let dialogRef = this.dialog.open(AreaDialogComponent, {
+      width: '500px',
+        data: this.dataDialog,
+      });
+      console.log(data)
+    dialogRef.afterClosed().subscribe(result => {});
+
+  })}
+}
+
+@Component({
+  selector: 'area-dialog',
+  templateUrl: './area-dialog.component.html',
+  styleUrls: ['./emergency-broadcasting-list.component.scss']
+})
+export class AreaDialogComponent implements OnInit {
+
+  constructor(
+    public dialogRef: MatDialogRef<AreaDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+  }
+
+
 }

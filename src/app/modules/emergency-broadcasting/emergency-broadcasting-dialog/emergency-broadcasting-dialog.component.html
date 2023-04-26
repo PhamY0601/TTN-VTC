@@ -55,35 +55,6 @@
                             #pickerB></ngx-mat-timepicker>
       </div>
     </div>
-<!--    <div fxLayout="row" fxLayoutGap="30">-->
-<!--      <div fxLayout="column" class="full-width">-->
-<!--        <mat-label>Quận, huyện</mat-label>-->
-<!--        <mat-form-field appearance="outline">-->
-<!--          <mat-select name="district" [value]="-1"-->
-<!--                      (selectionChange)="districtEffect($event)">-->
-<!--            <mat-option [value]="-1">-->
-<!--              Tất cả-->
-<!--            </mat-option>-->
-<!--            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">-->
-<!--              {{item.name}}-->
-<!--            </mat-option>-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--      <div fxLayout="column" class="full-width">-->
-<!--        <mat-label>Xã, phường</mat-label>-->
-<!--        <mat-form-field class="full-width" appearance="outline">-->
-<!--          <mat-select name="ward">-->
-<!--            <mat-option [value]="-1">-->
-<!--              Tất cả-->
-<!--            </mat-option>-->
-<!--            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
-<!--              {{item.name}}-->
-<!--            </mat-option>-->
-<!--          </mat-select>-->
-<!--        </mat-form-field>-->
-<!--      </div>-->
-<!--    </div>-->
     <tree-root [nodes]="nodeItems" [options]="treeOptions"></tree-root>
     <div [fxLayout]="selected===4 ? 'column' : 'row'" fxLayoutGap="30">
       <div fxLayout="column" class="full-width">
@@ -146,7 +117,29 @@
               <textarea matInput placeholder="Nội dung văn bản"></textarea>
             </mat-form-field>
           </div>
+          <div fxLayout="row" fxLayoutGap="30">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Chất giọng</mat-label>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-select placeholder=" Chọn chất giọng">
+                  <mat-option [value]="0">Giọng nữ</mat-option>
+                  <mat-option [value]="1">Giọng nam</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
+            <div fxLayout="column" class="full-width">
+              <mat-label>Vùng miền</mat-label>
+              <mat-form-field class="full-width" appearance="outline">
+                <mat-select placeholder=" Chọn vùng miền">
+                  <mat-option [value]="0">Miền Bắc</mat-option>
+                  <mat-option [value]="1">Miền Trung</mat-option>
+                  <mat-option [value]="2">Miền Nam</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+
+          </div>
         </ng-container>
 
         <ng-container *ngSwitchCase="5">
@@ -164,7 +157,7 @@
     </div>
 
   </div>
-  <div mat-dialog-actions class="mt-1 px-4">
+  <div mat-dialog-actions class="mt-1 px-4 py-3">
     <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
     <span fxFlex></span>
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>

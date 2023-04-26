@@ -3,12 +3,12 @@
 </div>
 <div mat-dialog-content fxLayout="column" fxLayoutGap="10">
   <div fxLayout="row" fxLayoutGap="5">
-    <div class="text-blue fw-500">Lĩnh vực:</div>
-    <div class="text-gray">Kinh tế</div>
+    <div class="text-blue fw-500">{{snapshotUrl === 'schedule-field-source' ? 'Lĩnh vực:' : 'Đối tượng:' }}</div>
+    <div class="text-gray">{{snapshotUrl === 'schedule-field-source' ? data[0].name : data[0].district }}</div>
   </div>
   <div fxLayout="row" fxLayoutGap="5">
     <div class="text-blue fw-500"> Thời gian:</div>
-    <div class="text-gray">Từ ngày 10-04-2023 đến ngày 17-04-2023</div>
+    <div class="text-gray">Từ ngày {{data[0].start_date*1000 | date:'dd-MM-yyyy'}} đến ngày {{data[0].end_date*1000 | date:'dd-MM-yyyy'}}</div>
   </div>
 
   <div>
@@ -22,7 +22,7 @@
 
         <ng-container matColumnDef="content">
           <th mat-header-cell *matHeaderCellDef>Nội dung</th>
-          <td mat-cell *matCellDef="let element"> {{element.content}} </td>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
         </ng-container>
 
         <ng-container matColumnDef="time">

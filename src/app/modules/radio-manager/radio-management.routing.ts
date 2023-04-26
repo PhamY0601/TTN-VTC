@@ -32,21 +32,24 @@ export const RadioManagementRoutes: Routes = [
         component:  RadioManagerDialogComponent,
         resolve: {
           data: RadioManagementResolve
-        }
+        },
+        data: { breadcrumb: 'Thêm' }
       },
       {
         path: 'edit/:id',
         component:  RadioManagerDialogComponent,
         resolve: {
-          data: RadioManagementResolve
-        }
+          data: RadioManagementResolve,
+        },
+        data: { breadcrumb: 'Chỉnh sửa' }
       },
       {
         path: 'schedule/:id',
         component:  ScheduleDialogComponent,
         resolve: {
           data: RadioManagementResolve
-        }
+        },
+        data: { breadcrumb: 'Lịch phát' }
       }
     ]
   },

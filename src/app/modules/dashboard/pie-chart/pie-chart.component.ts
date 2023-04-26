@@ -43,7 +43,6 @@ export class PieChartComponent implements OnInit {
 
   loadData(): void {
     this.citiesService$.getPlayStreams().subscribe((data: any) => {
-      console.log(data)
       this.newsData = data;
       this.dataSource.data = data;
       this.title = this.newsData.map((item) => item.name);

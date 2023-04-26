@@ -8,11 +8,15 @@ import {NgxSpinnerService} from "ngx-spinner";
   styleUrls: ['./weekly-report.component.scss']
 })
 export class WeeklyReportComponent implements OnInit{
-  title_country: any
-  constructor(  private spinner: NgxSpinnerService,) {
-  }
+  title_country: any;
+  toDay = new Date();
+  beforeDay = new Date();
+
+  constructor(  private spinner: NgxSpinnerService,) {}
 
   ngOnInit() {
+    this.beforeDay.setDate(this.beforeDay.getDate() - 7);
+
     this.title_country = COUNTRY();
     this.spinner.show();
     setTimeout(() => {

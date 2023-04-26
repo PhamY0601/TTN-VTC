@@ -1,5 +1,14 @@
-
-.mat-column-station, .mat-column-speaker {
+.mat-column-station, .mat-column-speaker, .mat-column-area, .mat-column-action{
   text-align: center;
-  width: 120px;
+  width: 150px;
+  padding: 0 30px;
+}
+.mat-column-start_time, .mat-column-end_time {
+ text-align: center;
+}
+:host ::ng-deep .mat-expansion-panel-header:hover {
+  background: #FFFFFF !important;
+  border-right: none !important;
+  color: unset !important;
+
 }

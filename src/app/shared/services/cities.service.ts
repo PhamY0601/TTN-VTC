@@ -14,11 +14,12 @@ export class CitiesService {
   inforboard = this.http.post(`${API.INFORBOARD_URL}`, this.formData); //bản tin điện tử
   radioStream = this.http.post(`${API.RADIOSTREAM_URL}`, this.formData); //bản tin phát hành
   radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //nhà cung cấp
-  playStream = this.http.post(`${API.PLAYSTREAM_URL}`, this.formData) //bản tin đang phát
-  radioStreaming = this.http.post(`${API.RADIOSTREAMING_URL}`, this.formData) //phát thanh
-  playSchedule = this.http.post(`${API.PLAYSCHEDULE_URL}`, this.formData)
-  districts = this.http.post(`${API.DISTRICTS_URL}`, this.formData)
-  wards = this.http.post(`${API.WARDS_URL}`, this.formData)
+  playStream = this.http.post(`${API.PLAYSTREAM_URL}`, this.formData); //bản tin đang phát
+  radioStreaming = this.http.post(`${API.RADIOSTREAMING_URL}`, this.formData); //phát thanh
+  playSchedule = this.http.post(`${API.PLAYSCHEDULE_URL}`, this.formData);
+  cities = this.http.post(`${API.CITIES_URL}`, this.formData);
+  districts = this.http.post(`${API.DISTRICTS_URL}`, this.formData);
+  wards = this.http.post(`${API.WARDS_URL}`, this.formData);
 
   constructor(private http: HttpClient) {
     this.loadFormData()
@@ -199,6 +200,7 @@ export class CitiesService {
             ward: arr[i].ward,
             status: arr[i].status,
             url: `http://ics.vtctelecom.com.vn:5000/mediasource_${arr[i].confId}`,
+            type: 'Audio'
           })
         }
         return result
@@ -215,7 +217,7 @@ export class CitiesService {
         let a = Object.values(res[1])
           .filter((item) =>
             item.city === arr[0].city && item.district === arr[0].district
-          && item.guid === arr[0].rule);
+            && item.guid === arr[0].rule);
         if (a.length === 0) {
           return {
             id: arr[0].id,
@@ -250,7 +252,7 @@ export class CitiesService {
             ward: arr[0].ward,
             status: arr[0].status,
             url: `http://ics.vtctelecom.com.vn:5000/mediasource_${arr[0].confId}`,
-            date_from: new Date (a[0].date_from * 1000),
+            date_from: new Date(a[0].date_from * 1000),
             date_to: new Date(a[0].date_to * 1000),
             hour_from: a[0].hour_from,
             hour_to: a[0].hour_to,
@@ -282,13 +284,14 @@ export class CitiesService {
     );
   }
 
-
   getWards(district: any): Observable<any> {
     return this.wards.pipe(
       map((res) => {
         return Object.values(res).filter((item) => item.districtId === district)
+        // return res
       })
     );
   }
+
 
 }

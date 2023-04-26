@@ -1,0 +1,25 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">Chi tiết Khu vực</h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-divider></mat-divider>
+<div mat-dialog-content fxLayout="column" fxLayoutGap="30">
+  <mat-expansion-panel *ngFor="let item of data" expanded>
+    <mat-expansion-panel-header>
+      <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+        {{item.district}}
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <ol>
+      <li *ngFor="let ward of item.wards">
+        <p>{{ward.ward}}</p>
+      </li>
+    </ol>
+
+  </mat-expansion-panel>
+
+</div>
+

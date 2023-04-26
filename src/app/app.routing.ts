@@ -51,11 +51,7 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./modules/emergency-broadcasting/emergency-broadcasting.module').then(m => m.EmergencyBroadcastingModule),
         data: { breadcrumb: 'Phát thanh khẩn cấp' }
       },
-      {
-        path: 'advertising-calendar',
-        loadChildren: () => import('./modules/advertising-calendar/advertising-calendar.module').then(m => m.AdvertisingCalendarModule),
-        data: { breadcrumb: 'Lịch quảng bá' }
-      },
+
     ]
   },
   {

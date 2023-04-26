@@ -1,63 +1,60 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
-  <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px">
-    <div fxLayout="column" class="full-width">
-      <mat-label>Ngày</mat-label>
-      <mat-form-field class="text-blue" appearance="outline">
-        <input matInput [matDatepicker]="picker"  [value]="toDay">
-        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
+  <div fxLayout="column">
+    <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="30px">
+      <div fxLayout="column" class="full-width">
+        <mat-label>Ngày</mat-label>
+        <mat-form-field class="text-blue" appearance="outline">
+          <input matInput [matDatepicker]="picker" [value]="toDay">
+          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" class="full-width">
+        <mat-label>Trạm phát</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select name="district" [value]="-1">
+            <mat-option [value]="-1">
+              Tất cả
+            </mat-option>
+            <mat-option [value]="0">Trạm 1</mat-option>
+            <mat-option [value]="1">Trạm 2</mat-option>
+            <mat-option [value]="2">Trạm 3</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" class="full-width">
+        <mat-label>Quận, huyện</mat-label>
+        <mat-form-field appearance="outline">
+          <mat-select name="district" [value]="-1">
+            <mat-option [value]="-1">
+              Tất cả
+            </mat-option>
+            <!--          <mat-option *ngFor="let item of districtsData" [value]="item.nameId">-->
+            <!--            {{item.name}}-->
+            <!--          </mat-option>-->
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" class="full-width">
+        <mat-label>Xã, phường</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select name="ward" [value]="-1">
+            <mat-option [value]="-1">
+              Tất cả
+            </mat-option>
+            <!--          <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
+            <!--            {{item.name}}-->
+            <!--          </mat-option>-->
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <button mat-raised-button class="btn-blue">Xem</button>
     </div>
-
-    <div fxLayout="column" class="full-width">
-      <mat-label>Đài</mat-label>
-      <mat-form-field appearance="outline">
-        <mat-select name="district" [value]="-1">
-          <mat-option [value]="-1" >
-            Tất cả
-          </mat-option>
-          <mat-option [value]="0">Tỉnh</mat-option>
-          <mat-option [value]="1">Huyện</mat-option>
-          <mat-option [value]="2">Xã</mat-option>
-        </mat-select>
-      </mat-form-field>
+    <div>
+      <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
     </div>
-
-    <div fxLayout="column" class="full-width">
-      <mat-label>Lĩnh vực</mat-label>
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-select name="ward" [value]="-1">
-          <mat-option  [value]="-1">
-            Tất cả
-          </mat-option>
-          <mat-option [value]="0">Kinh tế</mat-option>
-          <mat-option [value]="1">Chính trị</mat-option>
-          <!--          <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
-          <!--            {{item.name}}-->
-          <!--          </mat-option>-->
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <div fxLayout="column" class="full-width">
-      <mat-label>Trạng thái</mat-label>
-      <mat-form-field class="full-width" appearance="outline">
-        <mat-select name="ward" [value]="-1">
-          <mat-option  [value]="-1">
-            Tất cả
-          </mat-option>
-          <mat-option [value]="0">Đang phát</mat-option>
-          <mat-option [value]="1">Chờ phát</mat-option>
-          <mat-option [value]="2">Hủy</mat-option>
-          <!--          <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
-          <!--            {{item.name}}-->
-          <!--          </mat-option>-->
-        </mat-select>
-      </mat-form-field>
-    </div>
-
-    <button mat-raised-button class="btn-blue">Xem</button>
   </div>
+
   <div class="mat-elevation-z2 bg-white full-width"
        fxLayout="column" fxLayoutAlign="space-between stretch">
     <table mat-table matSort [dataSource]="dataSource">

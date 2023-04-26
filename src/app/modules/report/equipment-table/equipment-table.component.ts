@@ -19,6 +19,8 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
+  total_error = 0;
+  total_success = 0;
 
   dataSource: any;
   equipmentData = [
@@ -27,9 +29,9 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
       district: 'Q.1',
       ward: 'Phường 3',
       type: 'Loa',
-      count: 3,
       radionode: "VTC",
-      action: 'Lỗi'
+      error_count: 2,
+      success_count: 10
     },
 
     {
@@ -37,9 +39,9 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
       district: 'Q.1',
       ward: 'Phường 4',
       type: 'Transmitter',
-      count: 2,
       radionode: "VTC",
-      action: 'Lỗi'
+      error_count: 8,
+      success_count: 15
     },
 
     {
@@ -47,9 +49,9 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
       district: 'Q.Thủ Đức',
       ward: 'Phường 7',
       type: 'Loa',
-      count: 6,
       radionode: "VTC",
-      action: 'Tốt'
+      error_count: 5,
+      success_count: 14
     },
 
     {
@@ -57,9 +59,10 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
       district: 'Q.5',
       ward: 'Phường 3',
       type: 'Loa',
-      count: 3,
       radionode: "VTC",
-      action: 'Tốt'
+      error_count: 1,
+      success_count: 16
+
     },
 
     {
@@ -67,37 +70,34 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
       district: 'Q.10',
       ward: 'Phường 3',
       type: 'Loa',
-      count: 3,
       radionode: "VTC",
-      action: 'Lỗi'
+      error_count: 9,
+      success_count: 25
     },
     {
       id: 6,
       district: 'Q.2',
       ward: 'Phường 3',
       type: 'Loa',
-      count: 15,
       radionode: "VTC",
-      action: 'Tốt'
+      error_count: 5,
+      success_count: 10
     },
     {
       id: 6,
       district: 'Q.4',
       ward: 'Phường 3',
       type: 'Loa',
-      count: 15,
       radionode: "VTC",
-      action: 'Tốt'
+      error_count: 5,
+      success_count: 14
     },
 
   ]
   displayedColumn: string[] = ['stt', 'district', 'ward', 'type', 'count', 'radionode', 'action'];
 
-  chartbyfield: any = [];
   chartbyplay: any = [];
-  backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
   title: any[] = [];
-  newsData: any[] = [];
   data: any[] = [];
 
   constructor(private citiesService$: CitiesService,
@@ -123,6 +123,14 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
 
 
   chartByPlay() {
+    this.equipmentData.forEach((item:any) => {
+      this.total_error = this.total_error + item.error_count;
+      this.total_success = this.total_success + item.success_count;
+
+    })
+
+    let array = [];
+    array.push(this.total_success, this.total_error)
     let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas`);
     this.chartbyplay = new Chart(htmlRef, {
       type: 'pie',
@@ -130,7 +138,7 @@ export class EquipmentTableComponent implements OnInit, AfterViewInit {
         labels: ['Tốt', 'Lỗi'],
         datasets: [
           {
-            data: [104, 20],
+            data: array,
             backgroundColor: ['#02C94F', '#D9D9D9'],
           },
         ],

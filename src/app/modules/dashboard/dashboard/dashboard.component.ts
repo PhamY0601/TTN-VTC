@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   installData: any[] = [];
   param?: string | null = '';
   title_country: any;
+  array= {};
 
 
   constructor(private citiesService$: CitiesService,
@@ -55,7 +56,8 @@ export class DashboardComponent implements OnInit {
       this.param = params.get('district');
     });
     this.loadData(COUNTRY());
-    this.title_country = COUNTRY()
+    this.title_country = COUNTRY();
+
   }
 
 
@@ -79,7 +81,6 @@ export class DashboardComponent implements OnInit {
       });
       this.citiesService$.getInstallInfo(_COUNTRY).subscribe((data) => {
         this.installData = data;
-        console.log(data)
       });
     }
   }

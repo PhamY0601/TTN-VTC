@@ -1,13 +1,15 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="20">
   <div>
     <div class="text-blue text-center fz-4 fw-500">Báo cáo quản lý phát thanh {{title_country | replaceStr}} </div>
-    <p class="text-gray text-center mt-3">Báo cáo năm {{toDay | date:'yyyy'}}</p>
+    <p class="text-gray text-center mt-3 fz-2">Báo cáo năm {{toDay | date:'yyyy'}}</p>
   </div>
   <div fxLayout="column" fxLayoutGap="30">
 
     <app-readio-streaming-table></app-readio-streaming-table>
     <app-media-table></app-media-table>
     <app-equipment-table></app-equipment-table>
+    <app-warning-content-table></app-warning-content-table>
     <app-installation-activity-table></app-installation-activity-table>
+
   </div>
 </div>

@@ -2,6 +2,8 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
+import {ContentManagementService} from "../../../shared/services/content-management.service";
 
 @Component({
   selector: 'app-editorial-content',
@@ -15,80 +17,10 @@ export class EditorialContentComponent implements OnInit, AfterViewInit{
   dataSource: any;
   toDay = new Date();
 
-  Data = [
-    {
-      id: 0,
-      date: '22/04/2023',
-      radio_station: 'Tỉnh',
-      field: 'Chính trị',
-      type: 'Media',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 1
-    },
-    {
-      id: 1,
-      date: '22/04/2023',
-      radio_station: 'Huyện',
-      field: 'Kinh tế',
-      type: 'Media',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 1
-    },
-    {
-      id: 2,
-      date: '22/04/2023',
-      radio_station: 'Tỉnh',
-      field: 'Kinh tế',
-      type: 'Âm thanh',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 0
-    },
-    {
-      id: 3,
-      date: '22/04/2023',
-      radio_station: 'Xã',
-      field: 'Chính trị',
-      type: 'Media',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 0
-    },
-    {
-      id: 4,
-      date: '22/04/2023',
-      radio_station: 'Tỉnh',
-      field: 'Chính trị',
-      type: 'Âm thanh',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 2
-    },
-    {
-      id: 5,
-      date: '22/04/2023',
-      radio_station: 'Huyện',
-      field: 'Chính trị',
-      type: 'Âm thanh',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 0
-    },
-    {
-      id: 0,
-      date: '22/04/2023',
-      radio_station: 'Xã',
-      field: 'Kinh tế',
-      type: 'Media',
-      time: '9:00-10:00',
-      content: 'Nội dung',
-      status: 0
-    },
-  ]
 
-  constructor() {
+  constructor(
+    private contentManagementService$: ContentManagementService
+  ) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -102,6 +34,8 @@ export class EditorialContentComponent implements OnInit, AfterViewInit{
   }
 
   loadData() {
-    this.dataSource.data = this.Data;
+    this.contentManagementService$.getEditorialContent().subscribe((data) => {
+      this.dataSource.data = data.body
+    });
   }
 }

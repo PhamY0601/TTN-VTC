@@ -29,7 +29,6 @@ export class InstallManagementChartComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.param = params.get('district');
     });
-
     this.loadData(COUNTRY())
   }
 

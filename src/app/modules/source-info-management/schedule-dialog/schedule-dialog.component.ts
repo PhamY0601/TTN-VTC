@@ -4,6 +4,7 @@ import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
+import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,7 +15,8 @@ import {MatSort} from "@angular/material/sort";
 export class ScheduleContentComponent implements OnInit {
   data: any;
   isSaving = false;
-  param?: string | null = '';
+  snapshotUrl: any;
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -37,7 +39,6 @@ export class ScheduleContentComponent implements OnInit {
   }
 
 
-
   private onSaveSuccess(): void {
     // this.eventManager.broadcast({
     //   name: 'radioManagerModified',
@@ -56,52 +57,50 @@ export class ScheduleContentComponent implements OnInit {
   template: '',
 })
 export class ScheduleDialogComponent implements OnInit, OnDestroy {
-  scheduleData = [
-    {
-      id: 0,
-      content: 'Kinh tế',
-      time: '10:00 – 11:00',
-    },
-    {
-      id: 1,
-      content: 'Chính trị',
-      time: '11:00 – 12:00'
-    },
-    {
-      id: 2,
-      content: 'Xã hội',
-      time: '12:00 – 13:00'
-    },
-  ]
+  param: any;
+  detailData: any[] = [];
+  getData: any;
 
-  private dialogRef!: MatDialogRef<ScheduleContentComponent> ;
+
+  private dialogRef!: MatDialogRef<ScheduleContentComponent>;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-  ) {}
+    private sourceInfoService$: SourceInfoManagementService
+  ) {
+  }
 
   ngOnInit() {
+    this.activatedRoute.paramMap.subscribe(params => {
+      this.param = Number(params.get('id'));
+    });
 
+    let a = this.activatedRoute.snapshot.url[0].path;
+
+    if (a === 'schedule-field-source') {
+      this.getData = this.sourceInfoService$.getFieldSource()
+    }
+    else {
+      this.getData = this.sourceInfoService$.getGeographicSource()
+    }
+    this.getData.subscribe((data: { body: any[]; }) => {
+      this.detailData = data.body;
+      this.detailData = this.detailData.filter((item: any) => item.id === this.param);
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
         width: '500px',
-
       });
-    this.dialogRef.componentInstance.dataSource = this.scheduleData
+      this.dialogRef.componentInstance.snapshotUrl = a;
+      this.dialogRef.componentInstance.data = this.detailData
+      this.dialogRef.componentInstance.dataSource = this.detailData[0].content
 
-      this.activatedRoute.paramMap.subscribe(params => {
-        this.dialogRef.componentInstance.param = params.get('district');
-      });
-
-      // this.dialogRef.componentInstance.checkedDays = data.week_day.split(',').map((n: any) => "Thứ " + n);
-      // this.dialogRef.componentInstance.checkedDays2 = data.week_day.split(',').map((n: any) => true);
-      // console.log(this.dialogRef.componentInstance.checkedDays2)
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),
         () => this.previousState());
-    }
+    })
+  }
 
 
   previousState(): void {

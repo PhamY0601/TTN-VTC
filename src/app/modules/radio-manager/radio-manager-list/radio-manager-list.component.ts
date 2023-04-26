@@ -19,7 +19,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  displayedColumn: string[] = ['stt', 'ward', 'district','schedule', 'status', 'url', 'actions'];
+  displayedColumn: string[] = ['stt', 'ward', 'district', 'type', 'schedule', 'status', 'url', 'actions'];
   eventSubscriber: Subscription | undefined;
 
   constructor(private citiesService$: CitiesService,
@@ -42,7 +42,6 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
     }, 2000);
     this.citiesService$.getRadioStreaming(_COUNTRY).subscribe((data) => {
       this.dataSource.data = data;
-      console.log(data)
     });
 
   }

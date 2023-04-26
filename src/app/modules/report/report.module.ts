@@ -16,7 +16,7 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
 import {BroadcastTimeReportComponent} from './broadcast-time-report/broadcast-time-report.component';
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
-import {PERFECT_SCROLLBAR_CONFIG} from "ngx-perfect-scrollbar";
+import { WarningContentTableComponent } from './warning-content-table/warning-content-table.component';
 
 export const MY_FORMATS = {
   parse: {
@@ -47,7 +47,8 @@ export const MY_FORMATS = {
     DateReportComponent,
     MonthlyReportComponent,
     YearlyReportComponent,
-    BroadcastTimeReportComponent
+    BroadcastTimeReportComponent,
+    WarningContentTableComponent
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
