@@ -1,8 +1,14 @@
 import { Routes } from '@angular/router';
 import {WarningContentListComponent} from "./warning-content/warning-content-list/warning-content-list.component";
 import {WarningContentDialogComponent} from "./warning-content/warning-content-dialog/warning-content-dialog.component";
-import {RegistrationContentComponent} from "./registration-content/registration-content.component";
-import {EditorialContentComponent} from "./editorial-content/editorial-content.component";
+import {RegistrationContentListComponent} from "./registration-content/registration-content-list/registration-content-list.component";
+import {EditorialContentListComponent} from "./editorial-content/editorial-content-list/editorial-content-list.component";
+import {
+  EditorialContentDialogComponent
+} from "./editorial-content/editorial-content-dialog/editorial-content-dialog.component";
+import {
+  RegistrationContentDialogComponent
+} from "./registration-content/registration-content-dialog/registration-content-dialog.component";
 
 export const ContentManagementRoutes: Routes = [
   {
@@ -18,12 +24,24 @@ export const ContentManagementRoutes: Routes = [
   },
   {
     path: 'registration-content',
-    component: RegistrationContentComponent,
+    component: RegistrationContentListComponent,
     data: { breadcrumb: 'Nội dung đăng ký' },
+    children: [
+      {
+        path: 'add',
+        component: RegistrationContentDialogComponent
+      }
+    ]
   },
   {
     path: 'editorial-content',
-    component: EditorialContentComponent,
+    component: EditorialContentListComponent,
     data: { breadcrumb: 'Nội dung biên tập' },
+    children: [
+      {
+        path: 'add',
+        component: EditorialContentDialogComponent
+      }
+    ]
   }
 ];

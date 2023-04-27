@@ -1,29 +1,29 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatSort, Sort} from "@angular/material/sort";
+import {MatPaginator} from "@angular/material/paginator";
+import {CitiesService} from "../../../../../shared/services/cities.service";
+import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
-import {SourceInfoManagementService} from "../../../../shared/services/source-info-management.service";
+import {SourceInfoManagementService} from "../../../../../shared/services/source-info-management.service";
 
 @Component({
-  selector: 'app-field-source',
-  templateUrl: './field-source.component.html',
-  styleUrls: ['./field-source.component.scss']
+  selector: 'app-geographic-source',
+  templateUrl: './geographic-source-list.component.html',
+  styleUrls: ['./geographic-source-list.component.scss']
 })
-
-export class FieldSourceComponent implements OnInit, AfterViewInit {
+export class GeographicSourceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'name', 'type', 'schedule','url', 'listens', 'status'];
+  displayedColumns: string[] = ['stt', 'district', 'type','schedule', 'url', 'listens', 'status'];
   dataSource: any;
+
   constructor( private spinner: NgxSpinnerService,
                private sourceInfoService$: SourceInfoManagementService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
-    this.loadData();
-
+    this.loadData()
   }
 
   ngAfterViewInit() {
@@ -41,10 +41,8 @@ export class FieldSourceComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
-
-    this.sourceInfoService$.getFieldSource().subscribe((data) => {
+    this.sourceInfoService$.getGeographicSource().subscribe((data) => {
       this.dataSource.data = data.body
     });
   }
-
 }

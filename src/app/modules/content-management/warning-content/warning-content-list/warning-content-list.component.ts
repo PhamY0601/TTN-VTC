@@ -4,6 +4,8 @@ import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {MatTableDataSource} from "@angular/material/table";
 import {ContentManagementService} from "../../../../shared/services/content-management.service";
+import {CitiesService} from "../../../../shared/services/cities.service";
+import {refCount} from "rxjs";
 
 @Component({
   selector: 'app-warning-content-list',
@@ -18,13 +20,15 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
 
 
   constructor(
-    private contentManagementService$: ContentManagementService
+    private contentManagementService$: ContentManagementService,
+    private citiesService$: CitiesService,
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
-    this.loadData()
+    this.loadData();
+    this.loadSpeaker()
   }
 
   ngAfterViewInit() {
@@ -35,7 +39,17 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
   loadData() {
     this.contentManagementService$.getWarningContent().subscribe((data) => {
       this.dataSource.data = data.body
-      console.log(data.body)
+
+    });
+  }
+  loadSpeaker() {
+    this.citiesService$.getSpeaker().subscribe((data) => {
+      data.forEach((item:any) =>{
+        this.citiesService$.post(item).subscribe(
+        );
+        }
+      )
+
     });
   }
 }

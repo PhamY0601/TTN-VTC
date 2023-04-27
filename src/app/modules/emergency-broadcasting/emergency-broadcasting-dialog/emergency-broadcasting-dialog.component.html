@@ -117,29 +117,21 @@
               <textarea matInput placeholder="Nội dung văn bản"></textarea>
             </mat-form-field>
           </div>
-          <div fxLayout="row" fxLayoutGap="30">
+
             <div fxLayout="column" class="full-width">
               <mat-label>Chất giọng</mat-label>
               <mat-form-field class="full-width" appearance="outline">
                 <mat-select placeholder=" Chọn chất giọng">
-                  <mat-option [value]="0">Giọng nữ</mat-option>
-                  <mat-option [value]="1">Giọng nam</mat-option>
+                  <mat-option [value]="0">Giọng nam miền Bắc</mat-option>
+                  <mat-option [value]="1">Giọng nữ miền Bắc</mat-option>
+                  <mat-option [value]="2">Giọng nam miền Trung</mat-option>
+                  <mat-option [value]="3">Giọng nữ miền Trung</mat-option>
+                  <mat-option [value]="4">Giọng nam miền Nam</mat-option>
+                  <mat-option [value]="5">Giọng nữ miền Nam</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
 
-            <div fxLayout="column" class="full-width">
-              <mat-label>Vùng miền</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <mat-select placeholder=" Chọn vùng miền">
-                  <mat-option [value]="0">Miền Bắc</mat-option>
-                  <mat-option [value]="1">Miền Trung</mat-option>
-                  <mat-option [value]="2">Miền Nam</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-
-          </div>
         </ng-container>
 
         <ng-container *ngSwitchCase="5">

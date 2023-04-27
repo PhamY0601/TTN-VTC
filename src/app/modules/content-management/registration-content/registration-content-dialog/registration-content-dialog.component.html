@@ -1,0 +1,160 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">Tạo mới</h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<form [formGroup]="formData">
+  <div mat-dialog-content>
+    <div fxLayout="row" fxLayoutGap="30">
+      <div class="full-width">
+        <mat-label>Ngày</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput formArrayName="date"
+                 [matDatepicker]="pickerFrom" [value]="toDay">
+          <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-datepicker #pickerFrom></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div fxLayout="column" class="full-width">
+        <mat-label>Trạm phát</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select formArrayName="station" placeholder="Chọn trạm phát">
+            <mat-option [value]="0">Tỉnh</mat-option>
+            <mat-option [value]="1">Huyện</mat-option>
+            <mat-option [value]="2">Xã</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="30">
+      <div fxLayout="column" class="full-width">
+        <mat-label>Bắt đầu</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput
+                 formArrayName="start_time"
+                 [format]="24"
+                 [ngxMatTimepicker]="pickerA"
+                 placeholder="10:00"
+          />
+          <mat-icon matSuffix
+                    (click)="pickerA.open()">
+            watch_later
+          </mat-icon>
+        </mat-form-field>
+        <ngx-mat-timepicker color="accent"
+                            #pickerA></ngx-mat-timepicker>
+
+      </div>
+      <div class="full-width">
+        <mat-label>Kết thúc</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <input matInput
+                 formArrayName="end_time"
+                 [format]="24"
+                 [ngxMatTimepicker]="pickerB"
+                 placeholder="10:30"
+          />
+          <mat-icon matSuffix
+                    (click)="pickerB.open()">
+            watch_later
+          </mat-icon>
+        </mat-form-field>
+        <ngx-mat-timepicker color="accent"
+                            #pickerB></ngx-mat-timepicker>
+      </div>
+    </div>
+
+    <div fxLayout="row" fxLayoutGap="30">
+      <div fxLayout="column" class="full-width">
+        <mat-label>Loại</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select formArrayName="type" placeholder="Loại">
+            <mat-option [value]="0">Media</mat-option>
+            <mat-option [value]="1">Âm thanh</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div fxLayout="column" class="full-width">
+        <mat-label>URL</mat-label>
+        <mat-form-field appearance="outline">
+          <input matInput formArrayName="url" placeholder="URL">
+        </mat-form-field>
+      </div>
+    </div>
+    <ng-container formArrayName="content">
+      <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10">
+        <p>Nội dung</p>
+        <button mat-icon-button class="text-blue mt--3" (click)="addLessons()">
+          <mat-icon>add_circle</mat-icon>
+        </button>
+      </div>
+      <ng-container *ngFor="let item of value.controls; let i = index;">
+        <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10">
+          <div fxFlex="95">
+            <div fxLayout="row" fxLayoutGap="30">
+              <div fxLayout="column" class="full-width">
+                <mat-label>Bắt đầu</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput
+                         formArrayName="hour_from"
+                         [format]="24"
+                         [ngxMatTimepicker]="pickerA"
+                         placeholder="10:00"
+                  />
+                  <mat-icon matSuffix
+                            (click)="pickerA.open()">
+                    watch_later
+                  </mat-icon>
+                </mat-form-field>
+                <ngx-mat-timepicker color="accent"
+                                    #pickerA></ngx-mat-timepicker>
+
+              </div>
+              <div class="full-width">
+                <mat-label>Kết thúc</mat-label>
+                <mat-form-field class="full-width" appearance="outline">
+                  <input matInput
+                         formArrayName="hour_to"
+                         [format]="24"
+                         [ngxMatTimepicker]="pickerB"
+                         placeholder="10:30"
+                  />
+                  <mat-icon matSuffix
+                            (click)="pickerB.open()">
+                    watch_later
+                  </mat-icon>
+                </mat-form-field>
+                <ngx-mat-timepicker color="accent"
+                                    #pickerB></ngx-mat-timepicker>
+              </div>
+            </div>
+            <div fxLayout="column">
+              <mat-label>Nội dung</mat-label>
+              <mat-form-field appearance="outline" style="height: 100px">
+                <textarea matInput formArrayName="content" placeholder="Nội dung"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div >
+            <button class="mt-3" mat-icon-button color="warn"
+                    (click)="deleteLesson(i)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+
+        </div>
+      </ng-container>
+    </ng-container>
+
+
+  </div>
+  <div mat-dialog-actions class="mt-1 px-4 py-3">
+    <button mat-raised-button class="btn-blue">Lưu</button>
+    <span fxFlex></span>
+    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+  </div>
+</form>
+
