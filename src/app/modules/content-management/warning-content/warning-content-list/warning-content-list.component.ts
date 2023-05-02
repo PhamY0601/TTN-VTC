@@ -28,7 +28,7 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadData();
-    this.loadSpeaker()
+    // this.loadSpeaker()
   }
 
   ngAfterViewInit() {
@@ -42,14 +42,14 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
 
     });
   }
-  loadSpeaker() {
-    this.citiesService$.getSpeaker().subscribe((data) => {
-      data.forEach((item:any) =>{
-        this.citiesService$.post(item).subscribe(
-        );
-        }
-      )
-
-    });
-  }
+  // loadSpeaker() {
+  //   this.citiesService$.getSpeaker().subscribe((data) => {
+  //     data.forEach((item:any) =>{
+  //       this.citiesService$.post(item).subscribe(
+  //       );
+  //       }
+  //     )
+  //
+  //   });
+  // }
 }

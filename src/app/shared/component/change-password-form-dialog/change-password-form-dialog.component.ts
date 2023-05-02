@@ -2,10 +2,6 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute, Data, Router} from '@angular/router';
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {
-  RadioManagerContentComponent
-} from "../../../modules/radio-manager/radio-manager-dialog/radio-manager-dialog.component";
-
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -75,6 +71,7 @@ export class ChangePasswordFormDialogComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
 
+
   ) {
   }
 
@@ -89,12 +86,8 @@ export class ChangePasswordFormDialogComponent implements OnInit, OnDestroy {
 
   }
 
-  previousState(): void {
-    this.router.navigate([''], {
-      relativeTo: this.activatedRoute.parent,
-      queryParams: {},
-      queryParamsHandling: 'merge'
-    });
+  previousState(){
+    this.router.navigate([{ outlets: { popup: null } }]);
   }
 
   ngOnDestroy(): void {

@@ -51,7 +51,6 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
       this.dataDialog = data.filter((item: any) => item.id === id);
       this.dataDialog  = this.dataDialog[0].area;
-      console.log(this.dataDialog)
       let dialogRef = this.dialog.open(AreaDialogComponent, {
       width: '500px',
         data: this.dataDialog,
@@ -72,8 +71,7 @@ export class AreaDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AreaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
+  ) {}
 
   closeDialog(): void {
     this.dialogRef.close();

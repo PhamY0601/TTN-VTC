@@ -200,7 +200,8 @@ export class CitiesService {
             ward: arr[i].ward,
             status: arr[i].status,
             url: `http://ics.vtctelecom.com.vn:5000/mediasource_${arr[i].confId}`,
-            type: 'Audio'
+            type: 'Audio',
+            pause: false
           })
         }
         return result
@@ -218,6 +219,7 @@ export class CitiesService {
           .filter((item) =>
             item.city === arr[0].city && item.district === arr[0].district
             && item.guid === arr[0].rule);
+            console.log(a)
         if (a.length === 0) {
           return {
             id: arr[0].id,
@@ -293,50 +295,50 @@ export class CitiesService {
     );
   }
 
-  getSpeaker(): Observable<any> {
-    let result: any[] = [];
-    let latitude;
-    let longitude;
-    return this.loudspeaker.pipe(
-      map((res) => {
-       let a =  Object.values(res)
-        a.forEach((item:any) =>{
-          if(item.latitude === null) {
-            latitude = "-10"
-          } else {
-            latitude = item.latitude
-          }
-
-          if(item.longitude === null) {
-            longitude = "-10"
-          } else {
-            longitude = item.longitude
-          }
-
-         result.push({
-           id: item.id,
-           model: "Cụm loa",
-           agencyId: "c3d3bea3-0e2d-4a3b-a3b7-9b9ab1b02a8f",
-           cumLoaId: item.nameId,
-           districtId: item.district,
-           wardId: item.ward,
-           cityId: item.city,
-           lat: latitude ,
-           lng: longitude,
-           createDate: item.createDate,
-           name: item.name,
-           note: item.note,
-           url: `http://ttn.vtctelecom.com.vn/${item.id}`
-         })
-        })
-        return result
-      })
-    );
-  }
-
-  post(data:any): Observable<HttpResponse<any>> {
-    return this.http.post('http://10.0.0.117:8089/api/TTN/DangkyCumLoa', data, {
-      observe: 'response',
-    });
-  }
+  // getSpeaker(): Observable<any> {
+  //   let result: any[] = [];
+  //   let latitude;
+  //   let longitude;
+  //   return this.loudspeaker.pipe(
+  //     map((res) => {
+  //      let a =  Object.values(res)
+  //       a.forEach((item:any) =>{
+  //         if(item.latitude === null) {
+  //           latitude = "-10"
+  //         } else {
+  //           latitude = item.latitude
+  //         }
+  //
+  //         if(item.longitude === null) {
+  //           longitude = "-10"
+  //         } else {
+  //           longitude = item.longitude
+  //         }
+  //
+  //        result.push({
+  //          id: item.id,
+  //          model: "Cụm loa",
+  //          agencyId: "c3d3bea3-0e2d-4a3b-a3b7-9b9ab1b02a8f",
+  //          cumLoaId: item.nameId,
+  //          districtId: item.district,
+  //          wardId: item.ward,
+  //          cityId: item.city,
+  //          lat: latitude ,
+  //          lng: longitude,
+  //          createDate: item.createDate,
+  //          name: item.name,
+  //          note: item.note,
+  //          url: `http://ttn.vtctelecom.com.vn/${item.id}`
+  //        })
+  //       })
+  //       return result
+  //     })
+  //   );
+  // }
+  //
+  // post(data:any): Observable<HttpResponse<any>> {
+  //   return this.http.post('http://10.0.0.117:8089/api/TTN/DangkyCumLoa', data, {
+  //     observe: 'response',
+  //   });
+  // }
 }
