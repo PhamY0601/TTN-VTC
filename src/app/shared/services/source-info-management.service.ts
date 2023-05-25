@@ -27,13 +27,4 @@ export class SourceInfoManagementService {
 
 
 
-  // fieldSourceDetail(id: number): Observable<HttpResponse<IFieldSource>> {
-  //   return this.http
-  //     .get<IFieldSource>(`${API.FIELDSOURCE_URL}/${id}`, {
-  //       observe: 'response'
-  //     })
-  //     .pipe(map((res: HttpResponse<IFieldSource>) => res));
-  // }
-
-
 }

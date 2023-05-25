@@ -11,10 +11,10 @@ import {CitiesService} from "../../../shared/services/cities.service";
 export class DateReportComponent implements OnInit {
   districtsData: any[] = [];
   wardsData: any[] = [];
-  showTable: boolean = false;
   title_country: any
   toDay = new Date();
   beforeDay = new Date();
+  display: boolean = false;
 
   constructor(private spinner: NgxSpinnerService,
               private citiesService$: CitiesService) {
@@ -23,25 +23,25 @@ export class DateReportComponent implements OnInit {
   ngOnInit() {
     this.beforeDay.setDate(this.beforeDay.getDate() - 15);
     this.title_country = COUNTRY();
-    this.getDistrict(COUNTRY());
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 2000);
-
   }
 
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-    })
-  }
 
   districtEffect(event: any): void {
-    this.wardsData = [];
-    this.citiesService$.getWards(event.value).subscribe((data) => {
-      this.wardsData = data
-    })
+    // this.wardsData = [];
+    // this.citiesService$.getWards(event.value).subscribe((data) => {
+    //   this.wardsData = data
+    // })
+  }
+
+  displayContent() {
+    if(this.display === false) {
+      this.display = true;
+      this.spinner.show();
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
+
+    }
   }
 
 }

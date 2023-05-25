@@ -21,36 +21,32 @@ import {
   ChangePasswordFormDialogComponent
 } from "./change-password-form-dialog/change-password-form-dialog.component";
 import {ReactiveFormsModule} from "@angular/forms";
+import {AppComfirmComponent} from "../services/app-confirm/app-confirm.component";
+import {AppConfirmService} from "../services/app-confirm/app-confirm.service";
+import { SeeMoreComponent } from './see-more/see-more.component';
 
 
-// const components = [
-//   HeaderComponent,
-//   SidenavComponent,
-//   OverviewCardComponent,
-//   NewsCardComponent,
-//   AvatarComponent,
-//   ContentCardComponent,
-//   FooterComponent,
-//   AdminLayoutComponent,
-//   MapComponent,
-//   ReplaceStrPipe
-// ];
+const components = [
+  HeaderComponent,
+  SidenavComponent,
+  OverviewCardComponent,
+  NewsCardComponent,
+  AvatarComponent,
+  ContentCardComponent,
+  FooterComponent,
+  AdminLayoutComponent,
+  MapComponent,
+  ReplaceStrPipe,
+  ChangePasswordFormContentComponent,
+  ChangePasswordFormDialogComponent,
+  AppComfirmComponent,
+];
 
 @NgModule({
-    declarations: [
-      HeaderComponent,
-      SidenavComponent,
-      OverviewCardComponent,
-      NewsCardComponent,
-      AvatarComponent,
-      ContentCardComponent,
-      FooterComponent,
-      AdminLayoutComponent,
-      MapComponent,
-      ReplaceStrPipe,
-      ChangePasswordFormContentComponent,
-      ChangePasswordFormDialogComponent
-    ],
+  declarations: [
+    ...components,
+    SeeMoreComponent
+  ],
   imports: [
     CommonModule,
     SharedMaterialModule,
@@ -61,20 +57,10 @@ import {ReactiveFormsModule} from "@angular/forms";
     ReactiveFormsModule,
   ],
     exports: [
-      HeaderComponent,
-      SidenavComponent,
-      OverviewCardComponent,
-      NewsCardComponent,
-      AvatarComponent,
-      ContentCardComponent,
-      FooterComponent,
-      AdminLayoutComponent,
-      MapComponent,
-      ReplaceStrPipe,
-      ChangePasswordFormContentComponent,
-      ChangePasswordFormDialogComponent
+        ...components,
+        SeeMoreComponent
     ],
-
+  providers: [AppConfirmService]
 })
 export class SharedComponentModule {
 }

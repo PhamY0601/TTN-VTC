@@ -1,9 +1,12 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CitiesService} from "../../../shared/services/cities.service";
 import {COUNTRY} from "../../../app.constants";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
+import {Chart} from "chart.js/auto";
+import {NgxSpinnerService} from "ngx-spinner";
+import {ReportBroadcastTimeService} from "../../../shared/services/report-broadcast-time.service";
 
 @Component({
   selector: 'app-broadcast-time-report',
@@ -12,8 +15,11 @@ import {MatTableDataSource} from "@angular/material/table";
 })
 export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
   districtsData: any[] = [];
+  arrayDistrictsData: any[] = []
   wardsData: any[] = [];
-  showTable: boolean = false;
+  arrayWardsData: any[] = [];
+
+  display: boolean = false;
   broadcastData = [
     {
       id: 0,
@@ -173,37 +179,76 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
   toDay = new Date();
   beforeDay = new Date();
 
+  chartByPlaySuccess: any = [];
+  chartByUrgentBulletin: any = [];
+  chartByTime: any = [];
+  title: any[] = [];
+  data: any[] = [];
+
+
   dataSource: any;
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumn: string[] =
     ['stt', 'station', 'speaker', 'area', 'location', 'news', 'urgent_bulletin', 'play_time', 'request_duration', 'ratio'];
 
-  constructor(private citiesService$: CitiesService) {
+  constructor(private citiesService$: CitiesService,
+              private elementRef: ElementRef,
+              private spinner: NgxSpinnerService,
+              private reportBroadcastTimeService$: ReportBroadcastTimeService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
-    this.getDistrict(COUNTRY());
+    this.beforeDay.setDate(this.beforeDay.getDate() - 15);
     this.loadData();
-    this.beforeDay.setDate(this.beforeDay.getDate()-15);
+    this.chartSuccess();
+    this.chartUrgentBulletin();
+    this.chartTime();
+    this.getDistrict(COUNTRY());
+    this.getWard();
+    // this.reportBroadcastTimeService$.test()
+
   }
 
   getDistrict(city: any) {
     this.citiesService$.getDistricts(city).subscribe((data) => {
       this.districtsData = data;
+      this.districtsData.forEach((item: any) => {
+        this.arrayDistrictsData.push(item.nameId)
+      })
     })
   }
 
-  districtEffect(event: any): void {
-    this.wardsData = [];
-    this.citiesService$.getWards(event.value).subscribe((data) => {
-      this.wardsData = data
+  getWard() {
+    let arrayWardsData: any[] = [];
+    this.citiesService$.getWards().subscribe((data) => {
+      arrayWardsData = data
+      for (let i in arrayWardsData) {
+        for (let j in this.arrayDistrictsData) {
+          if (this.arrayDistrictsData[j] === arrayWardsData[i].districtId) {
+            this.arrayWardsData.push(arrayWardsData[i])
+          }
+        }
+      }
     })
+  }
+
+  changeWards(nameId: any) {
+    this.arrayWardsData.forEach((item:any) => {
+      if (item.districtId === nameId) {
+        this.wardsData.push(item)
+      }
+    })
+  }
+
+  districtEffect(nameId: any): void {
+    this.wardsData = [];
+    this.changeWards(nameId.value)
   }
 
   loadData() {
-    this.dataSource.data = this.broadcastData
+    this.dataSource.data = this.broadcastData;
   }
 
   ngAfterViewInit() {
@@ -211,7 +256,209 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
     this.dataSource.sort = this.sort;
   }
 
-  calculateRatio (a:number, b: number) {
-    return ((a/b)*100).toFixed(0);
+  calculateRatio(a: number, b: number) {
+    return ((a / b) * 100).toFixed(0);
+  }
+
+  chartSuccess() {
+    let totalSuccess = 0;
+    let total = 0;
+
+    this.broadcastData.forEach((item: any) => {
+      total = total + item.total;
+      totalSuccess = totalSuccess + item.play_successful;
+    })
+
+    let totalOrther = 0;
+    totalOrther = total - totalSuccess
+
+      let array = [];
+    array.push(totalSuccess,totalOrther)
+    let htmlRef = this.elementRef.nativeElement.querySelector(`#canvasFrist`);
+    this.chartByPlaySuccess = new Chart(htmlRef, {
+      type: 'pie',
+      data: {
+        labels: ['Phát thành công', 'Bản tin khác'],
+        datasets: [
+          {
+            data: array,
+            backgroundColor: ['#02C94F', '#D9D9D9'],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 20,
+              boxHeight: 20,
+              padding: 30,
+              font: {
+                size: 16
+              }
+            }
+          },
+          datalabels: {
+            font: {
+              size: 14,
+            },
+            color: 'white',
+
+            formatter: (value, context) => {
+              const datapoint = context.dataset.data
+
+              function totalSum(total: any, datapoint: any) {
+                return total + datapoint
+              }
+
+              const totalValue = datapoint.reduce(totalSum, 0)
+              const percentValue = (value / totalValue * 100).toFixed(1)
+              const display = [`${percentValue}%`]
+              return display
+            }
+          },
+        },
+      }
+    })
+  }
+
+  chartUrgentBulletin() {
+    let totalUrgentBulletin = 0;
+    let total = 0;
+    this.broadcastData.forEach((item: any) => {
+      total = total + item.total;
+      totalUrgentBulletin = totalUrgentBulletin + item.urgent_bulletin;
+    })
+    let totalOrther = 0;
+    totalOrther = total - totalUrgentBulletin
+
+    let array = [];
+    array.push(totalUrgentBulletin, totalOrther)
+    let htmlRef = this.elementRef.nativeElement.querySelector(`#canvasSecond`);
+    this.chartByUrgentBulletin = new Chart(htmlRef, {
+      type: 'pie',
+      data: {
+        labels: ['Bản tin khẩn cấp', 'Bản tin khác'],
+        datasets: [
+          {
+            data: array,
+            backgroundColor: ['#02C94F', '#D9D9D9'],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 20,
+              boxHeight: 20,
+              padding: 30,
+              font: {
+                size: 16
+              }
+            }
+          },
+          datalabels: {
+            font: {
+              size: 14,
+            },
+            color: 'white',
+
+            formatter: (value, context) => {
+              const datapoint = context.dataset.data
+
+              function totalSum(total: any, datapoint: any) {
+                return total + datapoint
+              }
+
+              const totalValue = datapoint.reduce(totalSum, 0)
+              const percentValue = (value / totalValue * 100).toFixed(1)
+              const display = [`${percentValue}%`]
+              return display
+            }
+          },
+        },
+      }
+    })
+  }
+
+  chartTime() {
+    let totalTime = 0;
+    let total = 0;
+    this.broadcastData.forEach((item: any) => {
+      total = total + item.request_duration;
+      totalTime = totalTime + item.play_time;
+    })
+    let totalOrther = 0;
+    totalOrther = total - totalTime
+
+    let array = [];
+    array.push(totalTime, totalOrther)
+    let htmlRef = this.elementRef.nativeElement.querySelector(`#canvasThird`);
+    this.chartByTime = new Chart(htmlRef, {
+      type: 'pie',
+      data: {
+        labels: ['Thời gian phát', 'Thời gian còn lại'],
+        datasets: [
+          {
+            data: array,
+            backgroundColor: ['#02C94F', '#D9D9D9'],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 20,
+              boxHeight: 20,
+              padding: 30,
+              font: {
+                size: 16
+              }
+            }
+          },
+          datalabels: {
+            font: {
+              size: 14,
+            },
+            color: 'white',
+
+            formatter: (value, context) => {
+              const datapoint = context.dataset.data
+
+              function totalSum(total: any, datapoint: any) {
+                return total + datapoint
+              }
+
+              const totalValue = datapoint.reduce(totalSum, 0)
+              const percentValue = (value / totalValue * 100).toFixed(1)
+              const display = [`${percentValue}%`]
+              return display
+            }
+          },
+        },
+      }
+    })
+  }
+
+  displayContent() {
+    if(this.display === false) {
+      this.display = true;
+      this.spinner.show();
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 1000);
+
+    }
   }
 }

@@ -6,6 +6,7 @@ import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
+import {AppConfirmService} from "../../../shared/services/app-confirm/app-confirm.service";
 
 @Component({
   selector: 'app-radio-manager-list',
@@ -23,6 +24,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
   eventSubscriber: Subscription | undefined;
 
   constructor(private citiesService$: CitiesService,
+              private confirmService: AppConfirmService,
               // private eventManager: JhiEventManager,
               private spinner: NgxSpinnerService,) {
     this.dataSource = new MatTableDataSource([]);
@@ -39,12 +41,17 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000);
+    }, 1500);
     this.citiesService$.getRadioStreaming(_COUNTRY).subscribe((data) => {
       this.dataSource.data = data;
     });
-
   }
+
+  onSearch(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   // changedList() {
   //   this.eventSubscriber = this.eventManager.subscribe('radioManagerModified', () => this.loadData(COUNTRY()));
   // }
@@ -59,6 +66,13 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
     this.dataSource.sort = this.sort;
   }
 
-
+  deleteItem(row:any) {
+    this.confirmService.confirm({message: `Bạn có chắc chắn muốn xóa ${row.name}?`})
+      .subscribe(res => {
+        if (res) {
+         console.log(res)
+        }
+      });
+  }
 
 }

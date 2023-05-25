@@ -37,12 +37,7 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
   }
 
   loadData(): void {
-    this.spinner.show();
-    setTimeout(() => {
-      this.spinner.hide();
-    }, 1000);
-
-    this.sourceInfoService$.getFieldSource().subscribe((data) => {
+      this.sourceInfoService$.getFieldSource().subscribe((data) => {
       this.dataSource.data = data.body
     });
   }

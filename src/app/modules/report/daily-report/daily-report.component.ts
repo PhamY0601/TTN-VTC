@@ -14,11 +14,11 @@ export class DailyReportComponent implements OnInit{
   constructor(  private spinner: NgxSpinnerService,) {
   }
   ngOnInit() {
-
     this.title_country = COUNTRY();
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000);
+    }, 1000);
   }
+
 }

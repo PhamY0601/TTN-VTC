@@ -12,7 +12,6 @@ import {
   WarningContentDialogComponent
 } from "./warning-content/warning-content-dialog/warning-content-dialog.component";
 import {RegistrationContentListComponent} from "./registration-content/registration-content-list/registration-content-list.component";
-import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface} from "ngx-perfect-scrollbar";
 import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
 import {MomentDateAdapter} from "@angular/material-moment-adapter";
 import { EditorialContentListComponent } from './editorial-content/editorial-content-list/editorial-content-list.component';

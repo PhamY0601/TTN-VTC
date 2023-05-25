@@ -1,5 +1,8 @@
 import {Injectable} from '@angular/core';
 import {Router} from "@angular/router";
+import {HttpClient} from "@angular/common/http";
+import {API} from "../../helper/api";
+import {catchError, map, Observable, of} from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -13,22 +16,31 @@ export class AuthService {
     {username: 'laichau', password: 'vtc123',country:"Lai Châu_51"},
     {username: 'thanhhoa', password: 'vtc123',country:"Thanh Hóa_42"},
   ];
-  private readonly AUTH_TOKEN_KEY = 'auth_token';
+  private readonly AUTH_TOKEN_KEY = 'token';
 
-  constructor(private router: Router) { }
+  constructor(private router: Router,
+              private http: HttpClient) { }
 
-   logIn(username: string, password: string): boolean {
+   logIn(username: string, password: string) {
+     const data = {
+       username: username,
+       password: password
+     };
 
-   let user= this.USER_DATA.find(u => u.username.toLowerCase() === username && u.password === password);
-    if (user !== undefined) {
-      // Nếu đăng nhập thành công, lưu token vào LocalStorage
-      const authToken = 'vtc123';
-      localStorage.setItem(this.AUTH_TOKEN_KEY, authToken);
-      localStorage.setItem('currentUser',user.country);
-      return true;
-    }
-    return false;
+     return  this.http.post<any>(`${API.LOGIN_URL}`,data).pipe(
+       map((res) => {
+         localStorage.setItem(this.AUTH_TOKEN_KEY, res.token);
+         localStorage.setItem('currentUser', 'Thanh Hóa_42');
+         console.log(res)
+         return true;
+       }),
+       catchError(err => {
+         return of(false);
+       })
+     );
   }
+
+
 
   logOut(): void {
     let removeToken = localStorage.removeItem(this.AUTH_TOKEN_KEY);

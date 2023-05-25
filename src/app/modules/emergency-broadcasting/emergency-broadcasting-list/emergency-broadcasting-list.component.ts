@@ -5,6 +5,7 @@ import {MatTableDataSource} from "@angular/material/table";
 import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
 import {EmergencyBroadcastingService} from "../../../shared/services/emergency-broadcasting.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'app-emergency-broadcasting-list',
@@ -22,7 +23,8 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   constructor(
     private emergencyBroadcastingService$: EmergencyBroadcastingService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private spinner: NgxSpinnerService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -37,6 +39,10 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
   }
 
   loadData() {
+    this.spinner.show();
+    setTimeout(() => {
+      this.spinner.hide();
+    }, 1000);
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
       this.dataSource.data = data;
     });
@@ -47,6 +53,11 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
     return ((a / b) * 100).toFixed(0);
   }
 
+  onSearch(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
   openDialog(id:any): void {
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
       this.dataDialog = data.filter((item: any) => item.id === id);
@@ -55,7 +66,6 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
       width: '500px',
         data: this.dataDialog,
       });
-      console.log(data)
     dialogRef.afterClosed().subscribe(result => {});
 
   })}

@@ -3,7 +3,10 @@ import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY} from "../../../app.constants";
+import {COUNTRY, currentTime} from "../../../app.constants";
+import {
+  EmergencyBroadcastingContentComponent
+} from "../../emergency-broadcasting/emergency-broadcasting-dialog/emergency-broadcasting-dialog.component";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -242,15 +245,16 @@ export class RadioManagerContentComponent implements OnInit {
     },
   ];
 
-  checkedDays: any[] = [];
-  checkedDays2: any;
   districtsData: any[] = [];
+  districtsDatatemp: any[] = [];
   wardsData: any[] = [];
+  wardsDataTemp: any[] = [];
+  wardtemp: any[] = [];
   statusData = [
     {
-    name: 'Chờ phát thanh',
-    value: 'RS01'
-  },
+      name: 'Chờ phát thanh',
+      value: 'RS01'
+    },
     {
       name: 'Bắt đầu phát thanh',
       value: 'RS02'
@@ -267,7 +271,9 @@ export class RadioManagerContentComponent implements OnInit {
       name: 'Kết thúc',
       value: 'RS05'
     },
-  ]
+  ];
+  audSrc: any;
+  currentTime:any;
 
   constructor(
     // private eventManager: JhiEventManager,
@@ -278,20 +284,57 @@ export class RadioManagerContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getDistrict(COUNTRY())
+    this.getWard();
+    this.currentTime = currentTime;
   }
 
   save() {
     console.log(this.data)
   }
 
-
-  districtEffect(nameId: any): void {
-    this.wardsData = [];
-    this.citiesService$.getWards(nameId).subscribe((data) => {
-      this.wardsData = data
+  getDistrict(city: any) {
+    this.citiesService$.getDistricts(city).subscribe((data) => {
+      this.districtsData = data;
+      this.districtsData.forEach((item: any) => {
+        this.districtsDatatemp.push(item.nameId)
+      })
     })
   }
 
+  getWard() {
+    this.citiesService$.getWards().subscribe((data) => {
+      this.wardsData = data
+      for (let i in this.wardsData) {
+        for (let j in this.districtsDatatemp) {
+          if (this.districtsDatatemp[j] === this.wardsData[i].districtId) {
+            this.wardsDataTemp.push(this.wardsData[i])
+          }
+        }
+      }
+    })
+  }
+
+  test(nameId: any) {
+    for (let i in this.wardsDataTemp) {
+      if (this.wardsDataTemp[i].districtId === nameId) {
+        this.wardtemp.push(this.wardsDataTemp[i])
+      }
+    }
+
+  }
+
+  districtEffect(nameId: any): void {
+    this.wardtemp = [];
+    this.test(nameId)
+  }
+
+  onFileSelected(event: any) {
+    if (event.target.files && event.target.files[0]) {
+      const audSrc = URL.createObjectURL(event.target.files[0]);
+      this.audSrc = audSrc;
+    }
+  }
 
   private onSaveSuccess(): void {
     // this.eventManager.broadcast({
@@ -324,36 +367,22 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
-      const promises: Promise<any>[] = [
-        this.citiesService$.getDistricts(COUNTRY()).toPromise(),
-        this.citiesService$.getWards(data.district).toPromise(),
-      ];
-      Promise.all(promises).then(values => {
-        const [res1, res2] = values;
-        this.dialogRef = this.dialog.open(RadioManagerContentComponent, {
-          disableClose: true,
-          width: '1000px'
-        });
-        console.log(data);
-        data.week_day = data.week_day.split(',');
-        data.month = data.month.split(',');
-        data.day = data.day.split(',');
-        this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.week_day);
-        this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
-        this.weekDayEffect(this.dialogRef.componentInstance.days, data.day)
-        this.dialogRef.componentInstance.data = data;
-        this.dialogRef.componentInstance.districtsData = res1;
-        this.dialogRef.componentInstance.wardsData = res2;
-
-        this.dialogRef.afterClosed().subscribe(
-          () => this.previousState(),
-          () => this.previousState());
+      this.dialogRef = this.dialog.open(RadioManagerContentComponent, {
+        width: '1000px',
       });
+      this.dialogRef.componentInstance.data = data;
+      data.week_day = data.week_day.split(',');
+      data.month = data.month.split(',');
+      data.day = data.day.split(',');
+      this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.week_day);
+      this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
+      this.weekDayEffect(this.dialogRef.componentInstance.days, data.day);
+      this.dialogRef.componentInstance.data = data;
 
 
-      // this.dialogRef.componentInstance.checkedDays = data.week_day.split(',').map((n: any) => "Thứ " + n);
-      // this.dialogRef.componentInstance.checkedDays2 = data.week_day.split(',').map((n: any) => true);
-
+      this.dialogRef.afterClosed().subscribe(
+        () => this.previousState(),
+        () => this.previousState());
     });
   }
 
@@ -369,15 +398,15 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
     this.dialogRef = undefined;
   }
 
-  weekDayEffect(days:any, week_day: any) {
-      for(let i in days) {
-        for( let j in week_day) {
-          if(days[i].value === week_day[j])
-          {
-            days[i].checked = true;
-          }
+  weekDayEffect(days: any, week_day: any) {
+    for (let i in days) {
+      for (let j in week_day) {
+        if (days[i].value === week_day[j]) {
+          days[i].checked = true;
         }
       }
+    }
   }
+
 
 }

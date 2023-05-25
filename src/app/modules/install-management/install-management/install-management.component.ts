@@ -67,12 +67,25 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000);
+    }, 1500);
 
-    this.citiesService$.getSpeakerLocation(_COUNTRY).subscribe((data) => {
-      this.dataSourceSecond.data = data;
+    this.citiesService$.getSpeakerLocation(_COUNTRY).subscribe((item) => {
+      this.dataSourceSecond.data = item;
+      item.forEach((data: any) => {
+        console.log({
+          city: data.city,
+          district: data.district,
+          ward: data.ward,
+          type: data.endpointtype,
+          longitude: data.longitude,
+          latitude: data.latitude,
+          date: data.createDate,
+          status: data.status
+        })
+      })
 
     });
+
 
     if (this.param !== null) {
       this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {

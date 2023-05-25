@@ -3,6 +3,7 @@ import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../../../shared/services/cities.service";
+import {COUNTRY, currentTime} from "../../../../../app.constants";
 
 
 @Component({
@@ -21,7 +22,8 @@ export class GeographicSourceContentComponent implements OnInit {
     hour_from: '',
     hour_to: '',
     content: ''
-  }
+  };
+  currentTime: any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,13 +40,20 @@ export class GeographicSourceContentComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.getDistrict(COUNTRY());
+    this.currentTime = currentTime;
+  }
 
   save() {
     console.log(this.data)
   }
 
-
+  getDistrict(city: any) {
+    this.citiesService$.getDistricts(city).subscribe((data) => {
+      this.districtsData = data;
+    })
+  }
 
   private onSaveSuccess(): void {
     // this.eventManager.broadcast({

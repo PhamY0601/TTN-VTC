@@ -26,13 +26,11 @@
       <div fxLayout="column" class="full-width">
         <mat-label>Quận, huyện</mat-label>
         <mat-form-field appearance="outline">
-          <mat-select name="district" [value]="-1">
-            <mat-option [value]="-1">
-              Tất cả
+          <mat-select name="district" [value]="-1" (selectionChange)="districtEffect($event)">
+            <mat-option [value]="-1">Tất cả</mat-option>
+            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+              {{item.name}}
             </mat-option>
-            <!--          <mat-option *ngFor="let item of districtsData" [value]="item.nameId">-->
-            <!--            {{item.name}}-->
-            <!--          </mat-option>-->
           </mat-select>
         </mat-form-field>
       </div>
@@ -40,12 +38,10 @@
         <mat-label>Xã, phường</mat-label>
         <mat-form-field class="full-width" appearance="outline">
           <mat-select name="ward" [value]="-1">
-            <mat-option [value]="-1">
-              Tất cả
+            <mat-option [value]="-1">Tất cả</mat-option>
+            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
+              {{item.name}}
             </mat-option>
-            <!--          <mat-option *ngFor="let item of wardsData" [value]="item.nameId">-->
-            <!--            {{item.name}}-->
-            <!--          </mat-option>-->
           </mat-select>
         </mat-form-field>
       </div>
@@ -93,7 +89,9 @@
 
       <ng-container matColumnDef="content">
         <th mat-header-cell *matHeaderCellDef>Nội dung</th>
-        <td mat-cell *matCellDef="let element">{{element.content}}</td>
+        <td mat-cell *matCellDef="let element" class="py-2 line-height-25">
+          <app-see-more [content]="element.content"></app-see-more>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

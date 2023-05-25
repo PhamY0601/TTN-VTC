@@ -3,8 +3,10 @@ import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY} from "../../../app.constants";
-import { ITreeOptions } from '@circlon/angular-tree-component';
+import {COUNTRY, COUNTRY_TITLE, currentTime} from "../../../app.constants";
+import {ITreeOptions} from '@circlon/angular-tree-component';
+import {timeout} from "rxjs";
+import {NgxSpinnerService} from "ngx-spinner";
 
 @Component({
   selector: 'emergency-broadcasting-component',
@@ -19,8 +21,8 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   wardsData: any[] = [];
   transmitterData = ['#01', '#02', '#03', '#04', '#05'];
   libraryData = ['Thư viện 1', 'Thư viện 2', 'Thư viện 3', 'Thư viện 4', 'Thư viện 5'];
+  relayData = ['#01', '#02', '#03', '#04', '#05'];
   audSrc: any;
-  //store [{district,wards}]
   selected = -1;
   sourceData = {
     name: 'Nguồn phát',
@@ -34,70 +36,22 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
       {name: 'Tiếp âm', completed: false, value: 5},
     ],
   };
-  nodeItems = [
-    {
-      name: 'Khu vực TP.Hồ Chí Minh',
-      children: [
-        {
-          name: 'Quận 1',
-          children: [
-            { name: 'Phường 1' },
-            { name: 'Phường 2' },
-            { name: 'Phường 3' },
-            { name: 'Phường 4' },
-          ]
-        },
-        {
-          name: 'Quận 2',
-          children: [
-            { name: 'Phường 1' },
-            { name: 'Phường 2' },
-            { name: 'Phường 3' },
-            { name: 'Phường 4' },
-          ]
-        },
-        {
-          name: 'Quận 3',
-          children: [
-            { name: 'Phường 1' },
-            { name: 'Phường 2' },
-            { name: 'Phường 3' },
-            { name: 'Phường 4' },
-          ]
-        },
-      ]
-    },
-  ];
+  nodeItem: any[] = [];
+  currentTime: any;
   treeOptions: ITreeOptions = {
     useCheckbox: true
   };
+
   constructor(
-    // private eventManager: JhiEventManager,
-    private formBuilder: FormBuilder,
-    private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
-  ) {
-  }
+  ) {  }
 
   ngOnInit(): void {
-    this.getDistrict(COUNTRY())
+    this.currentTime = currentTime;
   }
 
   save() {
     console.log(this.data)
-  }
-
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-    })
-  }
-
-  districtEffect(event: any): void {
-    this.wardsData = [];
-    this.citiesService$.getWards(event.value).subscribe((data) => {
-      this.wardsData = data
-    })
   }
 
   onFileSelected(event: any) {
@@ -121,7 +75,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   select(event: any) {
-    console.log(event.value)
     this.selected = event.value;
   }
 }
@@ -139,19 +92,56 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
+    private citiesService$: CitiesService,
+    private spinner: NgxSpinnerService,
   ) {
   }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
+      const promises: Promise<any>[] = [
+        this.citiesService$.getDistricts(COUNTRY()).toPromise(),
+        this.citiesService$.getWards().toPromise()
+      ];
 
-      this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
-        width: '800px',
+      this.spinner.show();
+      setTimeout(() => {
+        this.spinner.hide();
+      }, 3500);
+
+      let nodeItem: any[] = [];
+      let childrenArray: any[] = [];
+      Promise.all(promises).then(values => {
+        const [res1, res2] = values;
+        let array: any[] = [];
+        res1.forEach((item: any) => {
+          array = []
+          res2.forEach((value: any) => {
+            if (value.districtId === item.nameId) {
+              array.push({name: value.name})
+            }
+          })
+          childrenArray.push({
+            name: item.name,
+            children: array
+          })
+          nodeItem = [{
+            name: COUNTRY_TITLE(),
+            children: childrenArray
+          }]
+        })
+
+        this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
+          width: '800px',
+        });
+        this.dialogRef.componentInstance.nodeItem = nodeItem
+        this.dialogRef.componentInstance.data = data;
+        this.dialogRef.afterClosed().subscribe(
+          () => this.previousState(),
+          () => this.previousState());
       });
-      this.dialogRef.componentInstance.data = data;
-      this.dialogRef.afterClosed().subscribe(
-        () => this.previousState(),
-        () => this.previousState());
+
+
     });
 
 

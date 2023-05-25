@@ -4,6 +4,7 @@ import {ActivatedRoute} from "@angular/router";
 import {COUNTRY} from "../../../app.constants";
 import {DistrictService} from "../../../shared/services/district.service";
 import {NgxSpinnerService} from "ngx-spinner";
+import {DashboardService} from "../../../shared/services/dashboard.service";
 
 @Component({
   selector: 'app-install-management',
@@ -15,41 +16,38 @@ export class DashboardComponent implements OnInit {
   installData: any[] = [];
   param?: string | null = '';
   title_country: any;
-  array= {};
+  array = {};
 
 
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
+              private dashboardService$: DashboardService,
               private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService,) {
+              private spinner: NgxSpinnerService) {
   }
 
   ngOnInit() {
-    this.overviewData=[
+    this.overviewData = [
       {
-        "id": 0,
+        "title": "Nhà cung cấp",
+        "count": 0,
+        "icon": "supplier"
+      },
+      {
         "title": "Loa",
         "count": 0,
         "icon": "speaker"
       },
       {
-        "id": 1,
         "title": "Bản tin điện tử",
         "count": 0,
         "icon": "youtube"
       },
       {
-        "id": 2,
         "title": "Bản tin phát hành",
         "count": 0,
         "icon": "document",
       },
-      {
-        "id": 4,
-        "title": "Nhà cung cấp",
-        "count": 0,
-        "icon": "supplier"
-      }
     ]
 
     this.activatedRoute.paramMap.subscribe(params => {
@@ -65,20 +63,30 @@ export class DashboardComponent implements OnInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 7000);
+    }, 4000);
+
+    this.dashboardService$.getTotal().subscribe((res) => {
+      this.overviewData = res
+    })
+
+    this.dashboardService$.getRecordActive().subscribe((res) => {
+      console.log(res)
+    })
+
     if (this.param !== null) {
-      this.districtService$.getOverView(_COUNTRY, this.param).subscribe((data) => {
-        this.overviewData = data
-      });
+      // this.districtService$.getOverView(_COUNTRY, this.param).subscribe((data) => {
+      //   this.overviewData = data
+      //
+      // });
 
       this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {
           this.installData = data;
         }
       )
     } else {
-      this.citiesService$.getOverView(_COUNTRY).subscribe((data) => {
-        this.overviewData = data
-      });
+      // this.citiesService$.getOverView(_COUNTRY).subscribe((data) => {
+      //   this.overviewData = data
+      // });
       this.citiesService$.getInstallInfo(_COUNTRY).subscribe((data) => {
         this.installData = data;
       });

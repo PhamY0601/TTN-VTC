@@ -6,31 +6,33 @@
 </div>
 
 <div mat-dialog-content>
-  <mat-expansion-panel expanded="true">
+  <audio controls class="full-width">
+    <source src="assets/audio/bantinkhancap.mp3" type="audio/ogg">
+    <source src="assets/audio/bantinkhancap.mp3" type="audio/mpeg">
+    <source src="assets/audio/bantinkhancap.mp3" type="audio/wav">
+  </audio>
+  <mat-expansion-panel expanded="true" class="mt-5">
     <mat-expansion-panel-header>
       <mat-panel-title>
         1. Nội dung
       </mat-panel-title>
     </mat-expansion-panel-header>
-    <table mat-table [dataSource]="dataSourceThird">
-      <ng-container matColumnDef="title">
-        <th mat-header-cell *matHeaderCellDef style="width:200px">ID</th>
-        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-      </ng-container>
+      <table mat-table [dataSource]="dataSourceThird">
+        <ng-container matColumnDef="title">
+          <th mat-header-cell *matHeaderCellDef style="width:200px">ID</th>
+          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+        </ng-container>
 
-      <ng-container matColumnDef="content">
-        <th mat-header-cell *matHeaderCellDef>{{param}}</th>
-        <td mat-cell *matCellDef="let element"> {{element.content}} </td>
-      </ng-container>
+        <ng-container matColumnDef="content">
+          <th mat-header-cell *matHeaderCellDef>{{param}}</th>
+          <td mat-cell *matCellDef="let element" class="py-2 line-height-25npm start"> {{element.content}} </td>
+        </ng-container>
 
-      <tr mat-header-row *matHeaderRowDef="displayedColumnThird"></tr>
-      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnThird;"
-          [ngClass]="{'bg-table': even}"></tr>
-    </table>
-  </mat-expansion-panel>
-  <!--  <div class="mat-elevation-z2 bg-white mt-2" fxLayout="column" fxLayoutAlign="space-between stretch">-->
-  <!--  -->
-  <!--  </div>-->
+        <tr mat-header-row *matHeaderRowDef="displayedColumnThird"></tr>
+        <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumnThird;"
+            [ngClass]="{'bg-table': even}"></tr>
+      </table>
+    </mat-expansion-panel>
   <mat-expansion-panel class="mt-5">
     <mat-expansion-panel-header>
       <mat-panel-title>

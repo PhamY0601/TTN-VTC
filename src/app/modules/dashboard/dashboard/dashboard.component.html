@@ -1,8 +1,8 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
   <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px">
     <div class="full-width" *ngFor="let item of overviewData">
-      <app-overview-card [title]="item.title"
-                         [count]="item.count"
+      <app-overview-card [title]="item.name_display"
+                         [count]="item.total"
                          [icon]="item.icon"
       >
       </app-overview-card>

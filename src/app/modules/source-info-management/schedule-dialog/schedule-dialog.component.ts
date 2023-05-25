@@ -5,6 +5,7 @@ import {ActivatedRoute, Data, Router} from "@angular/router";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
+import {currentTime} from "../../../app.constants";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -16,7 +17,7 @@ export class ScheduleContentComponent implements OnInit {
   data: any;
   isSaving = false;
   snapshotUrl: any;
-
+  currentTime: any;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -32,6 +33,7 @@ export class ScheduleContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.currentTime = currentTime;
   }
 
   save() {
@@ -90,7 +92,7 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
       this.detailData = this.detailData.filter((item: any) => item.id === this.param);
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
-        width: '500px',
+        width: '600px',
       });
       this.dialogRef.componentInstance.snapshotUrl = a;
       this.dialogRef.componentInstance.data = this.detailData

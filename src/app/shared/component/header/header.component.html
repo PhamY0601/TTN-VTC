@@ -23,7 +23,7 @@
   </div>
   <mat-menu #accountMenu>
     <div class="px-3 py-1 fw-500">{{title_country | replaceStr }}</div>
-    <menu mat-menu-item>Trang cá nhân</menu>
+<!--    <menu mat-menu-item>Trang cá nhân</menu>-->
     <menu mat-menu-item [routerLink]="['/', { outlets: { popup: ['change-password'] }}]">Đổi mật khẩu</menu>
     <menu mat-menu-item (click)="logOut()">Đăng xuất</menu>
   </mat-menu>
@@ -35,10 +35,10 @@
         <a class="text-gray view-all fz-1">Xem tất cả</a>
       </div>
       <menu mat-menu-item class="py-1">
-        <div fxLayout="row" fxLayoutGap="20">
+        <div fxLayout="row" fxLayoutGap="20" fxLayoutAlign="space-between center">
           <div fxFlex="80">
-            <div>Thông báo 1</div>
-            <p class="text-gray">Lorem ipsum is simply dummy dolor sit amet, consectetur adipisicing elit,</p>
+            <div>Thông báo bản tin</div>
+            <p class="text-gray">Bản tin khẩn đã được nhận bởi tất cả các huyện tỉnh Thanh Hóa.</p>
           </div>
           <p fxFlex="20" class="text-gray fz-1">30 phút trước</p>
         </div>
@@ -46,19 +46,19 @@
       <menu mat-menu-item class="py-1">
         <div fxLayout="row" fxLayoutGap="20">
           <div fxFlex="80">
-            <div>Thông báo 2</div>
-            <p class="text-gray">Lorem ipsum is simply dummy dolor sit amet, consectetur adipisicing elit,</p>
+            <div>Thông báo lắp đặt</div>
+            <p class="text-gray">Hoàn thành việc lắp 3 cụm loa ở huyện Quan Sơn.</p>
           </div>
-          <p fxFlex="20" class="text-gray fz-1">30 phút trước</p>
+          <p fxFlex="20" class="text-gray fz-1">32 phút trước</p>
         </div>
       </menu>
       <menu mat-menu-item class="py-1">
         <div fxLayout="row" fxLayoutGap="20">
           <div fxFlex="80">
-            <div>Thông báo 3</div>
-            <p class="text-gray">Lorem ipsum is simply dummy dolor sit amet, consectetur adipisicing elit,</p>
+            <div>Thông báo lịch phát</div>
+            <p class="text-gray">Lịch phát huyện Thiệu Hóa đang chuẩn bị phát trong 30 phút tới.</p>
           </div>
-          <p fxFlex="20" class="text-gray fz-1">30 phút trước</p>
+          <p fxFlex="20" class="text-gray fz-1">40 phút trước</p>
         </div>
       </menu>
     </div>

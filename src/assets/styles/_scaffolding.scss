@@ -339,3 +339,33 @@ td {
   }
 }
 
+.line-height-25 {
+  line-height: 25px;
+}
+
+.hiddenTable {
+  display: none !important;
+}
+.showTable {
+  display: block !important;
+}
+.file-input {
+  display: none;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: white !important;
+  border: 1px solid #08B1BD;
+}
+
+.ngx-mat-timepicker__toggle {
+  display: none !important;
+}
+
+.mdc-text-field--no-label:not(.mdc-text-field--outlined):not(.mdc-text-field--textarea) .mat-mdc-form-field-infix {
+  padding-top: 12px;
+}
+
+.ngx-mat-timepicker-control {
+  width: 150px !important;
+}

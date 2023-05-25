@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {combineLatestAll, forkJoin, map, observable, Observable} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
+import {COUNTRY} from "../../app.constants";
 
 
 @Injectable({
@@ -106,6 +107,7 @@ export class CitiesService {
           }
         })
 
+
         return result
       })
     );
@@ -157,6 +159,7 @@ export class CitiesService {
 
             })
           }
+
           return result
         }
       )));
@@ -213,13 +216,11 @@ export class CitiesService {
     let arr: any[] = [];
     return forkJoin([this.radioStreaming, this.playSchedule]).pipe(
       map((res) => {
-
         arr = Object.values(res[0]).filter((item) => item.id === id)
         let a = Object.values(res[1])
           .filter((item) =>
             item.city === arr[0].city && item.district === arr[0].district
             && item.guid === arr[0].rule);
-            console.log(a)
         if (a.length === 0) {
           return {
             id: arr[0].id,
@@ -254,8 +255,8 @@ export class CitiesService {
             ward: arr[0].ward,
             status: arr[0].status,
             url: `http://ics.vtctelecom.com.vn:5000/mediasource_${arr[0].confId}`,
-            date_from: new Date(a[0].date_from * 1000),
-            date_to: new Date(a[0].date_to * 1000),
+            date_from: new Date(),
+            date_to: new Date(),
             hour_from: a[0].hour_from,
             hour_to: a[0].hour_to,
             week_day: a[0].week_day.split(',').slice(1, -1).join(','),
@@ -286,59 +287,14 @@ export class CitiesService {
     );
   }
 
-  getWards(district: any): Observable<any> {
+  getWards(): Observable<any> {
     return this.wards.pipe(
       map((res) => {
-        return Object.values(res).filter((item) => item.districtId === district)
-        // return res
+        // return Object.values(res).filter((item) => item.districtId )
+        return Object.values(res)
       })
     );
   }
 
-  // getSpeaker(): Observable<any> {
-  //   let result: any[] = [];
-  //   let latitude;
-  //   let longitude;
-  //   return this.loudspeaker.pipe(
-  //     map((res) => {
-  //      let a =  Object.values(res)
-  //       a.forEach((item:any) =>{
-  //         if(item.latitude === null) {
-  //           latitude = "-10"
-  //         } else {
-  //           latitude = item.latitude
-  //         }
-  //
-  //         if(item.longitude === null) {
-  //           longitude = "-10"
-  //         } else {
-  //           longitude = item.longitude
-  //         }
-  //
-  //        result.push({
-  //          id: item.id,
-  //          model: "Cụm loa",
-  //          agencyId: "c3d3bea3-0e2d-4a3b-a3b7-9b9ab1b02a8f",
-  //          cumLoaId: item.nameId,
-  //          districtId: item.district,
-  //          wardId: item.ward,
-  //          cityId: item.city,
-  //          lat: latitude ,
-  //          lng: longitude,
-  //          createDate: item.createDate,
-  //          name: item.name,
-  //          note: item.note,
-  //          url: `http://ttn.vtctelecom.com.vn/${item.id}`
-  //        })
-  //       })
-  //       return result
-  //     })
-  //   );
-  // }
-  //
-  // post(data:any): Observable<HttpResponse<any>> {
-  //   return this.http.post('http://10.0.0.117:8089/api/TTN/DangkyCumLoa', data, {
-  //     observe: 'response',
-  //   });
-  // }
+
 }

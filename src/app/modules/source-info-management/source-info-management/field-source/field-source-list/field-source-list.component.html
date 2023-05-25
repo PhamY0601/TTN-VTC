@@ -5,7 +5,7 @@
       <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
     </div>
     <mat-form-field class="text-blue" appearance="outline">
-      <input matInput placeholder="Từ khóa">
+      <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 

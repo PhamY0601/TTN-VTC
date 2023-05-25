@@ -21,6 +21,7 @@ import {
 import {TreeModule} from "@circlon/angular-tree-component";
 
 
+
 @NgModule({
   imports: [
     CommonModule,
@@ -30,7 +31,8 @@ import {TreeModule} from "@circlon/angular-tree-component";
     FormsModule,
     ReactiveFormsModule,
     NgxMatTimepickerModule,
-    TreeModule
+    TreeModule,
+
   ],
   exports: [
 
@@ -42,7 +44,8 @@ import {TreeModule} from "@circlon/angular-tree-component";
     BroadcastingDetailContentComponent,
     BroadcastingDetailDialogComponent,
     AreaDialogComponent
-  ]
+  ],
+
 })
 export class EmergencyBroadcastingModule {
 }

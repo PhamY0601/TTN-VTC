@@ -2,7 +2,7 @@ import {Component, OnInit, OnDestroy, ElementRef, ViewChild} from '@angular/core
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {COUNTRY} from "../../../../app.constants";
+import {COUNTRY, currentTime} from "../../../../app.constants";
 import {CitiesService} from "../../../../shared/services/cities.service";
 
 
@@ -17,6 +17,7 @@ export class EditorialContentComponent implements OnInit {
   districtsData: any[] = [];
   wardsData: any[] = [];
   toDay = new Date();
+  currentTime: any;
 
   constructor(
     // private eventManager: JhiEventManager,
@@ -27,7 +28,8 @@ export class EditorialContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDistrict(COUNTRY())
+    this.getDistrict(COUNTRY());
+    this.currentTime = currentTime;
   }
 
   save() {
@@ -37,13 +39,6 @@ export class EditorialContentComponent implements OnInit {
   getDistrict(city: any) {
     this.citiesService$.getDistricts(city).subscribe((data) => {
       this.districtsData = data;
-    })
-  }
-
-  districtEffect(event: any): void {
-    this.wardsData = [];
-    this.citiesService$.getWards(event.value).subscribe((data) => {
-      this.wardsData = data
     })
   }
 

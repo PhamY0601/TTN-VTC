@@ -2,8 +2,8 @@ import {Component, OnInit, OnDestroy, ElementRef, ViewChild} from '@angular/core
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {COUNTRY} from "../../../../app.constants";
 import {CitiesService} from "../../../../shared/services/cities.service";
+import {currentTime} from "../../../../app.constants";
 
 
 @Component({
@@ -22,11 +22,11 @@ export class RegistrationContentComponent implements OnInit {
     hour_from: '',
     hour_to: '',
     content: ''
-  }
+  };
+  currentTime: any
 
   constructor(
     private formBuilder: FormBuilder,
-    private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<RegistrationContentComponent>,
   ) {
     this.formData = this.formBuilder.group({
@@ -40,7 +40,9 @@ export class RegistrationContentComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.currentTime = currentTime;
+  }
 
   save() {
     console.log(this.data)

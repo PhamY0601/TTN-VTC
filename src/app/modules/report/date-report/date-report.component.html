@@ -61,14 +61,14 @@
           <input matInput>
         </mat-form-field>
         <button fxFlex="10" class="btn-blue" mat-flat-button
-                (click)="showTable = true">
+                (click)="displayContent()">
           Xem
         </button>
         <div fxFlex="45"></div>
       </div>
     </mat-card-content>
   </mat-card>
-  <div  *ngIf="showTable"
+  <div  [ngClass]=" !display?'hiddenTable':'showTable'"
         fxLayout="column" fxLayoutGap="30">
     <app-readio-streaming-table></app-readio-streaming-table>
     <app-media-table></app-media-table>

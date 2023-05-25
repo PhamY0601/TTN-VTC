@@ -3,6 +3,7 @@ import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../../../shared/services/cities.service";
+import { currentTime } from 'src/app/app.constants';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class FieldSourceContentComponent implements OnInit {
     hour_to: '',
     content: ''
   }
+  currentTime:any;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -38,7 +40,9 @@ export class FieldSourceContentComponent implements OnInit {
     })
   }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.currentTime = currentTime;
+  }
 
   save() {
     console.log(this.data)

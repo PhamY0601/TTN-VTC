@@ -29,39 +29,18 @@
 
     <div fxLayout="row" fxLayoutGap="30">
       <div fxLayout="column" class="full-width">
-        <mat-label>Bắt đầu</mat-label>
-        <mat-form-field class="full-width" appearance="outline">
-          <input matInput
-                 name="selected_time_B"
-                 [format]="24"
-                 [ngxMatTimepicker]="pickerA"
-                 placeholder="10:00"
-          />
-          <mat-icon matSuffix
-                    (click)="pickerA.open()">
-            watch_later
-          </mat-icon>
-        </mat-form-field>
-        <ngx-mat-timepicker color="accent"
-                            #pickerA></ngx-mat-timepicker>
-
+        <mat-label>Giờ từ</mat-label>
+        <ngx-mat-timepicker-field
+          name="hour_from"
+          [format]="24"
+          [defaultTime]="currentTime"></ngx-mat-timepicker-field>
       </div>
-      <div class="full-width">
-        <mat-label>Kết thúc</mat-label>
-        <mat-form-field class="full-width" appearance="outline">
-          <input matInput
-                 name="selected_time_B"
-                 [format]="24"
-                 [ngxMatTimepicker]="pickerB"
-                 placeholder="10:30"
-          />
-          <mat-icon matSuffix
-                    (click)="pickerB.open()">
-            watch_later
-          </mat-icon>
-        </mat-form-field>
-        <ngx-mat-timepicker color="accent"
-                            #pickerB></ngx-mat-timepicker>
+      <div fxLayout="column" class="full-width">
+        <mat-label>Đến</mat-label>
+        <ngx-mat-timepicker-field
+          name="hour_to"
+          [format]="24"
+          [defaultTime]="currentTime"></ngx-mat-timepicker-field>
       </div>
     </div>
 

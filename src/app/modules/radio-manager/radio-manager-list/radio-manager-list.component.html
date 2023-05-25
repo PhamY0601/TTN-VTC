@@ -5,7 +5,7 @@
       <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
     </div>
     <mat-form-field class="text-blue" appearance="outline">
-      <input matInput placeholder="Từ khóa">
+      <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
 
@@ -63,14 +63,16 @@
 
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef>Hành động</th>
-        <td mat-cell *matCellDef="let element" (click)="element.pause = !element.pause">
+        <td mat-cell *matCellDef="let element">
+          <a (click)="element.pause = !element.pause"  matTooltip="Tạm dừng">
             <mat-icon class="text-orange">{{element.pause ? 'pause' : 'play_arrow'}}</mat-icon>
+          </a>
           <a mat-icon-button mat-sm-button class="text-blue"
              matTooltip="Chỉnh sửa"
              [routerLink]="['./edit', element.id]">
             <mat-icon>edit</mat-icon>
           </a>
-          <button mat-icon-button mat-sm-button color="warn"
+          <button mat-icon-button mat-sm-button color="warn"  (click)="deleteItem(element)"
                   matTooltip="Xóa">
             <mat-icon>delete</mat-icon>
           </button>

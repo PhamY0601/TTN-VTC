@@ -17,5 +17,7 @@ export class API {
   public static REGISTRATIONCONTENT_URL = `${environment.apiUrl}_data/RegistrationContent`;
   public static EDITORIALCONTENT_URL = `${environment.apiUrl}_data/EditorialContent`;
   public static EMERGENCYBROADCASTING_URL = `${environment.apiUrl}_data/EmergencyBroadcasting`;
+  public static DASHBOARD_URL = `http://10.0.0.117:8089/api/common/get?action=dashboard`;
+  public static LOGIN_URL = `http://10.0.0.117:8089/api/account/Login`
 
 }
