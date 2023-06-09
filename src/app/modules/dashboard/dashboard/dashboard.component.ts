@@ -17,6 +17,7 @@ export class DashboardComponent implements OnInit {
   param?: string | null = '';
   title_country: any;
   array = {};
+  newsData: any[] = [];
 
 
   constructor(private citiesService$: CitiesService,
@@ -59,39 +60,25 @@ export class DashboardComponent implements OnInit {
   }
 
 
-  loadData(_COUNTRY: any): void {
+  loadData(_COUNTRY:any): void {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 4000);
 
     this.dashboardService$.getTotal().subscribe((res) => {
-      this.overviewData = res
+      let arrayFirst = res.filter((item: any) => item.name === 'total').map((item: any) => item.value)
+      this.overviewData = arrayFirst[0];
+
+      let arraySecond = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
+      this.newsData = arraySecond[0];
+
+      let arrayThird = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
+      this.installData = arrayThird[0];
+
     })
-
-    this.dashboardService$.getRecordActive().subscribe((res) => {
-      console.log(res)
-    })
-
-    if (this.param !== null) {
-      // this.districtService$.getOverView(_COUNTRY, this.param).subscribe((data) => {
-      //   this.overviewData = data
-      //
-      // });
-
-      this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {
-          this.installData = data;
-        }
-      )
-    } else {
-      // this.citiesService$.getOverView(_COUNTRY).subscribe((data) => {
-      //   this.overviewData = data
-      // });
-      this.citiesService$.getInstallInfo(_COUNTRY).subscribe((data) => {
-        this.installData = data;
-      });
     }
-  }
+
 
 
 }

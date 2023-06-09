@@ -1,12 +1,18 @@
 import {Component, OnInit, OnDestroy, ElementRef, ViewChild} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
-import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY, COUNTRY_TITLE, currentTime} from "../../../app.constants";
-import {ITreeOptions} from '@circlon/angular-tree-component';
-import {timeout} from "rxjs";
+import {COUNTRY, COUNTRY_TITLE, sourceData, voiceData} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
+import {
+  EmergencyBroadcast,
+  IEmergencyBroadcasting,
+  ISrcParams,
+  SrcParams
+} from "../../../shared/models/emergency-broadcasting.model";
+import {EmergencyBroadcastingService} from "../../../shared/services/emergency-broadcasting.service";
+import {LocationsService} from "../../../shared/services/locations.service";
+
 
 @Component({
   selector: 'emergency-broadcasting-component',
@@ -14,8 +20,10 @@ import {NgxSpinnerService} from "ngx-spinner";
   styleUrls: ['./emergency-broadcasting-dialog.component.scss']
 })
 export class EmergencyBroadcastingContentComponent implements OnInit {
+
   @ViewChild('figAudio') figAudio!: ElementRef;
-  data: any;
+  displayDistrict = false;
+  data: IEmergencyBroadcasting = new EmergencyBroadcast();
   isSaving = false;
   districtsData: any[] = [];
   wardsData: any[] = [];
@@ -24,42 +32,107 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   relayData = ['#01', '#02', '#03', '#04', '#05'];
   audSrc: any;
   selected = -1;
-  sourceData = {
-    name: 'Nguồn phát',
-    completed: false,
-    value: '10',
-    subtasks: [
-      {name: 'File âm thanh', completed: false, value: 3},
-      {name: 'Văn bản', completed: false, value: 4},
-      {name: 'Transmitter', completed: false, value: 1},
-      {name: 'Thư viện', completed: false, value: 2},
-      {name: 'Tiếp âm', completed: false, value: 5},
-    ],
-  };
-  nodeItem: any[] = [];
+  sourceData = sourceData;
+  voiceData = voiceData;
+  cityData: any[] = [];
   currentTime: any;
-  treeOptions: ITreeOptions = {
-    useCheckbox: true
-  };
+  allComplete: boolean = false;
+  textToSpeechData: ISrcParams = new SrcParams();
 
-  constructor(
-    public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
-  ) {  }
+  constructor(public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
+              private emergencyBroadcastingService$: EmergencyBroadcastingService,
+              private locationsService$: LocationsService) {
+  }
 
   ngOnInit(): void {
-    this.currentTime = currentTime;
+    this.getLocations()
+  }
+
+  getLocations() {
+    this.locationsService$.getLocations().subscribe(data => {
+      console.log(data)
+      this.cityData = data
+    })
+
   }
 
   save() {
-    console.log(this.data)
+    // console.log(this.nodeItem);
+    // let districts = this.nodeItem[0].children;
+    // for (let i in districts) {
+    //   let wards = districts[i].children;
+    //   for (let j in wards) {
+    //     if (wards[j].check === true) {
+    //      this.data.locations?.push({Provine: districts[i].name, District: wards[j].name})
+    //     }
+    //   }
+    // }
+
+    this.data.src_type = 'TTS';
+    this.data.src_params = JSON.stringify(this.textToSpeechData)
+    this.emergencyBroadcastingService$.post(this.data).subscribe(
+      () => this.onSaveSuccess(),
+      () => this.onSaveError()
+    );
+
+
   }
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
       const audSrc = URL.createObjectURL(event.target.files[0]);
       this.audSrc = audSrc;
-
     }
+  }
+
+
+  setAll(completed: boolean) {
+    // this.allComplete = completed;
+    // if (this.nodeItem[0].children == null) {
+    //   return;
+    // }
+    // this.nodeItem[0].children.forEach((item: any) => {
+    //   item.check = completed;
+    //   this.selectAllWard(completed)
+    // });
+
+  }
+
+  selectAllWard(completed: boolean) {
+    // let city = this.nodeItem[0].children;
+    // if (city === null) {
+    //   return
+    // }
+    // city.forEach((district: any) => {
+    //   if (district.check === completed) {
+    //     district.children.forEach((ward: any) => {
+    //       ward.check = completed
+    //     })
+    //   }
+    // });
+    return false
+
+  }
+
+  someComplete(): boolean {
+    // if (this.nodeItem[0].children == null) {
+    //   return false;
+    // }
+    // return this.nodeItem[0].children.filter((t: any) => t.check).length > 0 && !this.allComplete;
+    return false
+  }
+
+  updateAllComplete() {
+    // this.allComplete = this.nodeItem[0].children != null && this.nodeItem[0].children.every((t: any) => t.check);
+  }
+
+  select(event: any) {
+    this.selected = event.value;
+  }
+
+
+  isEndTimeValid() {
+    return this.data.end && this.data.start && this.data.end > this.data.start;
   }
 
   private onSaveSuccess(): void {
@@ -68,41 +141,26 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     //   content: '',
     // });
     this.dialogRef.close(true);
+
   }
 
   private onSaveError() {
     this.isSaving = false;
   }
-
-  select(event: any) {
-    this.selected = event.value;
-  }
 }
 
 @Component({
-  selector: 'warning-dialog-component',
-  template: '',
+  selector: 'warning-dialog-component', template: '',
 })
 export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
 
-
   private dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent> | undefined;
 
-  constructor(
-    private router: Router,
-    private activatedRoute: ActivatedRoute,
-    private dialog: MatDialog,
-    private citiesService$: CitiesService,
-    private spinner: NgxSpinnerService,
-  ) {
+  constructor(private router: Router, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private citiesService$: CitiesService, private spinner: NgxSpinnerService,) {
   }
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
-      const promises: Promise<any>[] = [
-        this.citiesService$.getDistricts(COUNTRY()).toPromise(),
-        this.citiesService$.getWards().toPromise()
-      ];
 
       this.spinner.show();
       setTimeout(() => {
@@ -111,36 +169,37 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
 
       let nodeItem: any[] = [];
       let childrenArray: any[] = [];
-      Promise.all(promises).then(values => {
-        const [res1, res2] = values;
-        let array: any[] = [];
-        res1.forEach((item: any) => {
-          array = []
-          res2.forEach((value: any) => {
-            if (value.districtId === item.nameId) {
-              array.push({name: value.name})
-            }
-          })
-          childrenArray.push({
-            name: item.name,
-            children: array
-          })
-          nodeItem = [{
-            name: COUNTRY_TITLE(),
-            children: childrenArray
-          }]
-        })
+      // Promise.all(promises).then(values => {
+      //   const [res1, res2] = values;
+      //   let array: any[] = [];
+      //   res1.forEach((item: any) => {
+      //     array = []
+      //     res2.forEach((value: any) => {
+      //       if (value.districtId === item.nameId) {
+      //         array.push({name: value.name, check: false})
+      //       }
+      //     })
+      //     childrenArray.push({
+      //       name: item.name,
+      //       children: array,
+      //       display: false,
+      //       check: false
+      //     })
+      //     nodeItem = [{
+      //       name: COUNTRY_TITLE(),
+      //       check: false,
+      //       children: childrenArray
+      //     }]
+      //   })
+      //
+      //        });
 
-        this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
-          width: '800px',
-        });
-        this.dialogRef.componentInstance.nodeItem = nodeItem
-        this.dialogRef.componentInstance.data = data;
-        this.dialogRef.afterClosed().subscribe(
-          () => this.previousState(),
-          () => this.previousState());
+      this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
+        width: '800px',
       });
-
+      // this.dialogRef.componentInstance.nodeItem = nodeItem
+      // this.dialogRef.componentInstance.data = data;
+      this.dialogRef.afterClosed().subscribe(() => this.previousState(), () => this.previousState());
 
     });
 
@@ -149,14 +208,13 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
 
   previousState(): void {
     this.router.navigate(['./'], {
-      relativeTo: this.activatedRoute.parent,
-      queryParams: {},
-      queryParamsHandling: 'merge'
+      relativeTo: this.activatedRoute.parent, queryParams: {}, queryParamsHandling: 'merge'
     });
   }
 
   ngOnDestroy(): void {
     this.dialogRef = undefined;
   }
+
 
 }

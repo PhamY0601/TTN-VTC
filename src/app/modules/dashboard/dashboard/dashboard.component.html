@@ -9,7 +9,7 @@
     </div>
   </div>
   <div fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
-    <mat-card fxFlex="30" class="p-1">
+    <mat-card fxFlex="30" class="p-1" >
       <app-news-card></app-news-card>
     </mat-card>
     <div fxFlex="70">
@@ -20,12 +20,16 @@
     <div class="text-blue fz-3 fw-500">{{param ? (param | replaceStr) : (title_country | replaceStr)  }}</div>
     <div class="parent">
       <div class="child" *ngFor="let item of installData">
-        <app-content-card [district]="param ? (item.ward | replaceStr)  : (item.district | replaceStr)"
+        <app-content-card [district]="param ? (item.ward)  : (item.district )"
                           [speaker_establish]="item.speaker_establish"
                           [speaker_on]="item.speaker_on"
                           [speaker_off]="item.speaker_off"
                           [video_onl]="item.video_onl"
+                          [video_establish]="item.video_establish"
                           [video_off]="item.video_off"
+                          [transmitter_off]="item.transmitter_off"
+                          [transmitter_onl]="item.transmitter_onl"
+                          [transmitter_establish]="item.transmitter_establish"
                           [routerLink]="[ item.district]"
                           [ngClass]=" param ? '': 'link-active'"
         >

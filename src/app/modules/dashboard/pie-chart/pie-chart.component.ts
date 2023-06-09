@@ -5,6 +5,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 
 import {MatTableDataSource} from "@angular/material/table";
 import {ActivatedRoute} from "@angular/router";
+import {DashboardService} from "../../../shared/services/dashboard.service";
 
 Chart.register(ChartDataLabels);
 Chart.register(Colors);
@@ -29,6 +30,7 @@ export class PieChartComponent implements OnInit {
 
   constructor(
     private citiesService$: CitiesService,
+    private dashboardService$: DashboardService,
     private activatedRoute: ActivatedRoute
   ) {
     this.dataSource = new MatTableDataSource([])
@@ -42,9 +44,10 @@ export class PieChartComponent implements OnInit {
   }
 
   loadData(): void {
-    this.citiesService$.getPlayStreams().subscribe((data: any) => {
-      this.newsData = data;
-      this.dataSource.data = data;
+    this.dashboardService$.getTotal().subscribe((data: any) => {
+      let array = data.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
+      this.newsData = array[0];
+      this.dataSource.data = array[0];
       this.title = this.newsData.map((item) => item.name);
       this.data = this.newsData.map((item) => item.count);
       this.chart = new Chart('canvas', {

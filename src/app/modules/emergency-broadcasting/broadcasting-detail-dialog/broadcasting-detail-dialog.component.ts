@@ -1,10 +1,10 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
-import {FormBuilder} from "@angular/forms";
+
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {CitiesService} from "../../../shared/services/cities.service";
 import {EmergencyBroadcastingService} from "../../../shared/services/emergency-broadcasting.service";
 import * as moment from "moment";
+import {API} from "../../../helper/api";
 
 @Component({
   selector: 'broadcasting-detail-component',
@@ -26,10 +26,8 @@ export class BroadcastingDetailContentComponent implements OnInit {
   displayedColumnThird: string[] = ['title', 'content'];
 
 
+
   constructor(
-    // private eventManager: JhiEventManager,
-    private formBuilder: FormBuilder,
-    private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<BroadcastingDetailContentComponent>,
   ) {
   }
@@ -66,7 +64,6 @@ export class BroadcastingDetailContentComponent implements OnInit {
 export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
   param?: any;
   detailData: any;
-  totalTime = 0;
 
   private dialogRef: MatDialogRef<BroadcastingDetailContentComponent> | undefined;
 
@@ -81,61 +78,61 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.activatedRoute.data.subscribe(({data}: Data) => {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.param = Number(params.get('id'));
+      this.param = params.get('id');
 
     });
 
-    this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
-      this.detailData = data.filter((item: any) => item.id === this.param);
-      let array = this.detailData[0].station_list;
-      array.forEach((item:any) => {
-        this.totalTime = this.totalTime + item.time
-      })
 
+    this.emergencyBroadcastingService$.getDetail(this.param).subscribe((data) => {
+      this.detailData = data;
+      console.log(this.detailData.agencies)
 
       this.dialogRef = this.dialog.open(BroadcastingDetailContentComponent, {
         width: '800px',
       });
-      this.dialogRef.componentInstance.param = this.param
-      this.dialogRef.componentInstance.time = this.detailData[0].time;
-      this.dialogRef.componentInstance.dataSourceFirst = this.detailData[0].station_list;
-      this.dialogRef.componentInstance.dataSourceSecond = this.detailData[0].station_list;
-      this.dialogRef.componentInstance.dataSourceThird = [
 
+      this.dialogRef.componentInstance.data = this.detailData
+      //Lấy id
+      this.dialogRef.componentInstance.param = this.param
+      //Lấy danh sách trạm
+      this.dialogRef.componentInstance.dataSourceFirst = this.detailData.agencies;
+      //Lấy danh sách loa phát
+      this.dialogRef.componentInstance.dataSourceSecond = this.detailData.destinations;
+      console.log(this.detailData.receive_station)
+      //Lấy chi tiết nội dung
+
+      this.dialogRef.componentInstance.dataSourceThird = [
         {
           title: 'Tiêu đề:',
-          content: this.detailData[0].title,
+          content: this.detailData.title,
         },
         {
           title: 'Nội dung:',
-          content: this.detailData[0].content,
-        },
-        {
-          title: 'Người thực hiện',
-          content: this.detailData[0].performer,
+          content: this.detailData.content,
         },
         {
           title: 'Thời gian',
-          content:  (moment(this.detailData[0].start_time *1000)).format('DD-MM-YYYY HH:mm'),
+          content:  this.detailData.start_time + '-' + this.detailData.end_time
         },
         {
           title: 'Thời lượng',
-          content: (this.detailData[0].time / 60).toFixed(0) + ' phút',
+          content: (this.detailData.duration/60).toFixed(0) + ' phút',
         },
         {
           title: 'Trạm tiếp nhận',
-          content: this.detailData[0].receive_station,
+          content: this.detailData.receive_station ,
         },
         {
-          title: 'Loa đã phát',
-          content: this.detailData[0].play_successful + '/' + this.detailData[0].speaker,
+          title: 'Số loa đã phát',
+          content: this.detailData.total_device_playing + '/' + this.detailData.total_device,
         },
         {
-          title: 'Tổng thời lượng phát',
-          content: ((this.totalTime / (this.detailData[0].time * this.detailData[0].station) )*100).toFixed(0) + '%',
+          title: 'Tổng thời lượng yêu cầu phát',
+          content: (this.detailData.total_duration/60).toFixed(0) + ' phút'
         },
 
       ];
+
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),
         () => this.previousState());

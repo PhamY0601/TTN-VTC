@@ -7,19 +7,24 @@
 
 <mat-divider></mat-divider>
 <div mat-dialog-content fxLayout="column" fxLayoutGap="30">
-  <mat-expansion-panel *ngFor="let item of data" expanded>
+  <div *ngFor="let item of data">
+  <mat-expansion-panel *ngIf="item.district_display">
     <mat-expansion-panel-header>
       <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-        {{item.district}}
+        {{item.district_display}}
       </mat-panel-title>
     </mat-expansion-panel-header>
     <ol>
-      <li *ngFor="let ward of item.wards">
-        <p>{{ward.ward}}</p>
-      </li>
+      <div *ngFor="let ward of item.value">
+        <li *ngIf="ward.ward_display">
+          <p>{{ward.ward_display}}</p>
+        </li>
+      </div>
+
     </ol>
 
   </mat-expansion-panel>
+  </div>
+  </div>
 
-</div>
 

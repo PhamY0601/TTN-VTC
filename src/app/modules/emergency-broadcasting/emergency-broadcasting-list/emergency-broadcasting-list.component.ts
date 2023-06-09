@@ -58,17 +58,36 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  openDialog(id:any): void {
+  openDialog(id: any): void {
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
       this.dataDialog = data.filter((item: any) => item.id === id);
-      this.dataDialog  = this.dataDialog[0].area;
+      console.log(this.dataDialog[0].area)
+
+      //group theo district
+      const groupedData = this.dataDialog[0].area.reduce((acc: any, item: any) => {
+        if (!acc[item.district]) {
+          acc[item.district] = [];
+        }
+        acc[item.district].push(item);
+        return acc;
+      }, {});
+
+      let area: any[] = []
+      for (let i in groupedData) {
+        area.push({district: i, district_display: groupedData[i][0].district_display, value: groupedData[i]})
+      }
+      console.log(area)
+      this.dataDialog = area;
       let dialogRef = this.dialog.open(AreaDialogComponent, {
-      width: '500px',
+        width: '500px',
         data: this.dataDialog,
       });
-    dialogRef.afterClosed().subscribe(result => {});
+      dialogRef.afterClosed().subscribe(result => {
+      });
 
-  })}
+    })
+  }
+
 }
 
 @Component({
@@ -81,7 +100,8 @@ export class AreaDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<AreaDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) {
+  }
 
   closeDialog(): void {
     this.dialogRef.close();

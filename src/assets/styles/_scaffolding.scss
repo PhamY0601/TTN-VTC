@@ -172,6 +172,11 @@ p {
   background: #ADF9CF;
 }
 
+.status-establish {
+  color: #1286F3;
+  background: #E8F9FD;
+}
+
 .status-wait {
   background: #F6EADE;
   color: #FF7E07;
@@ -343,10 +348,10 @@ td {
   line-height: 25px;
 }
 
-.hiddenTable {
+.hiddenItem {
   display: none !important;
 }
-.showTable {
+.showItem {
   display: block !important;
 }
 .file-input {
@@ -368,4 +373,9 @@ td {
 
 .ngx-mat-timepicker-control {
   width: 150px !important;
+}
+.mat-mdc-form-field-error {
+  color: var(--mdc-theme-error, #f44336);
+  margin-top: 15px;
+  font-size: 14px;
 }

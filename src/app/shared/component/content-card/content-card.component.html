@@ -4,7 +4,7 @@
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="speaker_gray"></mat-icon>
       <div class="status-text text-green fw-500"
-           matTooltip="Online">
+           matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{speaker_on}}</div>
       </div>
@@ -14,7 +14,7 @@
         <div>{{speaker_establish}}</div>
       </div>
       <div class="status-text text-gray fw-500"
-           matTooltip="Offline">
+           matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{speaker_off}}</div>
       </div>
@@ -22,20 +22,39 @@
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="youtube_gray"></mat-icon>
       <div class="status-text text-green fw-500"
-           matTooltip="Online">
+           matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{video_onl}}</div>
       </div>
+      <div class="status-text text-dark-blue fw-500"
+           matTooltip="Đang phát">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{video_establish}}</div>
+      </div>
       <div class="status-text fw-500 text-gray"
-           matTooltip="Offline">
+           matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{video_off}}</div>
       </div>
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="transmitter"></mat-icon>
-      <div class="status status-play">
-       Tiếp âm
+      <div class="status-text text-green fw-500"
+           matTooltip="Kết nối">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{transmitter_onl}}</div>
+      </div>
+
+      <div class="status-text text-dark-blue fw-500"
+           matTooltip="Đang phát">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{transmitter_establish}}</div>
+      </div>
+
+      <div class="status-text fw-500 text-gray"
+           matTooltip="Mất kết nối">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{transmitter_off}}</div>
       </div>
 
     </div>

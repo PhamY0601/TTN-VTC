@@ -16,8 +16,12 @@ export class API {
   public static WARNINGCONTENT_URL = `${environment.apiUrl}_data/WarningContent`;
   public static REGISTRATIONCONTENT_URL = `${environment.apiUrl}_data/RegistrationContent`;
   public static EDITORIALCONTENT_URL = `${environment.apiUrl}_data/EditorialContent`;
-  public static EMERGENCYBROADCASTING_URL = `${environment.apiUrl}_data/EmergencyBroadcasting`;
-  public static DASHBOARD_URL = `http://10.0.0.117:8089/api/common/get?action=dashboard`;
-  public static LOGIN_URL = `http://10.0.0.117:8089/api/account/Login`
-
+  public static DASHBOARD_URL = `${environment.apiUrl}/ttn_api/api/common/get?action=dashboard`;
+  public static INSTALLATION_URL = `${environment.apiUrl}/ttn_api/api/common/get?action=installation`;
+  public static LOGIN_URL = `${environment.apiUrl}/ttn_test/api/account/Login`;
+  public static POST_EMERGENCYBROADCASTING_URL = `${environment.apiUrl}/ttn_test/api/app/addSosRecord`
+  public static EMERGENCYBROADCASTING_URL = `${environment.apiUrl}ttn_test/api/common/get?action=emergency_audio`;
+  public static EMERGENCYBROADCASTING_DETAIL_URL =  `${environment.apiUrl}ttn_test/api/common/get?action=emergency_audio_details&id=`;
+  public static AUDIO_URL = `${environment.apiUrl}ttn_test/ttn_/tts/`;
+  public static LOCATIONS_URL = `${environment.apiUrl}ttn_test/api/common/get?action=locations`;
 }

@@ -97,7 +97,6 @@ export class ReportBroadcastTimeService {
             item.time = timer$.getValue()
           }
         })
-        console.log(data);
 
         // In ra giá trị thời gian hiện tại
         console.log('Timer:', timer$.getValue());

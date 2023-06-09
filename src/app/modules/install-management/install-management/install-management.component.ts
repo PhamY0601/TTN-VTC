@@ -7,6 +7,7 @@ import {ActivatedRoute} from "@angular/router";
 import {DistrictService} from "../../../shared/services/district.service";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
+import {InstallationService} from "../../../shared/services/installation.service";
 
 @Component({
   selector: 'app-install-management',
@@ -26,10 +27,11 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   dataSourceSecond: any;
   @ViewChild('paginatorSecond', {static: true}) paginatorSecond!: MatPaginator;
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
-  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'c_endpointtype', 'createDate', 'position', 'status'];
+  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'createDate', 'position', 'status'];
 
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
+              private installationService$: InstallationService,
               private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService,) {
     this.dataSourceFirst = new MatTableDataSource([]);
@@ -69,46 +71,31 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
       this.spinner.hide();
     }, 1500);
 
-    this.citiesService$.getSpeakerLocation(_COUNTRY).subscribe((item) => {
-      this.dataSourceSecond.data = item;
-      item.forEach((data: any) => {
-        console.log({
-          city: data.city,
-          district: data.district,
-          ward: data.ward,
-          type: data.endpointtype,
-          longitude: data.longitude,
-          latitude: data.latitude,
-          date: data.createDate,
-          status: data.status
-        })
-      })
+    this.installationService$.getInstall().subscribe((data) => {
+      let arrayFirst = data.filter((item: any) => item.name === 'device_install').map((item: any) => item.value)
+      this.dataSourceFirst.data = arrayFirst[0];
+      let arraySecond = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
+      this.dataSourceSecond.data = arraySecond[0];
 
     });
 
 
-    if (this.param !== null) {
-      this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {
-          this.dataSourceFirst.data = data;
 
-        }
-      )
-    } else {
-      this.citiesService$.getInstallInfo(_COUNTRY).subscribe((data) => {
-        this.dataSourceFirst.data = data;
 
-      });
-    }
+    // if (this.param !== null) {
+    //   this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {
+    //       this.dataSourceFirst.data = data;
+    //
+    //     }
+    //   )
+    // } else {
+    //   this..subscribe((data) => {
+    //     this.dataSourceFirst.data = data;
+    //
+    //   });
+    // }
 
   }
 
-
-  coords = [
-    [20.3653, 105.2663],
-    [16.0000, 108.1458],
-    [19.8050, 105.6999],
-    [20.0617, 105.8055],
-    [19.9269, 105.8877],
-  ]
 }
 

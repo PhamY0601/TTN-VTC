@@ -11,7 +11,10 @@ export class ContentCardComponent {
   @Input() speaker_establish?:number;
   @Input() speaker_off?: number;
   @Input() video_onl?: number;
+  @Input() video_establish?:number;
   @Input() video_off?: number;
-  @Input() transmitter?: string;
+  @Input() transmitter_onl?: number;
+  @Input() transmitter_off?: number;
+  @Input() transmitter_establish?: number
 
 }
