@@ -48,93 +48,44 @@
       </div>
     </div>
 
-    <!--    Tạo checkbox tỉnh huyện xã-->
-    <!--    <div>-->
-    <!--      <div fxLayout="row" fxLayoutAlign=" center">-->
-    <!--        <div (click)="displayDistrict = !displayDistrict" class="cursor">-->
-    <!--          <mat-icon>{{displayDistrict ? 'expand_more' : 'chevron_right'}}</mat-icon>-->
-    <!--        </div>-->
-    <!--        <mat-checkbox (change)="setAll($event.checked)"-->
-    <!--                      [checked]="allComplete"-->
-    <!--                      [indeterminate]="someComplete()">-->
-    <!--          {{nodeItem[0].name}}-->
-    <!--        </mat-checkbox>-->
-    <!--      </div>-->
-    <!--      <div [class.hiddenItem]="!displayDistrict">-->
-    <!--        <ul>-->
-    <!--          <li *ngFor="let district of nodeItem[0].children">-->
-
-    <!--            <div fxLayout="row" fxLayoutAlign=" center">-->
-    <!--              <div (click)="district.display = !district.display"-->
-    <!--                   *ngIf="district.children.length > 0"-->
-    <!--                   class="cursor">-->
-    <!--                <mat-icon>{{district.display ? 'expand_more' : 'chevron_right'}}</mat-icon>-->
-    <!--              </div>-->
-    <!--              <mat-checkbox (change)="selectAllWard($event.checked);updateAllComplete()"-->
-    <!--                            [(ngModel)]="district.check"-->
-    <!--                            [checked]="district.check"-->
-    <!--                            [class.ms-4]="district.children.length === 0"-->
-    <!--                            name="district"-->
-    <!--              >-->
-    <!--                {{district.name}}-->
-    <!--              </mat-checkbox>-->
-    <!--            </div>-->
-
-    <!--            <div [class.hiddenItem]="!district.display">-->
-    <!--              <ul class="ms-2">-->
-    <!--                <li *ngFor="let ward of district.children">-->
-    <!--                  <mat-checkbox [(ngModel)]="ward.check"-->
-    <!--                                [checked]="ward.check"-->
-    <!--                                name="ward"-->
-    <!--                                required-->
-    <!--                  >-->
-    <!--                    {{ward.name}}-->
-    <!--                  </mat-checkbox>-->
-    <!--                </li>-->
-    <!--              </ul>-->
-    <!--            </div>-->
-    <!--          </li>-->
-    <!--        </ul>-->
-    <!--      </div>-->
-    <!--    </div>-->
-
     <div>
       <div fxLayout="row" fxLayoutAlign=" center">
         <div (click)="displayDistrict = !displayDistrict" class="cursor">
           <mat-icon>{{displayDistrict ? 'expand_more' : 'chevron_right'}}</mat-icon>
         </div>
-        <mat-checkbox (change)="setAll($event.checked)"
-                      [checked]="allComplete"
-                      [indeterminate]="someComplete()">
+        <mat-checkbox
+          (change)="selectAllChanged()"
+          [checked]="this.cityData[0]?.check"
+          [indeterminate]="someChecked(cityData[0])"
+         >
           {{cityData[0]?.Name}}
         </mat-checkbox>
       </div>
 
       <div [class.hiddenItem]="!displayDistrict">
         <ul>
-          <li *ngFor="let district of cityData[0]?.children">
-
+          <li *ngFor="let district of cityData[0]?.children; let i = index">
             <div fxLayout="row" fxLayoutAlign=" center">
               <div (click)="district.display = !district.display"
                    *ngIf="district.children.length > 0"
                    class="cursor">
                 <mat-icon>{{district.display ? 'expand_more' : 'chevron_right'}}</mat-icon>
               </div>
-              <mat-checkbox (change)="selectAllWard($event.checked);updateAllComplete()"
+              <mat-checkbox [(ngModel)]="district.check"
+                            (ngModelChange)="districtChanged(district)"
+                            [indeterminate]="someChecked(district)"
                             [class.ms-4]="district.children.length === 0"
-                            [(ngModel)]="district.check"
-                            [checked]="district.check"
-                            name="district">
+                            [ngModelOptions]="{standalone: true}">
                 {{district?.Name}}
               </mat-checkbox>
             </div>
 
             <div [class.hiddenItem]="!district.display">
               <ul class="ms-2">
-                <li *ngFor="let ward of district.children">
-                  <mat-checkbox [(ngModel)]="ward.check"
-                                [checked]="ward.check"
-                                name="ward"
+                <li *ngFor="let ward of district.children; let i = index">
+                  <mat-checkbox (ngModelChange)="wardChanged(ward)"
+                               [(ngModel)]="ward.check"
+                                [ngModelOptions]="{standalone: true}"
                                 required>
                     {{ward?.Name}}
                   </mat-checkbox>

@@ -36,7 +36,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   voiceData = voiceData;
   cityData: any[] = [];
   currentTime: any;
-  allComplete: boolean = false;
   textToSpeechData: ISrcParams = new SrcParams();
 
   constructor(public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
@@ -46,30 +45,43 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
 
   ngOnInit(): void {
     this.getLocations()
+
   }
 
   getLocations() {
     this.locationsService$.getLocations().subscribe(data => {
-      console.log(data)
       this.cityData = data
+      console.log(this.cityData)
     })
 
   }
 
   save() {
-    // console.log(this.nodeItem);
-    // let districts = this.nodeItem[0].children;
-    // for (let i in districts) {
-    //   let wards = districts[i].children;
-    //   for (let j in wards) {
-    //     if (wards[j].check === true) {
-    //      this.data.locations?.push({Provine: districts[i].name, District: wards[j].name})
-    //     }
-    //   }
-    // }
+    console.log(this.cityData);
+    let districts = this.cityData[0].children;
+    console.log(districts)
+    for (let i in districts) {
+      if(districts[i].check === true) {
+        this.data.locations?.push({
+          Province: districts[i].ParentCode,
+          District: districts[i].Code,
+        })
+      }
+      // let wards = districts[i].children;
+      // for (let j in wards) {
+      //   if (wards[j].check === true) {
+      //     this.data.locations?.push({
+      //       Province: districts[i].ParentCode,
+      //       District: districts[i].Code,
+      //       Ward: wards[j].Code
+      //     })
+      //   }
+      // }
+    }
 
     this.data.src_type = 'TTS';
     this.data.src_params = JSON.stringify(this.textToSpeechData)
+    console.log(this.data)
     this.emergencyBroadcastingService$.post(this.data).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()
@@ -85,45 +97,57 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     }
   }
 
+  selectAllChanged() {
 
-  setAll(completed: boolean) {
-    // this.allComplete = completed;
-    // if (this.nodeItem[0].children == null) {
-    //   return;
-    // }
-    // this.nodeItem[0].children.forEach((item: any) => {
-    //   item.check = completed;
-    //   this.selectAllWard(completed)
-    // });
+    this.cityData[0].check = !this.cityData[0].check;
 
+    this.cityData[0].children.forEach((district: any) => {
+      district.check = this.cityData[0].check;
+
+      if (district.children) {
+        district.children.forEach((child: any) => {
+          child.check = this.cityData[0].check;
+        });
+      }
+    });
   }
 
-  selectAllWard(completed: boolean) {
-    // let city = this.nodeItem[0].children;
-    // if (city === null) {
-    //   return
-    // }
-    // city.forEach((district: any) => {
-    //   if (district.check === completed) {
-    //     district.children.forEach((ward: any) => {
-    //       ward.check = completed
-    //     })
-    //   }
-    // });
-    return false
-
+  districtChanged(district: any) {
+    console.log(district)
+    if (district.children) {
+      district.children.forEach((ward: any) => ward.check = district.check);
+    }
+    this.updateAllComplete()
   }
 
-  someComplete(): boolean {
-    // if (this.nodeItem[0].children == null) {
-    //   return false;
-    // }
-    // return this.nodeItem[0].children.filter((t: any) => t.check).length > 0 && !this.allComplete;
-    return false
+  wardChanged(ward: any) {
+    ward.check = !ward.check
+    // tìm huyện có xã được check
+    let district = this.cityData[0].children.find((district: any) => district.Code === ward.ParentCode);
+
+    if (district) {
+
+      //cập nhật trạng thái cua huyện
+      district.check = district.children.every((child: any) => child.check);
+      console.log(district);
+
+    }
+    this.updateAllComplete()
   }
+
 
   updateAllComplete() {
-    // this.allComplete = this.nodeItem[0].children != null && this.nodeItem[0].children.every((t: any) => t.check);
+    this.cityData[0].check = this.cityData[0].children.every((item: any) => item.check);
+
+  }
+
+  someChecked(item: any) {
+    if (!item?.children || item?.children.length === 0) {
+      return false;
+    }
+
+    const checkedChildren = item?.children.filter((child: any) => child?.check);
+    return checkedChildren.length > 0 && checkedChildren.length < item?.children.length;
   }
 
   select(event: any) {
@@ -161,46 +185,16 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
-
       this.spinner.show();
       setTimeout(() => {
         this.spinner.hide();
-      }, 3500);
-
-      let nodeItem: any[] = [];
-      let childrenArray: any[] = [];
-      // Promise.all(promises).then(values => {
-      //   const [res1, res2] = values;
-      //   let array: any[] = [];
-      //   res1.forEach((item: any) => {
-      //     array = []
-      //     res2.forEach((value: any) => {
-      //       if (value.districtId === item.nameId) {
-      //         array.push({name: value.name, check: false})
-      //       }
-      //     })
-      //     childrenArray.push({
-      //       name: item.name,
-      //       children: array,
-      //       display: false,
-      //       check: false
-      //     })
-      //     nodeItem = [{
-      //       name: COUNTRY_TITLE(),
-      //       check: false,
-      //       children: childrenArray
-      //     }]
-      //   })
-      //
-      //        });
-
+      }, 500);
       this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
         width: '800px',
       });
-      // this.dialogRef.componentInstance.nodeItem = nodeItem
-      // this.dialogRef.componentInstance.data = data;
-      this.dialogRef.afterClosed().subscribe(() => this.previousState(), () => this.previousState());
-
+      this.dialogRef.afterClosed().subscribe(
+        () => this.previousState(),
+        () => this.previousState());
     });
 
 

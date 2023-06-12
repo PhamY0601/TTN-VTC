@@ -25,11 +25,12 @@ export class LocationsService {
           }
         });
 
-        let country = COUNTRY_TITLE()
+        // let country = COUNTRY_TITLE()
+        let country = '1'
         let locations = this.nestData(arr);
 
         locations.forEach((item:any) => {
-          if(item.Name === country) {
+          if(item.Code === country) {
             result.push(item);
           }
         })

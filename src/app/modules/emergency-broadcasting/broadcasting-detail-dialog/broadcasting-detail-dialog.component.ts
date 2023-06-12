@@ -88,7 +88,7 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
       console.log(this.detailData.agencies)
 
       this.dialogRef = this.dialog.open(BroadcastingDetailContentComponent, {
-        width: '800px',
+        width: '900px',
       });
 
       this.dialogRef.componentInstance.data = this.detailData
