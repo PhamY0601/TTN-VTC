@@ -44,7 +44,7 @@
           [(ngModel)]="data.end"
           [format]="24"
           name="end"></ngx-mat-timepicker-field>
-        <mat-error *ngIf="!isEndTimeValid()" class="mt--2">Thời gian kết thúc không hợp lệ</mat-error>
+<!--        <mat-error *ngIf="!isEndTimeValid()" class="mt&#45;&#45;2">Thời gian kết thúc không hợp lệ</mat-error>-->
       </div>
     </div>
 
@@ -57,7 +57,7 @@
           (change)="selectAllChanged()"
           [checked]="this.cityData[0]?.check"
           [indeterminate]="someChecked(cityData[0])"
-         >
+        >
           {{cityData[0]?.Name}}
         </mat-checkbox>
       </div>
@@ -84,7 +84,7 @@
               <ul class="ms-2">
                 <li *ngFor="let ward of district.children; let i = index">
                   <mat-checkbox (ngModelChange)="wardChanged(ward)"
-                               [(ngModel)]="ward.check"
+                                [(ngModel)]="ward.check"
                                 [ngModelOptions]="{standalone: true}"
                                 required>
                     {{ward?.Name}}

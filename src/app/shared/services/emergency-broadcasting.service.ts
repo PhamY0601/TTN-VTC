@@ -82,7 +82,8 @@ export class EmergencyBroadcastingService {
           total_device: arr[0].totalDevice,
           total_duration: arr[0].totalDuration,
           receive_station: receive_station,
-          link_audio: API.AUDIO_URL + arr[0].id + '.wav'
+          link_audio: API.AUDIO_URL + arr[0].id + '.wav',
+          performer: arr[0].excuted_by ? arr[0].excuted_by : ''
         }
       })
     );

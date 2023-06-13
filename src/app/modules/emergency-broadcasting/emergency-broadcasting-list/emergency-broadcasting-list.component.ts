@@ -1,8 +1,7 @@
-import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
-import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
 import {EmergencyBroadcastingService} from "../../../shared/services/emergency-broadcasting.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -12,7 +11,7 @@ import {NgxSpinnerService} from "ngx-spinner";
   templateUrl: './emergency-broadcasting-list.component.html',
   styleUrls: ['./emergency-broadcasting-list.component.scss']
 })
-export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit {
+export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit{
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
@@ -22,6 +21,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
 
   constructor(
+    private changeDetectorRef: ChangeDetectorRef,
     private emergencyBroadcastingService$: EmergencyBroadcastingService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService
@@ -30,7 +30,8 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
   }
 
   ngOnInit() {
-    this.loadData()
+    this.loadData();
+    this.changeDetectorRef.detectChanges()
   }
 
   ngAfterViewInit() {

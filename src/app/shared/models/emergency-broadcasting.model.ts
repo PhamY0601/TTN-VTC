@@ -24,7 +24,7 @@ export class EmergencyBroadcast implements IEmergencyBroadcasting {
     this.title = title ? title : '';
     this.content = content ? content : '';
     this.start = start ? start : '00:00';
-    this.end = end ? end : '01:00';
+    this.end = end ? end : '23:59';
     this.locations = locations ? locations : [];
     this.src_type = src_type ? src_type : '';
     this.src_params = src_params ? src_params : '';

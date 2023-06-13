@@ -1,8 +1,8 @@
-import {Component, OnInit, OnDestroy, ElementRef, ViewChild} from '@angular/core';
-import {MatDialogRef, MatDialog} from '@angular/material/dialog';
+import {Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY, COUNTRY_TITLE, sourceData, voiceData} from "../../../app.constants";
+import {sourceData, voiceData} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
 import {
   EmergencyBroadcast,
@@ -35,7 +35,8 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   sourceData = sourceData;
   voiceData = voiceData;
   cityData: any[] = [];
-  currentTime: any;
+  currentTime= new Date();
+
   textToSpeechData: ISrcParams = new SrcParams();
 
   constructor(public dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent>,
@@ -44,6 +45,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.data.start = this.currentTime.getHours() + ':' + this.currentTime.getMinutes()
     this.getLocations()
 
   }
@@ -92,8 +94,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
-      const audSrc = URL.createObjectURL(event.target.files[0]);
-      this.audSrc = audSrc;
+      this.audSrc = URL.createObjectURL(event.target.files[0]);
     }
   }
 
@@ -156,7 +157,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
 
 
   isEndTimeValid() {
-    return this.data.end && this.data.start && this.data.end > this.data.start;
+   return this.data.end && this.data.start && this.data.end > this.data.start;
   }
 
   private onSaveSuccess(): void {
@@ -204,6 +205,7 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
     this.router.navigate(['./'], {
       relativeTo: this.activatedRoute.parent, queryParams: {}, queryParamsHandling: 'merge'
     });
+
   }
 
   ngOnDestroy(): void {

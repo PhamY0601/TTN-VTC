@@ -18,10 +18,7 @@ import {
   BroadcastingDetailContentComponent,
   BroadcastingDetailDialogComponent
 } from "./broadcasting-detail-dialog/broadcasting-detail-dialog.component";
-import {TreeModule} from "@circlon/angular-tree-component";
 import {MatFormFieldModule} from "@angular/material/form-field";
-import {MatTreeModule} from "@angular/material/tree";
-
 
 
 @NgModule({
@@ -32,9 +29,8 @@ import {MatTreeModule} from "@angular/material/tree";
     SharedMaterialModule,
     FormsModule,
     NgxMatTimepickerModule,
-    TreeModule,
     MatFormFieldModule,
-    MatTreeModule
+
   ],
   exports: [
 

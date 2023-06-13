@@ -111,6 +111,10 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
           content: this.detailData.content,
         },
         {
+          title: 'Người thực hiện',
+          content: this.detailData.performer ,
+        },
+        {
           title: 'Thời gian',
           content:  this.detailData.start_time + '-' + this.detailData.end_time
         },
