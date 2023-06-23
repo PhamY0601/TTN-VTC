@@ -1,4 +1,4 @@
-import {AfterViewInit, ChangeDetectorRef, Component, DoCheck, Inject, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
@@ -11,17 +11,16 @@ import {NgxSpinnerService} from "ngx-spinner";
   templateUrl: './emergency-broadcasting-list.component.html',
   styleUrls: ['./emergency-broadcasting-list.component.scss']
 })
-export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit{
+export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'title', 'content', 'start_time', 'end_time', 'area', 'station', 'speaker', 'action'];
+  displayedColumns: string[] = ['stt', 'title', 'content', 'date', 'start_time', 'end_time', 'area', 'station', 'speaker', 'action'];
   dataSource: any;
   dataDialog: any[] = []
 
 
   constructor(
-    private changeDetectorRef: ChangeDetectorRef,
     private emergencyBroadcastingService$: EmergencyBroadcastingService,
     public dialog: MatDialog,
     private spinner: NgxSpinnerService
@@ -31,7 +30,6 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   ngOnInit() {
     this.loadData();
-    this.changeDetectorRef.detectChanges()
   }
 
   ngAfterViewInit() {
@@ -45,7 +43,18 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
       this.spinner.hide();
     }, 1000);
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
+      data.sort((i1: any, i2: any) => {
+        return i2.date - i1.date
+      })
       this.dataSource.data = data;
+
+    });
+
+    this.emergencyBroadcastingService$.data$.subscribe(data => {
+      data.sort((i1: any, i2: any) => {
+        return i2.date - i1.date
+      })
+      this.dataSource.data = data
     });
   }
 
@@ -80,7 +89,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
       console.log(area)
       this.dataDialog = area;
       let dialogRef = this.dialog.open(AreaDialogComponent, {
-        width: '500px',
+        width: '700px',
         data: this.dataDialog,
       });
       dialogRef.afterClosed().subscribe(result => {

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, Observable} from 'rxjs';
+import {BehaviorSubject, map, Observable} from 'rxjs';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
 import {header} from 'src/app/app.constants';
@@ -9,6 +9,9 @@ import {header} from 'src/app/app.constants';
   providedIn: 'root'
 })
 export class EmergencyBroadcastingService {
+
+  dataBehaviorSubject = new BehaviorSubject<any>(null);
+  data$ = this.dataBehaviorSubject.asObservable();
 
   constructor(private http: HttpClient) {
   }
@@ -25,11 +28,13 @@ export class EmergencyBroadcastingService {
     let arr: any[] = []
     return this.http.get(`${API.EMERGENCYBROADCASTING_URL}`, {headers}).pipe(
       map((res) => {
+
         Object.entries(res).map(([key, value]) => {
           if (key === 'data') {
             arr = value
           }
         });
+
         arr.forEach((item: any) => {
           result.push({
             id: item.id,
@@ -41,14 +46,20 @@ export class EmergencyBroadcastingService {
             total_agent_success: item.totalAgent_success,
             total_agencies: item.totalAgencies,
             total_device_sending: item.totalDevice_sending,
-            total_device: item.totalDevice
+            total_device: item.totalDevice,
+            date:  (new Date(item.activeddate))
           })
         })
-        return result
+       return result
       })
     );
 
   }
+
+  changeData(data:any) {
+    this.dataBehaviorSubject.next(data);
+  }
+
 
   getDetail(id:any): Observable<any> {
     const headers = header;

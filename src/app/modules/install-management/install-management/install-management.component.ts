@@ -29,6 +29,8 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
   displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'createDate', 'position', 'status'];
 
+  installDataChart: any;
+
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
               private installationService$: InstallationService,
@@ -74,9 +76,10 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.installationService$.getInstall().subscribe((data) => {
       let arrayFirst = data.filter((item: any) => item.name === 'device_install').map((item: any) => item.value)
       this.dataSourceFirst.data = arrayFirst[0];
+
       let arraySecond = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
       this.dataSourceSecond.data = arraySecond[0];
-
+      console.log(arraySecond[0])
     });
 
 

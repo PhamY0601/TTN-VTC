@@ -118,10 +118,10 @@ export class InstallationService {
           ward: item.ward,
           latitude: item.Lat,
           longitude: item.Lng,
-          type: item.status_display,
-          // type: item.type_display,
+          //type: item.status_display,
+           type: item.type_display,
           date: item.CreatedDate,
-          status: item.Status
+          status: item.Status ? item.Status : "0"
         })
       })
 

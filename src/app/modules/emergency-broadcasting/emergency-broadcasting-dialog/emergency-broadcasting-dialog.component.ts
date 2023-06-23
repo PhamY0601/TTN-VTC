@@ -165,8 +165,12 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     //   name: 'radioManagerModified',
     //   content: '',
     // });
+
     this.dialogRef.afterClosed().subscribe(result => {
-      this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe();
+      console.log(result)
+      this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data:any) =>{
+        this.emergencyBroadcastingService$.changeData(data);
+      });
     });
 
     this.dialogRef.close(true);
