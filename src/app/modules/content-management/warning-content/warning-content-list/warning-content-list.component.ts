@@ -43,6 +43,7 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
     }, 1000);
     this.contentManagementService$.getWarningContent().subscribe((data) => {
       this.dataSource.data = data.body
+      console.log(data.body)
 
     });
   }

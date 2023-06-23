@@ -51,6 +51,7 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit{
     }, 1000);
     this.contentManagementService$.getRegistrationContent().subscribe((data) => {
       this.dataSource.data = data.body
+      console.log(data.body)
     });
   }
 

@@ -14,7 +14,7 @@
           <mat-icon class="text-gray fz-3" *ngIf="element.ward  !== null || element.district !==null">location_on
           </mat-icon>
           <p>{{element.ward }}
-            <span *ngIf="element.ward  !== null || element.district !==null">-</span>
+            <span *ngIf="element.ward ||element.ward  !== null || element.district !==null">-</span>
             {{element.district }}
           </p>
         </div>

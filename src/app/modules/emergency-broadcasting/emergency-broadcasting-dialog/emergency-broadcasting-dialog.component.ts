@@ -165,6 +165,10 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     //   name: 'radioManagerModified',
     //   content: '',
     // });
+    this.dialogRef.afterClosed().subscribe(result => {
+      this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe();
+    });
+
     this.dialogRef.close(true);
 
   }
@@ -181,7 +185,11 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
 
   private dialogRef: MatDialogRef<EmergencyBroadcastingContentComponent> | undefined;
 
-  constructor(private router: Router, private activatedRoute: ActivatedRoute, private dialog: MatDialog, private citiesService$: CitiesService, private spinner: NgxSpinnerService,) {
+  constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private dialog: MatDialog,
+              private citiesService$: CitiesService,
+              private spinner: NgxSpinnerService,) {
   }
 
   ngOnInit() {
