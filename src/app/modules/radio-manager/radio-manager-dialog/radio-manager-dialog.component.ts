@@ -378,7 +378,7 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
       this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
       this.weekDayEffect(this.dialogRef.componentInstance.days, data.day);
       this.dialogRef.componentInstance.data = data;
-
+      console.log(data)
 
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),

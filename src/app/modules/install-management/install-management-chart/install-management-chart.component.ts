@@ -1,11 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Chart} from 'chart.js/auto'
 import ChartDataLabels from 'chartjs-plugin-datalabels';
-import {CitiesService} from "../../../shared/services/cities.service";
-import {DistrictService} from "../../../shared/services/district.service";
 import {ActivatedRoute} from "@angular/router";
 import {COUNTRY} from "../../../app.constants";
-import {InstallationService} from "../../../shared/services/installation.service";
+
 
 Chart.register(ChartDataLabels);
 
@@ -14,29 +12,28 @@ Chart.register(ChartDataLabels);
   templateUrl: './install-management-chart.component.html',
   styleUrls: ['./install-management-chart.component.scss']
 })
-export class InstallManagementChartComponent implements OnInit {
+export class InstallManagementChartComponent implements OnInit, OnChanges {
+  @Input() installData: any[] = []
+
   chart: any = [];
   backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
-  installData: any[] = []
   param?: string | null = '';
 
-  constructor(private installationServer$: InstallationService,
-              private activatedRoute: ActivatedRoute) {
-
-  }
+  constructor(private activatedRoute: ActivatedRoute) {}
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
       this.param = params.get('district');
     });
-    this.loadData(COUNTRY())
+    this.loadData()
   }
 
-  loadData(_COUNTRY:any): void {
-    // if (this.param !== null) {
-      this.installationServer$.getInstall().subscribe((data) => {
-        let array = data.filter((item: any) => item.name === 'device_total').map((item: any) => item.value)
-        this.installData = array[0];
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadData()
+  }
+
+  loadData(): void {
+
         let title = this.installData.map((item) => item.title)
         let value = this.installData.map((item) => item.count)
 
@@ -77,8 +74,7 @@ export class InstallManagementChartComponent implements OnInit {
                   }
                   const totalValue = datapoint.reduce(totalSum,0)
                   const percentValue = (value/totalValue *100).toFixed(1)
-                  const display = [`${percentValue}%`]
-                  return display
+                  return [`${percentValue}%`]
                 }
               },
 
@@ -86,64 +82,6 @@ export class InstallManagementChartComponent implements OnInit {
           },
           plugins: [ChartDataLabels]
         })
-      });
-    // } else {
-    //   this.citiesService$.getDeviceStatus(_COUNTRY).subscribe((data) => {
-    //     this.installData = data;
-    //     let title = this.installData.map((item) => item.title)
-    //     let value = this.installData.map((item) => item.count)
-    //
-    //     this.chart = new Chart('install-chart', {
-    //       type: 'pie',
-    //       data: {
-    //         labels: title,
-    //         datasets: [
-    //           {
-    //             data: value,
-    //             backgroundColor: this.backgroundColor,
-    //           },
-    //         ],
-    //       },
-    //       options: {
-    //         plugins: {
-    //           legend: {
-    //             position: 'bottom',
-    //             labels: {
-    //               boxWidth: 20,
-    //               boxHeight: 20,
-    //               padding: 50,
-    //               font: {
-    //                 size: 16
-    //               }
-    //             }
-    //           },
-    //           datalabels: {
-    //             font: {
-    //               size: 20,
-    //             },
-    //             color: 'white',
-    //
-    //             formatter: (value,context) => {
-    //               const datapoint = context.dataset.data
-    //               function totalSum (total:any,datapoint:any) {
-    //                 return total + datapoint
-    //               }
-    //               const totalValue = datapoint.reduce(totalSum,0)
-    //               const percentValue = (value/totalValue *100).toFixed(1)
-    //               const display = [`${percentValue}%`]
-    //               return display
-    //             }
-    //           },
-    //
-    //         },
-    //       },
-    //       plugins: [ChartDataLabels]
-    //     })
-    //   })
-    // }
-    //
-
-
   }
 
 }

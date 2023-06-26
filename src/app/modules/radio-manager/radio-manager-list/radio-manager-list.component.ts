@@ -13,7 +13,7 @@ import {AppConfirmService} from "../../../shared/services/app-confirm/app-confir
   templateUrl: './radio-manager-list.component.html',
   styleUrls: ['./radio-manager-list.component.scss']
 })
-export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestroy  {
+export class RadioManagerListComponent implements OnInit, AfterViewInit  {
 
   dataSource: any;
   @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
@@ -43,6 +43,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
       this.spinner.hide();
     }, 1500);
     this.citiesService$.getRadioStreaming(_COUNTRY).subscribe((data) => {
+      console.log(data)
       this.dataSource.data = data;
     });
   }
@@ -52,15 +53,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit, OnDestr
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // changedList() {
-  //   this.eventSubscriber = this.eventManager.subscribe('radioManagerModified', () => this.loadData(COUNTRY()));
-  // }
 
-  ngOnDestroy() {
-    if (this.eventSubscriber instanceof Subscription) {
-      // this.eventManager.destroy(this.eventSubscriber);
-    }
-  }
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;

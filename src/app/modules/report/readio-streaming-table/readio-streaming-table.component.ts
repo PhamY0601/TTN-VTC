@@ -179,8 +179,7 @@ export class ReadioStreamingTableComponent implements OnInit, AfterViewInit {
 
                 const totalValue = datapoint.reduce(totalSum, 0)
                 const percentValue = (value / totalValue * 100).toFixed(1)
-                const display = [`${percentValue}%`]
-                return display
+                return [`${percentValue}%`]
               }
             },
           },
@@ -233,8 +232,7 @@ export class ReadioStreamingTableComponent implements OnInit, AfterViewInit {
 
               const totalValue = datapoint.reduce(totalSum, 0)
               const percentValue = (value / totalValue * 100).toFixed(1)
-              const display = [`${percentValue}%`]
-              return display
+              return [`${percentValue}%`]
             }
           },
         },
@@ -242,5 +240,4 @@ export class ReadioStreamingTableComponent implements OnInit, AfterViewInit {
     })
 
   }
-
 }

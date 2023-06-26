@@ -6,7 +6,6 @@ import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {Chart} from "chart.js/auto";
 import {NgxSpinnerService} from "ngx-spinner";
-import {ReportBroadcastTimeService} from "../../../shared/services/report-broadcast-time.service";
 
 @Component({
   selector: 'app-broadcast-time-report',
@@ -194,8 +193,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
 
   constructor(private citiesService$: CitiesService,
               private elementRef: ElementRef,
-              private spinner: NgxSpinnerService,
-              private reportBroadcastTimeService$: ReportBroadcastTimeService) {
+              private spinner: NgxSpinnerService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -207,7 +205,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
     this.chartTime();
     this.getDistrict(COUNTRY());
     this.getWard();
-    // this.reportBroadcastTimeService$.test()
+
 
   }
 
@@ -272,7 +270,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
     let totalOrther = 0;
     totalOrther = total - totalSuccess
 
-      let array = [];
+    let array = [];
     array.push(totalSuccess,totalOrther)
     let htmlRef = this.elementRef.nativeElement.querySelector(`#canvasFrist`);
     this.chartByPlaySuccess = new Chart(htmlRef, {
@@ -316,8 +314,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
 
               const totalValue = datapoint.reduce(totalSum, 0)
               const percentValue = (value / totalValue * 100).toFixed(1)
-              const display = [`${percentValue}%`]
-              return display
+              return [`${percentValue}%`]
             }
           },
         },
@@ -379,8 +376,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
 
               const totalValue = datapoint.reduce(totalSum, 0)
               const percentValue = (value / totalValue * 100).toFixed(1)
-              const display = [`${percentValue}%`]
-              return display
+              return [`${percentValue}%`]
             }
           },
         },
@@ -442,8 +438,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
 
               const totalValue = datapoint.reduce(totalSum, 0)
               const percentValue = (value / totalValue * 100).toFixed(1)
-              const display = [`${percentValue}%`]
-              return display
+              return [`${percentValue}%`]
             }
           },
         },

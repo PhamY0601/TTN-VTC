@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {Chart, Colors} from 'chart.js/auto'
 import {CitiesService} from "../../../shared/services/cities.service";
 import ChartDataLabels from "chartjs-plugin-datalabels";
@@ -16,8 +16,9 @@ Chart.register(Colors);
   styleUrls: ['./pie-chart.component.scss']
 })
 
-export class PieChartComponent implements OnInit {
+export class PieChartComponent implements OnInit, OnChanges {
 
+  @Input() recordFieldData: any[] = [];
   param?: string | null = '';
   title: any[] = [];
   data: any[] = [];
@@ -31,7 +32,8 @@ export class PieChartComponent implements OnInit {
   constructor(
     private citiesService$: CitiesService,
     private dashboardService$: DashboardService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private elementRef: ElementRef
   ) {
     this.dataSource = new MatTableDataSource([])
   }
@@ -43,13 +45,18 @@ export class PieChartComponent implements OnInit {
     this.loadData()
   }
 
+  //Phát hiện thay đổi của Input
+  ngOnChanges(changes: SimpleChanges) {
+    this.loadData()
+  }
+
   loadData(): void {
-    this.dashboardService$.getTotal().subscribe((data: any) => {
-      let array = data.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
-      this.newsData = array[0];
-      this.dataSource.data = array[0];
-      this.title = this.newsData.map((item) => item.name);
-      this.data = this.newsData.map((item) => item.count);
+
+      this.dataSource.data = this.recordFieldData;
+      this.title = this.recordFieldData.map((item) => item.name);
+      this.data = this.recordFieldData.map((item) => item.count);
+      let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas`)
+
       this.chart = new Chart('canvas', {
         type: 'pie',
         data: {
@@ -83,14 +90,14 @@ export class PieChartComponent implements OnInit {
 
                 const totalValue = datapoint.reduce(totalSum, 0)
                 const percentValue = (value / totalValue * 100).toFixed(1)
-                const display = [`${percentValue}%`]
-                return display
+                return [`${percentValue}%`]
               }
             },
           },
         }
       })
-    })
+
+    this.chart.destroy()
   }
 
 

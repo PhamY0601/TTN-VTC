@@ -13,16 +13,14 @@ import {DashboardService} from "../../../shared/services/dashboard.service";
 })
 export class DashboardComponent implements OnInit {
   overviewData: any[] = [];
+  newsData: any[] = [];
   installData: any[] = [];
+  typeData: any[] = [];
   param?: string | null = '';
   title_country: any;
   array = {};
-  newsData: any[] = [];
 
-
-  constructor(private citiesService$: CitiesService,
-              private districtService$: DistrictService,
-              private dashboardService$: DashboardService,
+  constructor(private dashboardService$: DashboardService,
               private activatedRoute: ActivatedRoute,
               private spinner: NgxSpinnerService) {
   }
@@ -59,25 +57,30 @@ export class DashboardComponent implements OnInit {
 
   }
 
-
+ //Lấy dữ liệu từ API
   loadData(_COUNTRY:any): void {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 4000);
 
+    //lấy số liệu
     this.dashboardService$.getTotal().subscribe((res) => {
-      let arrayFirst = res.filter((item: any) => item.name === 'total').map((item: any) => item.value)
-      this.overviewData = arrayFirst[0];
+      let arrayOverview = res.filter((item: any) => item.name === 'total').map((item: any) => item.value)
+      this.overviewData =  arrayOverview[0];
 
-      let arraySecond = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
-      this.newsData = arraySecond[0];
+      //Bản tin đang phát
+      let arrayRecordActive = res.filter((item: any) => item.name === 'record_active').map((item: any) => item.value)
+      this.newsData = arrayRecordActive[0];
 
-      let arrayThird = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
-      this.installData = arrayThird[0];
+      //Số lượng lắp đặt
+      let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
+      this.installData = arrayDeviceStatus[0];
 
+      let arrayRecordField = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
+      this.typeData = arrayRecordField[0];
     })
-    }
+  }
 
 
 

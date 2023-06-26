@@ -10,10 +10,10 @@
   </div>
   <div fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
     <mat-card fxFlex="30" class="p-1" >
-      <app-news-card></app-news-card>
+      <app-news-card [newsData]="newsData"></app-news-card>
     </mat-card>
     <div fxFlex="70">
-      <app-pie-chart></app-pie-chart>
+      <app-pie-chart [recordFieldData]="typeData"></app-pie-chart>
     </div>
   </div>
   <mat-card class="p-4" fxLayout="column" fxLayoutAlign="space-around strecth" fxLayoutGap="30">

@@ -29,7 +29,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
   displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'createDate', 'position', 'status'];
 
-  installDataChart: any;
+  installDataChart: any[] = [];
 
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
@@ -74,12 +74,15 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     }, 1500);
 
     this.installationService$.getInstall().subscribe((data) => {
-      let arrayFirst = data.filter((item: any) => item.name === 'device_install').map((item: any) => item.value)
-      this.dataSourceFirst.data = arrayFirst[0];
+      let arrayDeviceInstall = data.filter((item: any) => item.name === 'device_install').map((item: any) => item.value)
+      this.dataSourceFirst.data = arrayDeviceInstall[0];
 
-      let arraySecond = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
-      this.dataSourceSecond.data = arraySecond[0];
-      console.log(arraySecond[0])
+      let arrayDevicePositions = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
+      this.dataSourceSecond.data = arrayDevicePositions[0];
+
+      let arrayDeviceTotal = data.filter((item: any) => item.name === 'device_total').map((item: any) => item.value)
+      this.installDataChart = arrayDeviceTotal[0]
+
     });
 
 
