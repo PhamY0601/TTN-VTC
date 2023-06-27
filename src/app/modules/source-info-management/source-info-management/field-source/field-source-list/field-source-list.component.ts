@@ -1,9 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort, Sort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SourceInfoManagementService} from "../../../../../shared/services/source-info-management.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+import {
+  AreaDialogComponent
+} from "../../../../emergency-broadcasting/emergency-broadcasting-list/emergency-broadcasting-list.component";
 
 @Component({
   selector: 'app-field-source',
@@ -16,7 +20,9 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['stt', 'name', 'type', 'schedule','url', 'listens', 'status'];
   dataSource: any;
+
   constructor( private spinner: NgxSpinnerService,
+               public dialog: MatDialog,
                private sourceInfoService$: SourceInfoManagementService) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -38,8 +44,11 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
 
   loadData(): void {
       this.sourceInfoService$.getFieldSource().subscribe((data) => {
-        this.dataSource.data = data.body
+        this.dataSource.data = data
     });
   }
+
+
+
 
 }

@@ -47,7 +47,8 @@ export const MY_FORMATS = {
     FieldSourceContentComponent,
     FieldSourceDialogComponent,
     GeographicSourceContentComponent,
-    GeographicSourceDialogComponent
+    GeographicSourceDialogComponent,
+
   ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

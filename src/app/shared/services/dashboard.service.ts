@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, Observable} from 'rxjs';
+import {combineLatestAll, map, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
 
@@ -115,10 +115,11 @@ export class DashboardService {
         let transmitter_establish = 0;
 
         group.forEach((device: any) => {
+
           if (device.type === "AudioBox") {
             province = device.provinceName;
             district = device.districtName;
-            switch (device.status) {
+            switch (device.STATUS) {
               case "0":
                 speaker_off = device.total;
                 break;
@@ -128,12 +129,18 @@ export class DashboardService {
               case "2":
                 speaker_establish = device.total;
                 break;
+              case null:
+                speaker_off = device.total;
             }
+
+
           }
           if (device.type === "Transmiter") {
             province = device.provinceName;
             district = device.districtName
-            switch (device.status) {
+
+            switch (device.STATUS) {
+
               case "0":
                 transmitter_off = device.total;
                 break;
@@ -148,7 +155,8 @@ export class DashboardService {
           if (device.type === "MediaBox") {
             province = device.provinceName;
             district = device.districtName
-            switch (device.status) {
+
+            switch (device.STATUS) {
               case "0":
                 video_off = device.total;
                 break;

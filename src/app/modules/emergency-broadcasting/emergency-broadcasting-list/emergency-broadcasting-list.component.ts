@@ -108,7 +108,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 export class AreaDialogComponent implements OnInit {
 
   constructor(
-    public dialogRef: MatDialogRef<AreaDialogComponent>,
+    public dialogRef: MatDialogRef<EmergencyBroadcastingListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {
   }

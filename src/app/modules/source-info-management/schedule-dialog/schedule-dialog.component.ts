@@ -1,14 +1,12 @@
 import {Component, OnInit, OnDestroy, ViewChild} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
-import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {SourceInfoManagementService} from "../../../shared/services/source-info-management.service";
-import {currentTime} from "../../../app.constants";
+
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'schedule-component',
   templateUrl: './schedule-dialog.component.html',
   styleUrls: ['./schedule-dialog.component.scss']
@@ -26,32 +24,12 @@ export class ScheduleContentComponent implements OnInit {
 
 
   constructor(
-    // private eventManager: JhiEventManager,
-    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ScheduleContentComponent>,
   ) {
   }
 
-  ngOnInit(): void {
-    this.currentTime = currentTime;
-  }
+  ngOnInit(): void {}
 
-  save() {
-    console.log(this.data)
-  }
-
-
-  private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
-    this.dialogRef.close(true);
-  }
-
-  private onSaveError() {
-    this.isSaving = false;
-  }
 }
 
 @Component({
@@ -76,7 +54,7 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
-      this.param = Number(params.get('id'));
+      this.param = params.get('id');
     });
 
     let a = this.activatedRoute.snapshot.url[0].path;
@@ -87,9 +65,12 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
     else {
       this.getData = this.sourceInfoService$.getGeographicSource()
     }
-    this.getData.subscribe((data: { body: any[]; }) => {
-      this.detailData = data.body;
+    this.getData.subscribe((data: any) => {
+      this.detailData = data;
+
       this.detailData = this.detailData.filter((item: any) => item.id === this.param);
+      console.log( this.detailData )
+
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
         width: '600px',

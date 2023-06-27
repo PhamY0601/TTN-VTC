@@ -39,7 +39,7 @@
       <ng-container matColumnDef="schedule">
         <th mat-header-cell *matHeaderCellDef> Lịch</th>
         <td mat-cell *matCellDef="let element">
-          <a mat-icon-button mat-sm-button class="text-blue"
+          <a mat-icon-button class="text-blue"
              [routerLink]="['schedule-field-source',element.id]">
             <mat-icon>event</mat-icon>
           </a>
@@ -48,7 +48,7 @@
 
       <ng-container matColumnDef="listens">
         <th mat-header-cell *matHeaderCellDef>Lượt nghe</th>
-        <td mat-cell *matCellDef="let element"> {{element.listens}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.views}} </td>
       </ng-container>
 
       <ng-container matColumnDef="status">

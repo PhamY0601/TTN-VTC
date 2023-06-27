@@ -11,8 +11,8 @@ export class API {
   public static DISTRICTS_URL = `${environment.apiUrl}lookups/model/Districts`; //quận
   public static WARDS_URL = `${environment.apiUrl}lookups/model/Wards`; //xã
   public static CITIES_URL = `${environment.apiUrl}lookups/model/Provinces`; //xã
-  public static FIELDSOURCE_URL = `${environment.apiUrl}_data/FieldSource`; //TNN theo lĩnh vực
-  public static GEOGRAPHICSOURCE_URL = `${environment.apiUrl}_data/GeographicSource`;
+  public static FIELDSOURCE_URL = `${environment.apiUrl}ttn_api/api/common/get?action=uri_field`; //TNN theo lĩnh vực
+  public static GEOGRAPHICSOURCE_URL = `${environment.apiUrl}ttn_api/api/common/get?action=geographic`;
   public static WARNINGCONTENT_URL = `${environment.apiUrl}_data/WarningContent`;
   public static REGISTRATIONCONTENT_URL = `${environment.apiUrl}_data/RegistrationContent`;
   public static EDITORIALCONTENT_URL = `${environment.apiUrl}_data/EditorialContent`;
@@ -24,4 +24,5 @@ export class API {
   public static EMERGENCYBROADCASTING_DETAIL_URL =  `${environment.apiUrl}ttn_test/api/common/get?action=emergency_audio_details&id=`;
   public static AUDIO_URL = `${environment.apiUrl}ttn_test/ttn_/tts/`;
   public static LOCATIONS_URL = `${environment.apiUrl}ttn_test/api/common/get?action=locations`;
+
 }
