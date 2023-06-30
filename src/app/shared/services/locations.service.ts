@@ -40,6 +40,8 @@ export class LocationsService {
     );
 
   }
+
+  //group
   nestData(data:any, parentCode = null) {
     let nestedData: any[] = [];
 

@@ -25,7 +25,7 @@ export const ContentManagementRoutes: Routes = [
   {
     path: 'registration-content',
     component: RegistrationContentListComponent,
-    data: { breadcrumb: 'Lịch phát đăng ký' },
+    data: { breadcrumb: 'Lịch phát đã đăng ký' },
     children: [
       {
         path: 'add',

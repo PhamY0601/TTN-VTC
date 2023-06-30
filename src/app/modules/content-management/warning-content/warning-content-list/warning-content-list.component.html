@@ -37,12 +37,16 @@
 
       <ng-container matColumnDef="warning_level">
         <th mat-header-cell *matHeaderCellDef>Mức cảnh báo</th>
-        <td mat-cell *matCellDef="let element">{{element.warning_level}}</td>
+        <td mat-cell *matCellDef="let element">Mức {{element.warning_level}}</td>
       </ng-container>
 
       <ng-container matColumnDef="receiver">
         <th mat-header-cell *matHeaderCellDef>Nơi nhận </th>
-        <td mat-cell *matCellDef="let element"> {{element.receiver}} </td>
+        <td mat-cell *matCellDef="let element" [ngSwitch]="element.receiver">
+          <div *ngSwitchCase="'Province'">Tỉnh, thành phố</div>
+          <div *ngSwitchCase="'District'">Quận, huyện</div>
+          <div *ngSwitchCase="'Ward'">Xã, phường</div>
+        </td>
       </ng-container>
 
       <ng-container matColumnDef="action">

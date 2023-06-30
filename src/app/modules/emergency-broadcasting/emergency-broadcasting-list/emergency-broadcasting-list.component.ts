@@ -15,7 +15,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'title', 'content', 'date', 'start_time', 'end_time', 'area', 'station', 'speaker', 'action'];
+  displayedColumns: string[] = ['stt', 'date', 'start_time', 'end_time', 'title', 'content',  'area', 'station', 'speaker', 'action'];
   dataSource: any;
   dataDialog: any[] = []
 
@@ -43,17 +43,21 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
       this.spinner.hide();
     }, 1000);
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
-      data.sort((i1: any, i2: any) => {
-        return i2.date - i1.date
-      })
+      data.sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
       this.dataSource.data = data;
 
     });
 
     this.emergencyBroadcastingService$.data$.subscribe(data => {
-      data.sort((i1: any, i2: any) => {
-        return i2.date - i1.date
-      })
+      data.sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
       this.dataSource.data = data
     });
   }

@@ -14,7 +14,7 @@ import {SourceInfoManagementService} from "../../../../../shared/services/source
 export class GeographicSourceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'district', 'type','schedule', 'url', 'listens', 'status'];
+  displayedColumns: string[] = ['stt', 'province', 'district', 'ward', 'type','schedule', 'url', 'listens', 'status'];
   dataSource: any;
 
   constructor( private spinner: NgxSpinnerService,

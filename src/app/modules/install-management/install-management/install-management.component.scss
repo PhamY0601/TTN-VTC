@@ -8,9 +8,9 @@
   width: 250px;
 }
 .mat-column-speaker, .mat-column-video, .mat-column-transmitter,
-.mat-column-c_endpointtype, .mat-column-createDate, .mat-column-status{
+.mat-column-c_endpointtype, .mat-column-createDate, .mat-column-status, .mat-column-position{
   text-align: center;
 }
-.mat-column-city, .mat-column-district, mat-column-ward {
-  width: 250px;
+.mat-column-city, .mat-column-district, .mat-column-ward {
+  width: 180px;
 }

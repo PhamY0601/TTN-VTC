@@ -3,9 +3,7 @@
   width: 150px;
   padding: 0 30px;
 }
-.mat-column-start_time, .mat-column-end_time {
- text-align: center;
-}
+
 :host ::ng-deep .mat-expansion-panel-header:hover {
   background: #FFFFFF !important;
   border-right: none !important;
@@ -13,8 +11,9 @@
 }
 
 .mat-column-content {
-  width: 350px;
+  width: 280px;
 }
-.mat-column-title {
-  width: 200px;
+
+.mat-column-date, .mat-column-start_time, .mat-column-end_time {
+ width: 120px;
 }

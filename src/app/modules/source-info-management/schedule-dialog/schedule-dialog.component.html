@@ -1,44 +1,60 @@
 <div fxLayout="row" fxLayoutGap="20">
   <h1 matDialogTitle class="text-blue">Thông tin phát sóng</h1>
 </div>
+
 <div mat-dialog-content fxLayout="column" fxLayoutGap="10">
-  <div fxLayout="row" fxLayoutGap="5">
-    <div class="text-blue fw-500">{{snapshotUrl === 'schedule-field-source' ? 'Lĩnh vực:' : 'Đối tượng:' }}</div>
-    <div class="text-gray">{{snapshotUrl === 'schedule-field-source' ? data[0].name : data[0].district }}</div>
-  </div>
-  <div fxLayout="row" fxLayoutGap="5">
-    <div class="text-blue fw-500"> Thời gian:</div>
-    <div class="text-gray">Từ ngày {{data[0].start_date| date:'dd-MM-yyyy'}} đến ngày {{data[0].end_date| date:'dd-MM-yyyy'}}</div>
+  <div  *ngIf="data[0].start_date !== null &&
+                data[0].end_date !== null &&
+                data[0].content !== null;
+                then thenDisplay else elseHidden">
   </div>
 
-  <div>
-    <div class="text-blue fw-500">Nội dung</div>
-    <div class="mat-elevation-z2 bg-white mt-2" fxLayout="column" fxLayoutAlign="space-between stretch">
-      <table mat-table [dataSource]="dataSource">
-        <ng-container matColumnDef="stt">
-          <th mat-header-cell *matHeaderCellDef> STT</th>
-          <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
-        </ng-container>
+<!--  hiện nếu đk đúng-->
 
-        <ng-container matColumnDef="content">
-          <th mat-header-cell *matHeaderCellDef>Nội dung</th>
-          <td mat-cell *matCellDef="let element"> {{element.title}} </td>
-        </ng-container>
+  <ng-template #thenDisplay>
+    <div fxLayout="row" fxLayoutGap="5">
+      <div class="text-blue fw-500">{{snapshotUrl === 'schedule-field-source' ? 'Lĩnh vực:' : 'Đối tượng:' }}</div>
+      <div class="text-gray">{{snapshotUrl === 'schedule-field-source' ? data[0].name : data[0].district }}</div>
+    </div>
+    <div fxLayout="row" fxLayoutGap="5">
+      <div class="text-blue fw-500"> Thời gian:</div>
+      <div class="text-gray">Từ ngày {{data[0].start_date| date:'dd-MM-yyyy'}} đến
+        ngày {{data[0].end_date| date:'dd-MM-yyyy'}}</div>
+    </div>
+    <div>
+      <div class="text-blue fw-500">Nội dung</div>
+      <div class="mat-elevation-z2 bg-white mt-2" fxLayout="column" fxLayoutAlign="space-between stretch">
+        <table mat-table [dataSource]="dataSource">
+          <ng-container matColumnDef="stt">
+            <th mat-header-cell *matHeaderCellDef> STT</th>
+            <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+          </ng-container>
 
-        <ng-container matColumnDef="time">
-          <th mat-header-cell *matHeaderCellDef>Thời gian</th>
-          <td mat-cell *matCellDef="let element" class="py-2"> {{element.start_time}} - {{element.end_time}} </td>
-        </ng-container>
+          <ng-container matColumnDef="content">
+            <th mat-header-cell *matHeaderCellDef>Nội dung</th>
+            <td mat-cell *matCellDef="let element"  class="py-2"> {{element.title}} </td>
+          </ng-container>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
-        <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn;"
-            [ngClass]="{'bg-table': even}"></tr>
-      </table>
-      <div>
+          <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef>Thời gian</th>
+            <td mat-cell *matCellDef="let element" class="py-2"> {{element.start_time}} - {{element.end_time}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+          <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn;"
+              [ngClass]="{'bg-table': even}"></tr>
+        </table>
+        <div>
+        </div>
       </div>
     </div>
-  </div>
+  </ng-template>
+
+<!--  Hiện khi đk sai-->
+  <ng-template #elseHidden>Đã hết hạn xem lịch phát</ng-template>
+
   <div mat-dialog-actions class="mt-1" align="end">
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
   </div>
 </div>
+

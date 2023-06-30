@@ -27,7 +27,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   dataSourceSecond: any;
   @ViewChild('paginatorSecond', {static: true}) paginatorSecond!: MatPaginator;
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
-  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'createDate', 'position', 'status'];
+  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'deviceId', 'createDate', 'position', 'status'];
 
   installDataChart: any[] = [];
 
@@ -78,6 +78,12 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
       this.dataSourceFirst.data = arrayDeviceInstall[0];
 
       let arrayDevicePositions = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
+
+      arrayDevicePositions[0].sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
       this.dataSourceSecond.data = arrayDevicePositions[0];
 
       let arrayDeviceTotal = data.filter((item: any) => item.name === 'device_total').map((item: any) => item.value)

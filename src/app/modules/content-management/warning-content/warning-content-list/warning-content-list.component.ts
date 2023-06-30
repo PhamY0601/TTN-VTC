@@ -4,8 +4,7 @@ import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {MatTableDataSource} from "@angular/material/table";
 import {ContentManagementService} from "../../../../shared/services/content-management.service";
-import {CitiesService} from "../../../../shared/services/cities.service";
-import {refCount} from "rxjs";
+
 
 @Component({
   selector: 'app-warning-content-list',
@@ -42,8 +41,8 @@ export class WarningContentListComponent implements OnInit, AfterViewInit {
       this.spinner.hide();
     }, 1000);
     this.contentManagementService$.getWarningContent().subscribe((data) => {
-      this.dataSource.data = data.body
-      console.log(data.body)
+      this.dataSource.data = data
+      console.log(data)
 
     });
   }

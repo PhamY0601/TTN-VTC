@@ -7,6 +7,7 @@ import {MatSort} from "@angular/material/sort";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppConfirmService} from "../../../shared/services/app-confirm/app-confirm.service";
+import {RadioManagementService} from "../../../shared/services/radio-management.service";
 
 @Component({
   selector: 'app-radio-manager-list',
@@ -20,12 +21,10 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
   @ViewChild(MatSort) sort!: MatSort;
 
 
-  displayedColumn: string[] = ['stt', 'ward', 'district', 'type', 'schedule', 'status', 'url', 'actions'];
-  eventSubscriber: Subscription | undefined;
+  displayedColumn: string[] = ['stt', 'province', 'district', 'ward', 'agency', 'type', 'url', 'status','schedule', 'actions'];
 
-  constructor(private citiesService$: CitiesService,
+  constructor(private radioManagementService$: RadioManagementService,
               private confirmService: AppConfirmService,
-              // private eventManager: JhiEventManager,
               private spinner: NgxSpinnerService,) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -42,7 +41,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
     setTimeout(() => {
       this.spinner.hide();
     }, 1500);
-    this.citiesService$.getRadioStreaming(_COUNTRY).subscribe((data) => {
+   this.radioManagementService$.getRadioManagement().subscribe((data) => {
       console.log(data)
       this.dataSource.data = data;
     });

@@ -1,7 +1,20 @@
-:host ::ng-deep .mat-sort-header-container {
-  display: flex;
-  justify-content: center;
+//:host ::ng-deep .mat-sort-header-container {
+//  display: flex;
+//  justify-content: center;
+//}
+
+.mat-column-url, .mat-column-type {
+  width: 120px;
 }
-.mat-column-date {
-  text-align: center;
+.mat-column-content {
+  width: 250px;
+}
+.mat-column-area {
+  width: 250px;
+}
+.mat-column-date{
+  width: 120px;
+}
+.mat-column-time {
+  width: 170px;
 }

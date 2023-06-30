@@ -14,7 +14,7 @@ export class ReportBroadcastTimeService {
   formData: any = new FormData();
   loudspeaker = this.http.post(`${API.IPPBXEXTEN_URL}`, this.formData) //loa
   playSchedule = this.http.post(`${API.PLAYSCHEDULE_URL}`, this.formData);
-  radioStreaming = this.http.post(`${API.RADIOSTREAMING_URL}`, this.formData);
+  radioStreaming = this.http.post(`${API.RADIO_MANAGEMENT_URL}`, this.formData);
 
   constructor(private http: HttpClient,
               private citiesService: CitiesService

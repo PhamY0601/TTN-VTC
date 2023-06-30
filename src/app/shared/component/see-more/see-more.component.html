@@ -1,5 +1,8 @@
 <div>
-  <div #seemore [ngClass]="{'display-text': isReadMore, 'mb-2':true}">{{content}}</div>
-  <a *ngIf="seemore.scrollHeight>40" class="title-btn text-blue"
-     (click)="showText()">{{ isReadMore ? 'Xem tiếp' : 'Thu gọn' }}</a>
+  <div #seemore [ngClass]="{'display-text': isReadMore, 'mb-2':true}">{{content}}
+  </div>
+    <a class="title-btn text-blue"
+       (click)="showText()">
+      <span *ngIf="seemore.scrollHeight>20">{{ isReadMore ? 'Xem tiếp' : 'Thu gọn' }}</span>
+    </a>
 </div>

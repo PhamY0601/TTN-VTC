@@ -6,16 +6,17 @@ import {ContentManagementService} from "../../../../shared/services/content-mana
 import {NgxSpinnerService} from "ngx-spinner";
 import {CitiesService} from "../../../../shared/services/cities.service";
 import {COUNTRY} from "../../../../app.constants";
+import {LocationsService} from "../../../../shared/services/locations.service";
 
 @Component({
   selector: 'app-registration-content',
   templateUrl: './registration-content-list.component.html',
   styleUrls: ['./registration-content-list.component.scss']
 })
-export class RegistrationContentListComponent implements OnInit, AfterViewInit{
+export class RegistrationContentListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'date', 'station', 'area', 'type', 'time', 'url', 'content'];
+  displayedColumns: string[] = ['stt', 'date', 'time', 'type', 'url', 'content', 'area'];
   dataSource: any;
   toDay = new Date();
   districtsData: any[] = [];
@@ -23,20 +24,18 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit{
   wardsData: any[] = [];
   arrayWardsData: any[] = [];
 
+
   constructor(
     private contentManagementService$: ContentManagementService,
-    private spinner: NgxSpinnerService,
-    private citiesService$: CitiesService,
-
+    private locationService$: LocationsService,
+    private spinner: NgxSpinnerService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
     this.loadData();
-    this.getDistrict(COUNTRY());
-    this.getWard();
-
+    this.getDistrict();
   }
 
   ngAfterViewInit() {
@@ -50,44 +49,41 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit{
       this.spinner.hide();
     }, 1000);
     this.contentManagementService$.getRegistrationContent().subscribe((data) => {
-      this.dataSource.data = data.body
-      console.log(data.body)
+      data.sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
+      this.dataSource.data = data
+
     });
+
   }
 
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-      this.districtsData.forEach((item: any) => {
-        this.arrayDistrictsData.push(item.nameId)
+
+  getDistrict() {
+    this.locationService$.getLocations().subscribe(data => {
+      data[0].children.forEach((item: any) => {
+        this.districtsData.push({value: item.Code, name: item.Name})
       })
     })
   }
 
-  getWard() {
-    let arrayWardsData: any[] = [];
-    this.citiesService$.getWards().subscribe((data) => {
-      arrayWardsData = data
-      for (let i in arrayWardsData) {
-        for (let j in this.arrayDistrictsData) {
-          if (this.arrayDistrictsData[j] === arrayWardsData[i].districtId) {
-            this.arrayWardsData.push(arrayWardsData[i])
-          }
+  changeWards(districtCode: any) {
+    this.locationService$.getLocations().subscribe(data => {
+      data[0].children.forEach((district: any) => {
+        if (district.Code === districtCode) {
+          district.children.forEach((ward: any) => {
+            this.wardsData.push({value: ward.Code, name: ward.Name})
+          })
         }
-      }
+      })
     })
   }
 
-  changeWards(nameId: any) {
-    this.arrayWardsData.forEach((item:any) => {
-      if (item.districtId === nameId) {
-        this.wardsData.push(item)
-      }
-    })
-  }
-
-  districtEffect(nameId: any): void {
+  districtEffect(event: any): void {
     this.wardsData = [];
-    this.changeWards(nameId.value)
+    this.changeWards(event.value)
+
   }
 }

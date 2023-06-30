@@ -69,16 +69,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
           District: districts[i].Code,
         })
       }
-      // let wards = districts[i].children;
-      // for (let j in wards) {
-      //   if (wards[j].check === true) {
-      //     this.data.locations?.push({
-      //       Province: districts[i].ParentCode,
-      //       District: districts[i].Code,
-      //       Ward: wards[j].Code
-      //     })
-      //   }
-      // }
     }
 
     this.data.src_type = 'TTS';
@@ -114,7 +104,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   districtChanged(district: any) {
-    console.log(district)
     if (district.children) {
       district.children.forEach((ward: any) => ward.check = district.check);
     }
@@ -161,11 +150,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
-
     this.dialogRef.afterClosed().subscribe(result => {
       console.log(result)
       this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data:any) =>{

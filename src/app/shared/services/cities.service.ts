@@ -16,7 +16,7 @@ export class CitiesService {
   radioStream = this.http.post(`${API.RADIOSTREAM_URL}`, this.formData); //bản tin phát hành
   radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //nhà cung cấp
   playStream = this.http.post(`${API.PLAYSTREAM_URL}`, this.formData); //bản tin đang phát
-  radioStreaming = this.http.post(`${API.RADIOSTREAMING_URL}`, this.formData); //phát thanh
+  radioStreaming = this.http.post(`${API.RADIO_MANAGEMENT_URL}`, this.formData); //phát thanh
   playSchedule = this.http.post(`${API.PLAYSCHEDULE_URL}`, this.formData);
   cities = this.http.post(`${API.CITIES_URL}`, this.formData);
   districts = this.http.post(`${API.DISTRICTS_URL}`, this.formData);

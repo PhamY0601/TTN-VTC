@@ -71,6 +71,12 @@ export class DashboardComponent implements OnInit {
 
       //Bản tin đang phát
       let arrayRecordActive = res.filter((item: any) => item.name === 'record_active').map((item: any) => item.value)
+
+      arrayRecordActive[0].sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
       this.newsData = arrayRecordActive[0];
 
       //Số lượng lắp đặt
