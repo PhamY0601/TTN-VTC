@@ -5,7 +5,11 @@
         <mat-card-title class="text-blue fz-3">Số lượng thiết bị</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <app-install-management-chart [installData]="installDataChart"></app-install-management-chart>
+<!--        <app-install-management-chart [installData]="installDataChart"></app-install-management-chart>-->
+        <div style="height: 400px; width: 400px">
+          <canvas id="install-chart">{{chart}}</canvas>
+        </div>
+
       </mat-card-content>
     </mat-card>
     <div class="mat-elevation-z2 bg-white" fxFlex="65" fxLayout="column" fxLayoutAlign="space-between stretch">

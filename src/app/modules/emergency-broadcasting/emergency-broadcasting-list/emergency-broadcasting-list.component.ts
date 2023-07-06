@@ -53,11 +53,11 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
     });
 
     this.emergencyBroadcastingService$.data$.subscribe(data => {
-      data.sort((item1: any, item2: any) => {
-        let date1: any = new Date(item1.date);
-        let date2: any = new Date(item2.date);
-        return date2 - date1;
-      });
+      // data.sort((item1: any, item2: any) => {
+      //   let date1: any = new Date(item1.date);
+      //   let date2: any = new Date(item2.date);
+      //   return date2 - date1;
+      // });
       this.dataSource.data = data
     });
   }
@@ -90,10 +90,11 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
       for (let i in groupedData) {
         area.push({district: i, district_display: groupedData[i][0].district_display, value: groupedData[i]})
       }
-      console.log(area)
+
       this.dataDialog = area;
+
       let dialogRef = this.dialog.open(AreaDialogComponent, {
-        width: '700px',
+        width: '500px',
         data: this.dataDialog,
       });
       dialogRef.afterClosed().subscribe(result => {

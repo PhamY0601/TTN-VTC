@@ -1,10 +1,13 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {CitiesService} from "../../../shared/services/cities.service";
 import {ActivatedRoute} from "@angular/router";
 import {COUNTRY} from "../../../app.constants";
 import {DistrictService} from "../../../shared/services/district.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {DashboardService} from "../../../shared/services/dashboard.service";
+import {MatTableDataSource} from "@angular/material/table";
+import {Chart} from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 @Component({
   selector: 'app-install-management',
@@ -18,11 +21,23 @@ export class DashboardComponent implements OnInit {
   typeData: any[] = [];
   param?: string | null = '';
   title_country: any;
-  array = {};
+
+
+
+  title: any[] = [];
+  data: any[] = [];
+  chart: any = [];
+  backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
+
+  displayedColumns: string[] = ['stt', 'name', 'count'];
+  dataSource: any;
+
 
   constructor(private dashboardService$: DashboardService,
               private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService) {
+              private spinner: NgxSpinnerService,
+              private elementRef: ElementRef) {
+    this.dataSource = new MatTableDataSource([])
   }
 
   ngOnInit() {
@@ -52,13 +67,13 @@ export class DashboardComponent implements OnInit {
     this.activatedRoute.paramMap.subscribe(params => {
       this.param = params.get('district');
     });
-    this.loadData(COUNTRY());
+    this.loadData();
     this.title_country = COUNTRY();
 
   }
 
  //Lấy dữ liệu từ API
-  loadData(_COUNTRY:any): void {
+  loadData(): void {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
@@ -83,11 +98,65 @@ export class DashboardComponent implements OnInit {
       let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
       this.installData = arrayDeviceStatus[0];
 
+      //Loại bản tin
       let arrayRecordField = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
-      this.typeData = arrayRecordField[0];
+      this.typeData = arrayRecordField[0]
+      this.createChart(arrayRecordField[0])
     })
   }
 
+
+  createChart(chartData:any): void {
+
+    this.dataSource.data = chartData;
+    this.title = chartData.map((item:any) => item.name);
+    this.data = chartData.map((item:any) => item.count);
+    // let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas`)
+
+    this.chart = new Chart('canvas', {
+      type: 'pie',
+      data: {
+        labels: this.title,
+        datasets: [
+          {
+            data: this.data,
+            backgroundColor: this.backgroundColor,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+          legend: {
+            display: false
+          },
+          datalabels: {
+            font: {
+              size: 14,
+            },
+            color: 'white',
+
+            formatter: (value, context) => {
+              const datapoint = context.dataset.data
+
+              function totalSum(total: any, datapoint: any) {
+                return total + datapoint
+              }
+
+              const totalValue = datapoint.reduce(totalSum, 0)
+              const percentValue = (value / totalValue * 100).toFixed(1)
+              return [`${percentValue}%`]
+            }
+          },
+        },
+      },
+      plugins: [ChartDataLabels],
+
+    })
+
+    //this.chart.destroy()
+  }
 
 
 }

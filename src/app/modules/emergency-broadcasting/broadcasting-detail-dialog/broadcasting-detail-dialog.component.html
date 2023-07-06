@@ -88,49 +88,38 @@
 
       <ng-container matColumnDef="station">
         <th mat-header-cell *matHeaderCellDef> Trạm phát</th>
-        <td mat-cell *matCellDef="let element"> {{element.ward_display? element.ward_display : element.district_display}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.agencyName}} </td>
       </ng-container>
 
-      <ng-container matColumnDef="speaker">
-        <th mat-header-cell *matHeaderCellDef>Loa</th>
-        <td mat-cell *matCellDef="let element">
-          <div class="status" [ngClass]=
-            "{'status-increase': calculateRatio(element.play_successful,element.speaker) >= '80'
-                            || calculateRatio(element.play_successful,element.speaker) === '100',
-                  'status-decrease':calculateRatio(element.play_successful,element.speaker) <= '60',
-                   'status-wait':
-                   calculateRatio(element.play_successful,element.speaker ) > '60' &&
-                   calculateRatio(element.play_successful,element.speaker) < '80',
-                  }">
-            {{element.play_successful}} &#47; {{element.speaker}}
-          </div>
-        </td>
+      <ng-container matColumnDef="name_device">
+        <th mat-header-cell *matHeaderCellDef> Mã thiết bị</th>
+        <td mat-cell *matCellDef="let element"> {{element.deviceId}} </td>
       </ng-container>
 
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
-        <td mat-cell *matCellDef="let element"> {{(element.time / 60).toFixed(0)}} phút</td>
+        <td mat-cell *matCellDef="let element"> {{(element.duration / 60).toFixed(0)}} phút</td>
       </ng-container>
 
       <ng-container matColumnDef="time_request">
         <th mat-header-cell *matHeaderCellDef>Thời lượng yêu cầu</th>
-        <td mat-cell *matCellDef="let element"> {{ (time / 60).toFixed(0) }} phút</td>
+        <td mat-cell *matCellDef="let element"> {{ (element.required_duration  / 60).toFixed(0) }} phút</td>
       </ng-container>
 
       <ng-container matColumnDef="ratio">
         <th mat-header-cell *matHeaderCellDef>Tỉ lệ</th>
         <td mat-cell *matCellDef="let element">
           <div class="status" [ngClass]=
-            "{'status-increase': calculateRatio(element.time,time) >= '80'
-                              || calculateRatio(element.time,time) === '100',
-                  'status-decrease':calculateRatio(element.time,time) <= '60',
-                   'status-wait':
-                   calculateRatio(element.time,time ) > '60' &&
-                   calculateRatio(element.time,time) < '80',
-                  }">
-            {{ calculateRatio(element.time, time)}} %
+                        "{     'status-increase': element.rate >= 80 ||
+                                                element.rate=== 100,
+                                'status-decrease':element.rate <= 60,
+                               'status-wait': element.rate > 60 &&
+                                               element.rate < 80
+                              }">
+                        {{element.rate}} %
           </div>
         </td>
+
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnSecond"></tr>

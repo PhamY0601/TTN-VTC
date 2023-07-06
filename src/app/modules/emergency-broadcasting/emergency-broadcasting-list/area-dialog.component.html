@@ -8,23 +8,27 @@
 <mat-divider></mat-divider>
 <div mat-dialog-content fxLayout="column" fxLayoutGap="30">
   <div *ngFor="let item of data">
-  <mat-expansion-panel *ngIf="item.district_display">
-    <mat-expansion-panel-header>
-      <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-        {{item.district_display}}
-      </mat-panel-title>
-    </mat-expansion-panel-header>
-    <ol>
-      <div *ngFor="let ward of item.value">
-        <li *ngIf="ward.ward_display">
-          <p>{{ward.ward_display}}</p>
-        </li>
-      </div>
+    <!--    <mat-expansion-panel *ngIf="item.district_display">-->
+    <!--      <mat-expansion-panel-header>-->
+    <!--        <mat-panel-title class="text-blue fz-2 fw-400 my-2">-->
+    <!--          {{item.district_display}}-->
+    <!--        </mat-panel-title>-->
+    <!--      </mat-expansion-panel-header>-->
+    <!--      <ol>-->
+    <!--        <div *ngFor="let ward of item.value">-->
+    <!--          <li *ngIf="ward.ward_display">-->
+    <!--            <p>{{ward.ward_display}}</p>-->
+    <!--          </li>-->
+    <!--        </div>-->
 
-    </ol>
+    <!--      </ol>-->
 
-  </mat-expansion-panel>
+    <!--    </mat-expansion-panel>-->
+    {{item.district_display}}
+    <div *ngFor="let ward of item.value">
+      <p>{{ward.ward_display}}</p>
+    </div>
   </div>
-  </div>
+</div>
 
 

@@ -57,7 +57,7 @@
          <div class="status" [ngClass] =
                  "{'status-increase': calculateRatio(element.total_agent_success,element.total_agencies ) >= '80'
                                     || calculateRatio(element.total_agent_success,element.total_agencies) === '100',
-                  'status-decrease':calculateRatio(element.total_agent_success,element.total_agencies ) <= '60',
+                  'status-decrease':calculateRatio(element.total_agent_success,element.total_agencies ) <= '60' ,
                    'status-wait':
                    calculateRatio(element.total_agent_success,element.total_agencies) > '60' &&
                    calculateRatio(element.total_agent_success,element.total_agencies ) < '80',

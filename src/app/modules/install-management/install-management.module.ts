@@ -4,7 +4,6 @@ import {RouterModule} from "@angular/router";
 import {InstallManagementRoutes} from "./install-management.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {InstallManagementComponent} from "./install-management/install-management.component";
-import {InstallManagementChartComponent} from "./install-management-chart/install-management-chart.component";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
 
 
@@ -18,9 +17,7 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
 
   ],
   declarations: [
-    InstallManagementComponent,
-    InstallManagementChartComponent,
-
+    InstallManagementComponent
   ]
 })
 export class InstallManagementModule {

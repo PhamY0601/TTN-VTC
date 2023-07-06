@@ -5,7 +5,6 @@ import {DashboardRoutes} from "./dashboard.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {DashboardComponent} from "./dashboard/dashboard.component";
-import {PieChartComponent} from "./pie-chart/pie-chart.component";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
 
 
@@ -22,8 +21,7 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
     DashboardComponent
   ],
   declarations: [
-    DashboardComponent,
-    PieChartComponent,
+    DashboardComponent
   ]
 })
 export class DashboardModule {

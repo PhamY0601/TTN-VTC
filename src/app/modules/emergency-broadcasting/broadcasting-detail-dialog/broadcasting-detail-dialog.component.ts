@@ -14,13 +14,14 @@ import {API} from "../../../helper/api";
 export class BroadcastingDetailContentComponent implements OnInit {
   data: any;
   isSaving = false;
-  time: any;
+  required_duration: any = 0;
+  time =0
   param: any;
   dataSourceFirst: any;
   displayedColumnFirst: string[] = ['stt', 'station', 'speaker', 'time'];
 
   dataSourceSecond: any;
-  displayedColumnSecond: string[] = ['stt', 'station', 'speaker', 'time', 'time_request', 'ratio'];
+  displayedColumnSecond: string[] = ['stt', 'station', 'name_device', 'time', 'time_request', 'ratio'];
 
   dataSourceThird: any;
   displayedColumnThird: string[] = ['title', 'content'];
@@ -29,8 +30,7 @@ export class BroadcastingDetailContentComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<BroadcastingDetailContentComponent>,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
 
@@ -45,10 +45,6 @@ export class BroadcastingDetailContentComponent implements OnInit {
   }
 
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
     this.dialogRef.close(true);
   }
 
@@ -85,21 +81,27 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
 
     this.emergencyBroadcastingService$.getDetail(this.param).subscribe((data) => {
       this.detailData = data;
-      console.log(this.detailData.agencies)
 
       this.dialogRef = this.dialog.open(BroadcastingDetailContentComponent, {
         width: '900px',
       });
+
+      let devicesData: any[] = [];
+      this.detailData.agencies.forEach((agency: any) => {
+        if (agency.devices && Array.isArray(agency.devices)) {
+          devicesData = [...devicesData, ...agency.devices];
+        }
+      });
+      console.log(this.detailData)
 
       this.dialogRef.componentInstance.data = this.detailData
       //Lấy id
       this.dialogRef.componentInstance.param = this.param
       //Lấy danh sách trạm
       this.dialogRef.componentInstance.dataSourceFirst = this.detailData.agencies;
+
+      this.dialogRef.componentInstance.dataSourceSecond = devicesData;
       //Lấy danh sách loa phát
-      this.dialogRef.componentInstance.dataSourceSecond = this.detailData.destinations;
-      console.log(this.detailData.receive_station)
-      //Lấy chi tiết nội dung
 
       this.dialogRef.componentInstance.dataSourceThird = [
         {

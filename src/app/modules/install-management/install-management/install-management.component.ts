@@ -8,6 +8,8 @@ import {DistrictService} from "../../../shared/services/district.service";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
 import {InstallationService} from "../../../shared/services/installation.service";
+import {Chart} from "chart.js/auto";
+import ChartDataLabels from "chartjs-plugin-datalabels";
 
 @Component({
   selector: 'app-install-management',
@@ -30,6 +32,9 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'deviceId', 'createDate', 'position', 'status'];
 
   installDataChart: any[] = [];
+  chart: any = [];
+  backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
+
 
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
@@ -41,9 +46,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      this.param = params.get('district');
-    });
+
     this.loadData(COUNTRY());
 
 
@@ -87,25 +90,63 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
       this.dataSourceSecond.data = arrayDevicePositions[0];
 
       let arrayDeviceTotal = data.filter((item: any) => item.name === 'device_total').map((item: any) => item.value)
-      this.installDataChart = arrayDeviceTotal[0]
+      this.createChart(arrayDeviceTotal[0])
 
     });
 
+  }
+
+  createChart(chartData:any)  {
+    console.log(chartData)
+    let title = chartData.map((item:any) => item.title)
+    let value = chartData.map((item:any) => item.count)
 
 
+    this.chart = new Chart('install-chart', {
+      type: 'pie',
+      data: {
+        labels: title,
+        datasets: [
+          {
+            data: value,
+            backgroundColor: this.backgroundColor,
+          },
+        ],
+      },
+      options: {
+        plugins: {
+          legend: {
+            position: 'bottom',
+            labels: {
+              boxWidth: 15,
+              boxHeight: 15,
+              padding: 50,
+              font: {
+                size: 14
+              }
+            }
+          },
+          datalabels: {
+            font: {
+              size: 20,
+            },
+            color: 'white',
 
-    // if (this.param !== null) {
-    //   this.districtService$.getInfoDistrict(_COUNTRY, this.param).subscribe((data) => {
-    //       this.dataSourceFirst.data = data;
-    //
-    //     }
-    //   )
-    // } else {
-    //   this..subscribe((data) => {
-    //     this.dataSourceFirst.data = data;
-    //
-    //   });
-    // }
+            formatter: (value,context) => {
+              const datapoint = context.dataset.data
+              function totalSum (total:any,datapoint:any) {
+                return total + datapoint
+              }
+              const totalValue = datapoint.reduce(totalSum,0)
+              const percentValue = (value/totalValue *100).toFixed(1)
+              return [`${percentValue}%`]
+            }
+          },
+
+        },
+      },
+       plugins: [ChartDataLabels]
+    })
 
   }
 
