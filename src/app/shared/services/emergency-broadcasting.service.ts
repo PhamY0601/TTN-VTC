@@ -36,6 +36,11 @@ export class EmergencyBroadcastingService {
         });
 
         arr.forEach((item: any) => {
+          let areaDetail: any[] = [];
+          item.destinations.forEach((district:any) => {
+            areaDetail.push(district.district_display)
+          })
+
           result.push({
             id: item.id,
             title: item.title,
@@ -47,7 +52,8 @@ export class EmergencyBroadcastingService {
             total_agencies: item.totalAgencies,
             total_device_sending: item.totalDevice_sending,
             total_device: item.totalDevice,
-            date:  (new Date(item.activeddate))
+            date:  (new Date(item.activeddate)),
+            areaDetail: areaDetail
           })
         })
        return result

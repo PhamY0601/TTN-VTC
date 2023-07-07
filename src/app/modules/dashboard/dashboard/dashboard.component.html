@@ -1,6 +1,10 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
-  <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px">
-    <div class="full-width" *ngFor="let item of overviewData">
+  <div fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="30px"
+       fxLayout.xs= "column"
+      >
+    <div *ngFor="let item of overviewData"
+         fxFlex="23"
+         class="full-width">
       <app-overview-card [title]="item.name_display"
                          [count]="item.total"
                          [icon]="item.icon"
@@ -8,15 +12,17 @@
       </app-overview-card>
     </div>
   </div>
-  <div fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
+  <div style="height: 500px"
+    fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
+
     <mat-card fxFlex="30" class="p-1" >
       <app-news-card [newsData]="newsData"></app-news-card>
     </mat-card>
     <div fxFlex="70">
-      <mat-card class="py-3 px-5" style="height: 100%;">
+      <mat-card class="p-5" style="height: 100%;">
         <p class="text-blue fz-3 fw-500">Loại bản tin</p>
         <div fxLayout="row" fxLayoutAlign="space-between center">
-          <div fxFlex="40" class="mat-elevation-z2 bg-white" fxLayout="column" fxLayoutAlign="space-between stretch">
+          <div fxFlex="55" class="mat-elevation-z2 bg-white py-5" fxLayout="column" fxLayoutAlign="space-between stretch">
             <table mat-table [dataSource]="dataSource">
               <ng-container matColumnDef="stt">
                 <th mat-header-cell *matHeaderCellDef> STT</th>
@@ -26,9 +32,11 @@
               <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef>Lĩnh vực</th>
                 <td mat-cell *matCellDef="let element; let i = index;">
-                  <div fxLayout="row" fxLayoutAlign=" center">
-                    <mat-icon class="color-{{i}}">stop</mat-icon>
-                    <div>{{element.name}}</div>
+                  <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap = "10">
+                    <div>
+                      <mat-icon class="color-{{i}}">stop</mat-icon>
+                    </div>
+                    <div class="py-2">{{element.name}}</div>
                   </div>
                 </td>
               </ng-container>
@@ -41,10 +49,16 @@
               <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
               <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumns;"
                   [ngClass]="{'bg-table': even}"></tr>
+
             </table>
+            <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+              <div >Số bản ghi của bảng là: {{dataSource.data.length}}</div>
+              <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[4]"
+                             #paginatorRef></mat-paginator>
+            </div>
 
           </div>
-          <div fxFlex="60" style="
+          <div fxFlex="45" style="
               display: flex;
               justify-content: center;
               align-items: center;">
