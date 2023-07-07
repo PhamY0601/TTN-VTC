@@ -374,8 +374,17 @@ td {
 .ngx-mat-timepicker-control {
   width: 150px !important;
 }
+
 .mat-mdc-form-field-error {
   color: var(--mdc-theme-error, #f44336);
-  margin-top: 15px;
+  margin-top: 5px;
   font-size: 14px;
+}
+
+.mat-mdc-form-field-subscript-wrapper {
+  display: none !important;
+}
+
+@media only screen and (max-width : 480px) {
+  /* Styles */
 }

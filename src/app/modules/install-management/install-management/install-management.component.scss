@@ -22,3 +22,21 @@
 //  height: 40vh;
 //  width: 50vw;
 //}
+@media screen and (max-width: 600px) {
+  .mat-header-row {
+    display: none;
+  }
+
+  .mat-row {
+    border-bottom: 1px solid #ccc;
+    display: block;
+    padding: 8px 0;
+  }
+
+  .mat-cell,
+  .mat-footer-cell {
+    display: inline-block;
+    width: 100%;
+    text-align: left;
+  }
+}

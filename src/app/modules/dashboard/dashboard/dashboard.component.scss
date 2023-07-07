@@ -8,9 +8,13 @@
   width: 23%;
 }
 
-.mat-column-count, mat-column-stt {
+.mat-column-count, .mat-column-stt {
   text-align: center;
 }
+.mat-column-count {
+  width: 100px;
+}
+
 .color{
   &-0{
     color: #2155CD;

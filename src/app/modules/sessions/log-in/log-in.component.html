@@ -34,7 +34,7 @@
           placeholder="Nhập mật khẩu"
         />
         <mat-icon matSuffix (click)="togglePasswordVisibility()">
-          {{showPassword?'visibility_off':'visibility'}}
+          {{showPassword?'visibility':'visibility_off'}}
         </mat-icon>
         <mat-error *ngIf="logInForm.controls['password'].hasError('required')">
           Vui lòng nhập mật khẩu

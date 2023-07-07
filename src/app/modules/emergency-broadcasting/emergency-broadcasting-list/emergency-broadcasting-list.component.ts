@@ -75,6 +75,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
   openDialog(id: any): void {
     this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data) => {
       this.dataDialog = data.filter((item: any) => item.id === id);
+      console.log(this.dataDialog)
       console.log(this.dataDialog[0].area)
 
       //group theo district

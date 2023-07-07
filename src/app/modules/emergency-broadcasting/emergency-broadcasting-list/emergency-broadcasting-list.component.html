@@ -46,31 +46,36 @@
 
       <ng-container matColumnDef="area">
         <th mat-header-cell *matHeaderCellDef>Khu vực nhận</th>
-        <td mat-cell *matCellDef="let element">
-          <mat-icon class="text-blue cursor" (click)="openDialog(element.id)">location_on</mat-icon>
+        <td mat-cell *matCellDef="let element" class="py-2">
+
+          <div *ngFor="let item of element.areaDetail| slice:0:3">{{item}}</div>
+
+          <div *ngIf="element.areaDetail.length > 3"
+               class="button-underline text-blue cursor"
+               (click)="openDialog(element.id)">Xem thêm</div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="station">
         <th mat-header-cell *matHeaderCellDef>Trạm phát</th>
         <td mat-cell *matCellDef="let element">
-         <div class="status" [ngClass] =
-                 "{'status-increase': calculateRatio(element.total_agent_success,element.total_agencies ) >= '80'
+          <div class="status" [ngClass]=
+            "{'status-increase': calculateRatio(element.total_agent_success,element.total_agencies ) >= '80'
                                     || calculateRatio(element.total_agent_success,element.total_agencies) === '100',
                   'status-decrease':calculateRatio(element.total_agent_success,element.total_agencies ) <= '60' ,
                    'status-wait':
                    calculateRatio(element.total_agent_success,element.total_agencies) > '60' &&
                    calculateRatio(element.total_agent_success,element.total_agencies ) < '80',
                   }">
-           {{element.total_agent_success}} &#47; {{element.total_agencies}}
-         </div>
+            {{element.total_agent_success}} &#47; {{element.total_agencies}}
+          </div>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="speaker">
         <th mat-header-cell *matHeaderCellDef>Loa phát</th>
         <td mat-cell *matCellDef="let element">
-          <div class="status" [ngClass] =
+          <div class="status" [ngClass]=
             "{'status-increase': calculateRatio(element.total_device_sending,element.total_device) >= '80'
                               || calculateRatio(element.total_device_sending,element.total_device) === '100' ,
                   'status-decrease':calculateRatio(element.total_device_sending,element.total_device) <= '60',

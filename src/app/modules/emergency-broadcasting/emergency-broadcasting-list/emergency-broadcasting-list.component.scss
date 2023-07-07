@@ -1,4 +1,4 @@
-.mat-column-station, .mat-column-speaker, .mat-column-area, .mat-column-action{
+.mat-column-station, .mat-column-speaker, .mat-column-action{
   text-align: center;
   width: 150px;
   padding: 0 30px;
@@ -16,4 +16,11 @@
 
 .mat-column-date, .mat-column-start_time, .mat-column-end_time {
  width: 120px;
+}
+.mat-column-area {
+  width: 150px;
+}
+
+.button-underline:hover {
+  text-decoration: underline;
 }
