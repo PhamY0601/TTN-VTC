@@ -8,10 +8,9 @@ import {DashboardService} from "../../../shared/services/dashboard.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Chart} from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-dashboard',
+  selector: 'app-install-management',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
@@ -23,13 +22,14 @@ export class DashboardComponent implements OnInit {
   param?: string | null = '';
   title_country: any;
 
+
+
   title: any[] = [];
   data: any[] = [];
   chart: any = [];
-  backgroundColor = ['#5170FD', '#60ABFB', '#AEE1FC', '#00FFF6', '#0B1BFF'];
+  backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
 
   displayedColumns: string[] = ['stt', 'name', 'count'];
-  @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
   dataSource: any;
 
 
@@ -72,11 +72,7 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-  }
-
-  //Lấy dữ liệu từ API
+ //Lấy dữ liệu từ API
   loadData(): void {
     this.spinner.show();
     setTimeout(() => {
@@ -126,7 +122,6 @@ export class DashboardComponent implements OnInit {
             data: this.data,
             backgroundColor: this.backgroundColor,
           },
-
         ],
       },
       options: {
@@ -136,9 +131,6 @@ export class DashboardComponent implements OnInit {
           legend: {
             display: false
           },
-          // colors: {
-          //   forceOverride: true
-          // },
           datalabels: {
             font: {
               size: 14,
@@ -159,10 +151,11 @@ export class DashboardComponent implements OnInit {
           },
         },
       },
-      //plugins: [ChartDataLabels],
+      plugins: [ChartDataLabels],
 
     })
 
+    //this.chart.destroy()
   }
 
 
