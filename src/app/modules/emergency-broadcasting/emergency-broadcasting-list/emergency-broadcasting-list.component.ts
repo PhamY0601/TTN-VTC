@@ -53,11 +53,11 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
     });
 
     this.emergencyBroadcastingService$.data$.subscribe(data => {
-      // data.sort((item1: any, item2: any) => {
-      //   let date1: any = new Date(item1.date);
-      //   let date2: any = new Date(item2.date);
-      //   return date2 - date1;
-      // });
+      data.sort((item1: any, item2: any) => {
+        let date1: any = new Date(item1.date);
+        let date2: any = new Date(item2.date);
+        return date2 - date1;
+      });
       this.dataSource.data = data
     });
   }

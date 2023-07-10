@@ -8,13 +8,14 @@ import {DashboardService} from "../../../shared/services/dashboard.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {Chart} from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-install-management',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, AfterViewInit {
   overviewData: any[] = [];
   newsData: any[] = [];
   installData: any[] = [];
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   displayedColumns: string[] = ['stt', 'name', 'count'];
   dataSource: any;
-
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
 
   constructor(private dashboardService$: DashboardService,
               private activatedRoute: ActivatedRoute,
@@ -105,6 +106,10 @@ export class DashboardComponent implements OnInit {
     })
   }
 
+  ngAfterViewInit() {
+    this.dataSource.paginator = this.paginator;
+
+  }
 
   createChart(chartData:any): void {
 

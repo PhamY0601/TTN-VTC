@@ -20,13 +20,13 @@
       </mat-form-field>
     </div>
     <div>
-      <mat-label>Nội dung</mat-label>
+      <mat-label>Ghi chú</mat-label>
       <mat-form-field appearance="outline" class="full-width">
         <input #content="ngModel" [(ngModel)]="data.content" matInput
-               name="content" placeholder="Nội dung"
+               name="content" placeholder="Ghi chú"
                required>
         <div *ngIf="content.invalid && (content.dirty || content.touched)">
-          <mat-error *ngIf="content.errors">Nội dung không được để trống</mat-error>
+          <mat-error *ngIf="content.errors">Ghi chú không được để trống</mat-error>
         </div>
       </mat-form-field>
     </div>
