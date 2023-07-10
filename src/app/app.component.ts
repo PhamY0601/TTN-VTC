@@ -16,8 +16,10 @@ export class AppComponent {
   }
   title = 'VTC-ICS';
 
+
   ngOnInit() {
-    // this.reportBroadcastTimeService$.test()
+    console.log('đã vào app module')
+
   }
 
 }
