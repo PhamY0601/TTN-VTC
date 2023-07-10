@@ -12,6 +12,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {RouterModule} from "@angular/router";
 import {BreadcrumbModule} from "xng-breadcrumb";
 import {SharedComponentModule} from "./shared/component/shared-component.module";
+import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
@@ -37,10 +38,8 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   ],
   providers: [
     MatIconRegistry,
-    {
-      provide: PERFECT_SCROLLBAR_CONFIG,
-      useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG
-    }
+    { provide: PERFECT_SCROLLBAR_CONFIG, useValue: DEFAULT_PERFECT_SCROLLBAR_CONFIG},
+    {provide: LocationStrategy, useClass: HashLocationStrategy}
   ],
   exports: [],
   bootstrap: [AppComponent],

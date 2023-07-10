@@ -26,7 +26,7 @@ export class DashboardComponent implements OnInit {
   title: any[] = [];
   data: any[] = [];
   chart: any = [];
-  backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
+  backgroundColor = ['#5170FD', '#60ABFB', '#AEE1FC', '#00FFF6', '#0B1BFF'];
 
   displayedColumns: string[] = ['stt', 'name', 'count'];
   @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
@@ -136,9 +136,9 @@ export class DashboardComponent implements OnInit {
           legend: {
             display: false
           },
-          colors: {
-            forceOverride: true
-          },
+          // colors: {
+          //   forceOverride: true
+          // },
           datalabels: {
             font: {
               size: 14,
