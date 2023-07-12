@@ -59,21 +59,25 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   save() {
-    console.log(this.cityData);
+
     let districts = this.cityData[0].children;
-    console.log(districts)
-    for (let i in districts) {
-      if(districts[i].check === true) {
-        this.data.locations?.push({
-          Province: districts[i].ParentCode,
-          District: districts[i].Code,
+
+    districts.forEach((district:any) => {
+      if(district.check === true) {
+        district.children.forEach((ward: any) => {
+          console.log(ward)
+          this.data.locations?.push({
+            Ward: ward.Code,
+            District: ward.ParentCode,
+            Province: district.ParentCode
+          })
         })
       }
-    }
+    })
 
     this.data.src_type = 'TTS';
     this.data.src_params = JSON.stringify(this.textToSpeechData)
-    console.log(this.data)
+
     this.emergencyBroadcastingService$.post(this.data).subscribe(
       () => this.onSaveSuccess(),
       () => this.onSaveError()

@@ -119,9 +119,10 @@ export class InstallationService {
           latitude: item.Lat.toString().slice(0, 6),
           longitude: item.Lng.toString().slice(0, 6),
           deviceId: item.Id,
-           type: item.type_display,
+          type: item.type_display,
           date: item.CreatedDate,
-          status: item.Status ? item.Status : "0"
+          status: item.Status ? item.Status : "0",
+          agencies_name: item.agencies_name
         })
       })
 

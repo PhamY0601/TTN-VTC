@@ -120,6 +120,11 @@
             <td mat-cell *matCellDef="let element">{{element.deviceId}}</td>
           </ng-container>
 
+          <ng-container matColumnDef="agencies">
+            <th mat-header-cell *matHeaderCellDef>Nhà cung cấp </th>
+            <td mat-cell *matCellDef="let element">{{element.agencies_name}}</td>
+          </ng-container>
+
           <ng-container matColumnDef="position">
             <th mat-header-cell *matHeaderCellDef>Vị trí</th>
             <td mat-cell *matCellDef="let element">
