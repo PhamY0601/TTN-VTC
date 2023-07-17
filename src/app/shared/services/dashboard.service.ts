@@ -27,20 +27,14 @@ export class DashboardService {
 
       this.getData(array, 'total').forEach((item: any) => {
         switch (item.name) {
-          case 'Agency':
-            totalData.push({
-              name: item.name,
-              total: item.total,
-              name_display: 'Nhà cung cấp',
-              icon: "supplier"
-            })
-            break;
+
           case 'AudioBox':
             totalData.push({
               name: item.name,
               total: item.total,
               name_display: 'Loa',
-              icon: "speaker"
+              icon: "speaker",
+              id: 1
             })
             break;
           case 'MediaBox':
@@ -48,7 +42,8 @@ export class DashboardService {
               name: item.name,
               total: item.total,
               name_display: 'Bản tin điện tử',
-              icon: "youtube"
+              icon: "youtube",
+              id: 2
             })
             break;
           case 'Record':
@@ -56,7 +51,17 @@ export class DashboardService {
               name: item.name,
               total: item.total,
               name_display: 'Bản tin phát hành',
-              icon: "document"
+              icon: "document",
+              id: 3
+            })
+            break;
+          case 'Agency':
+            totalData.push({
+              name: item.name,
+              total: item.total,
+              name_display: 'Nhà cung cấp',
+              icon: "supplier",
+              id: 4
             })
             break;
         }

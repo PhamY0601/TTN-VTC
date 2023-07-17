@@ -83,6 +83,9 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     //lấy số liệu
     this.dashboardService$.getTotal().subscribe((res) => {
       let arrayOverview = res.filter((item: any) => item.name === 'total').map((item: any) => item.value)
+      arrayOverview[0].sort((item1: any, item2: any) => {
+        return item1.id - item2.id;
+      });
       this.overviewData =  arrayOverview[0];
 
       //Bản tin đang phát

@@ -65,7 +65,7 @@
 
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
-        <td mat-cell *matCellDef="let element"> {{ (element.totalDuration / 60).toFixed(0) }} phút</td>
+        <td mat-cell *matCellDef="let element"> {{ element.totalDuration || 0 }} giây</td>
       </ng-container>
 
       <tr mat-header-row *matHeaderRowDef="displayedColumnFirst"></tr>
@@ -98,12 +98,12 @@
 
       <ng-container matColumnDef="time">
         <th mat-header-cell *matHeaderCellDef>Thời lượng phát</th>
-        <td mat-cell *matCellDef="let element"> {{(element.duration / 60).toFixed(0)}} phút</td>
+        <td mat-cell *matCellDef="let element"> {{element.duration}} giây</td>
       </ng-container>
 
       <ng-container matColumnDef="time_request">
         <th mat-header-cell *matHeaderCellDef>Thời lượng yêu cầu</th>
-        <td mat-cell *matCellDef="let element"> {{ (element.required_duration  / 60).toFixed(0) }} phút</td>
+        <td mat-cell *matCellDef="let element"> {{ element.required_duration   }} giây</td>
       </ng-container>
 
       <ng-container matColumnDef="ratio">

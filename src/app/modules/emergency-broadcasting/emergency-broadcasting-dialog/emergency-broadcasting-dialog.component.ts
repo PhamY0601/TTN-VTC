@@ -53,7 +53,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   getLocations() {
     this.locationsService$.getLocations().subscribe(data => {
       this.cityData = data
-      console.log(this.cityData)
     })
 
   }
@@ -65,7 +64,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
     districts.forEach((district:any) => {
       if(district.check === true) {
         district.children.forEach((ward: any) => {
-          console.log(ward)
+
           this.data.locations?.push({
             Ward: ward.Code,
             District: ward.ParentCode,

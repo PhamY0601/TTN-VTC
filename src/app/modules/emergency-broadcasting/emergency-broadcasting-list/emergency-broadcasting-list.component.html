@@ -76,14 +76,14 @@
         <th mat-header-cell *matHeaderCellDef>Loa phát</th>
         <td mat-cell *matCellDef="let element">
           <div class="status" [ngClass]=
-            "{'status-increase': calculateRatio(element.total_device_sending,element.total_device) >= '80'
-                              || calculateRatio(element.total_device_sending,element.total_device) === '100' ,
-                  'status-decrease':calculateRatio(element.total_device_sending,element.total_device) <= '60',
+            "{'status-increase': calculateRatio(element.total_device_playing,element.total_device) >= '80'
+                              || calculateRatio(element.total_device_playing,element.total_device) === '100' ,
+                  'status-decrease':calculateRatio(element.total_device_playing,element.total_device) <= '60',
                    'status-wait':
-                   calculateRatio(element.total_device_sending,element.total_device ) > '60' &&
-                   calculateRatio(element.total_device_sending,element.total_device) < '80',
+                   calculateRatio(element.total_device_playing,element.total_device ) > '60' &&
+                   calculateRatio(element.total_device_playing,element.total_device) < '80',
                   }">
-            {{element.total_device_sending}} &#47; {{element.total_device}}
+            {{element.total_device_playing}} &#47; {{element.total_device}}
           </div>
         </td>
       </ng-container>

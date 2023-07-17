@@ -29,7 +29,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   dataSourceSecond: any;
   @ViewChild('paginatorSecond', {static: true}) paginatorSecond!: MatPaginator;
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
-  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'deviceId', 'agencies','createDate', 'position', 'status'];
+  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'agencies','deviceId', 'agencies','createDate', 'position', 'status'];
 
   installDataChart: any[] = [];
   chart: any = [];

@@ -51,6 +51,7 @@ export class EmergencyBroadcastingService {
             total_agent_success: item.totalAgent_success,
             total_agencies: item.totalAgencies,
             total_device_sending: item.totalDevice_sending,
+            total_device_playing: item.totalDevice_playing,
             total_device: item.totalDevice,
             date:  (new Date(item.activeddate)),
             areaDetail: areaDetail

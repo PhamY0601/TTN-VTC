@@ -1,5 +1,5 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
-  <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px">
+  <div fxLayout="row" fxLayoutAlign="space-around stretch" fxLayoutGap="30px" style="height: 600px">
     <mat-card class="p-1" fxFlex="35" fxLayout="column" fxLayoutAlign="space-around center" fxLayoutGap="20px">
       <mat-card-header>
         <mat-card-title class="text-blue fz-3">Số lượng thiết bị</mat-card-title>
@@ -58,7 +58,7 @@
 
     </div>
   </div>
-  <mat-card class="px-4 py-5" fxLayout="column">
+  <mat-card class="px-4 py-5" fxLayout="column" fxLayoutGap="30px" >
     <div fxLayout="column" fxLayoutGap="10px">
       <div class="text-blue fz-3 fw-500">Vị trí cụm loa</div>
       <div fxLayout="row" fxLayoutAlign="space-between center">
@@ -115,14 +115,14 @@
             </td>
           </ng-container>
 
-          <ng-container matColumnDef="deviceId">
-            <th mat-header-cell *matHeaderCellDef>Mã thiết bị</th>
-            <td mat-cell *matCellDef="let element">{{element.deviceId}}</td>
-          </ng-container>
-
           <ng-container matColumnDef="agencies">
             <th mat-header-cell *matHeaderCellDef>Nhà cung cấp </th>
             <td mat-cell *matCellDef="let element">{{element.agencies_name}}</td>
+          </ng-container>
+
+          <ng-container matColumnDef="deviceId">
+            <th mat-header-cell *matHeaderCellDef>Mã thiết bị</th>
+            <td mat-cell *matCellDef="let element">{{element.deviceId}}</td>
           </ng-container>
 
           <ng-container matColumnDef="position">
