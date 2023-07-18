@@ -5,7 +5,7 @@
   </button>
 </div>
   <form (ngSubmit)="save()" novalidate #form="ngForm">
-    <div mat-dialog-content>
+    <div mat-dialog-content  fxLayout="column" fxLayoutGap="30px">
       <div>
         <mat-label>Từ khóa</mat-label>
         <mat-form-field class="full-width" appearance="outline">
@@ -53,9 +53,9 @@
       </div>
     </div>
     <div mat-dialog-actions class="mt-1 p-4">
-      <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
-      <span fxFlex></span>
       <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+      <span fxFlex></span>
+      <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
     </div>
   </form>
 

@@ -5,6 +5,8 @@ import {InstallManagementRoutes} from "./install-management.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {InstallManagementComponent} from "./install-management/install-management.component";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
+import {LeafletModule} from "@asymmetrik/ngx-leaflet";
+import { MapDevicePositionsComponent } from './map-device-positions/map-device-positions.component';
 
 
 @NgModule({
@@ -13,11 +15,12 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
     SharedComponentModule,
     RouterModule.forChild(InstallManagementRoutes),
     SharedMaterialModule,
-
+    LeafletModule,
 
   ],
   declarations: [
-    InstallManagementComponent
+    InstallManagementComponent,
+    MapDevicePositionsComponent
   ]
 })
 export class InstallManagementModule {

@@ -7,6 +7,7 @@ import {COUNTRY, currentTime} from "../../../app.constants";
 import {
   EmergencyBroadcastingContentComponent
 } from "../../emergency-broadcasting/emergency-broadcasting-dialog/emergency-broadcasting-dialog.component";
+import {LocationsService} from "../../../shared/services/locations.service";
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -246,10 +247,7 @@ export class RadioManagerContentComponent implements OnInit {
   ];
 
   districtsData: any[] = [];
-  districtsDatatemp: any[] = [];
   wardsData: any[] = [];
-  wardsDataTemp: any[] = [];
-  wardtemp: any[] = [];
   statusData = [
     {
       name: 'Chờ phát thanh',
@@ -276,57 +274,54 @@ export class RadioManagerContentComponent implements OnInit {
   currentTime:any;
 
   constructor(
-    // private eventManager: JhiEventManager,
-    private formBuilder: FormBuilder,
-    private citiesService$: CitiesService,
+      private formBuilder: FormBuilder,
+      private locationsService$: LocationsService,
     public dialogRef: MatDialogRef<RadioManagerContentComponent>,
   ) {
   }
 
   ngOnInit(): void {
-    this.getDistrict(COUNTRY())
-    this.getWard();
+    this.getDistrict()
+
     this.currentTime = currentTime;
   }
 
   save() {
     console.log(this.data)
   }
-
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-      this.districtsData.forEach((item: any) => {
-        this.districtsDatatemp.push(item.nameId)
+  getDistrict() {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        this.districtsData.push({
+          code: district.Code,
+          name: district.Name,
+        })
       })
+
     })
   }
 
-  getWard() {
-    this.citiesService$.getWards().subscribe((data) => {
-      this.wardsData = data
-      for (let i in this.wardsData) {
-        for (let j in this.districtsDatatemp) {
-          if (this.districtsDatatemp[j] === this.wardsData[i].districtId) {
-            this.wardsDataTemp.push(this.wardsData[i])
-          }
+  districtEffect(code: any): void {
+
+    this.wardsData = [];
+    this.getWard(code)
+  }
+
+  getWard(code:any):void {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        if(district.Code === code) {
+          district.children.forEach((ward:any) => {
+            this.wardsData.push({
+              code: ward.Code,
+              name: ward.Name,
+            })
+          })
+
         }
-      }
+      })
+
     })
-  }
-
-  test(nameId: any) {
-    for (let i in this.wardsDataTemp) {
-      if (this.wardsDataTemp[i].districtId === nameId) {
-        this.wardtemp.push(this.wardsDataTemp[i])
-      }
-    }
-
-  }
-
-  districtEffect(nameId: any): void {
-    this.wardtemp = [];
-    this.test(nameId)
   }
 
   onFileSelected(event: any) {
@@ -378,7 +373,7 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
       this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
       this.weekDayEffect(this.dialogRef.componentInstance.days, data.day);
       this.dialogRef.componentInstance.data = data;
-      console.log(data)
+
 
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),

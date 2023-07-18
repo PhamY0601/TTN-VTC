@@ -51,10 +51,7 @@ export class FieldSourceContentComponent implements OnInit {
 
 
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
+
     this.dialogRef.close(true);
   }
 

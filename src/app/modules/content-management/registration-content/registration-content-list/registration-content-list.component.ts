@@ -20,14 +20,14 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit {
   dataSource: any;
   toDay = new Date();
   districtsData: any[] = [];
-  arrayDistrictsData: any[] = []
+
   wardsData: any[] = [];
-  arrayWardsData: any[] = [];
+
 
 
   constructor(
     private contentManagementService$: ContentManagementService,
-    private locationService$: LocationsService,
+    private locationsService$: LocationsService,
     private spinner: NgxSpinnerService
   ) {
     this.dataSource = new MatTableDataSource([]);
@@ -62,28 +62,36 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit {
 
 
   getDistrict() {
-    this.locationService$.getLocations().subscribe(data => {
-      data[0].children.forEach((item: any) => {
-        this.districtsData.push({value: item.Code, name: item.Name})
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        this.districtsData.push({
+          code: district.Code,
+          name: district.Name,
+        })
       })
+
     })
   }
 
-  changeWards(districtCode: any) {
-    this.locationService$.getLocations().subscribe(data => {
-      data[0].children.forEach((district: any) => {
-        if (district.Code === districtCode) {
-          district.children.forEach((ward: any) => {
-            this.wardsData.push({value: ward.Code, name: ward.Name})
+  districtEffect(code: any): void {
+    this.wardsData = [];
+    this.getWard(code)
+  }
+
+  getWard(code:any):void {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        if(district.Code === code) {
+          district.children.forEach((ward:any) => {
+            this.wardsData.push({
+              code: ward.Code,
+              name: ward.Name,
+            })
           })
+
         }
       })
+
     })
-  }
-
-  districtEffect(event: any): void {
-    this.wardsData = [];
-    this.changeWards(event.value)
-
   }
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from "@angular/material/paginator";
@@ -7,9 +7,13 @@ import {ActivatedRoute} from "@angular/router";
 import {DistrictService} from "../../../shared/services/district.service";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
+import {Map, tileLayer} from "leaflet";
 import {InstallationService} from "../../../shared/services/installation.service";
 import {Chart} from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+
+
+
 
 @Component({
   selector: 'app-install-management',
@@ -29,18 +33,18 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   dataSourceSecond: any;
   @ViewChild('paginatorSecond', {static: true}) paginatorSecond!: MatPaginator;
   @ViewChild('tableSecondSort') tableSecondSort!: MatSort;
-  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'agencies','deviceId', 'agencies','createDate', 'position', 'status'];
+  displayedColumn2: string[] = ['stt', 'city', 'district', 'ward', 'type', 'agencies', 'deviceId', 'createDate', 'position', 'status'];
 
   installDataChart: any[] = [];
   chart: any = [];
   backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
 
-
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
               private installationService$: InstallationService,
               private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService,) {
+              private spinner: NgxSpinnerService,
+              private elementRef: ElementRef) {
     this.dataSourceFirst = new MatTableDataSource([]);
     this.dataSourceSecond = new MatTableDataSource([]);
   }
@@ -48,8 +52,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   ngOnInit() {
 
     this.loadData(COUNTRY());
-
-
   }
 
   ngAfterViewInit() {
@@ -59,6 +61,8 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
     this.dataSourceSecond.paginator = this.paginatorSecond;
     this.dataSourceSecond.sort = this.tableSecondSort;
+
+    this.map()
   }
 
   ngOnDestroy() {
@@ -96,13 +100,12 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   }
 
-  createChart(chartData:any)  {
-    console.log(chartData)
-    let title = chartData.map((item:any) => item.title)
-    let value = chartData.map((item:any) => item.count)
+  createChart(chartData: any) {
+    let title = chartData.map((item: any) => item.title)
+    let value = chartData.map((item: any) => item.count)
+    let htmlRefChart = this.elementRef.nativeElement.querySelector(`#install-chart`);
 
-
-    this.chart = new Chart('install-chart', {
+    this.chart = new Chart(htmlRefChart, {
       type: 'pie',
       data: {
         labels: title,
@@ -132,23 +135,35 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
             },
             color: 'white',
 
-            formatter: (value,context) => {
+            formatter: (value, context) => {
               const datapoint = context.dataset.data
-              function totalSum (total:any,datapoint:any) {
+
+              function totalSum(total: any, datapoint: any) {
                 return total + datapoint
               }
-              const totalValue = datapoint.reduce(totalSum,0)
-              const percentValue = (value/totalValue *100).toFixed(1)
+
+              const totalValue = datapoint.reduce(totalSum, 0)
+              const percentValue = (value / totalValue * 100).toFixed(1)
               return [`${percentValue}%`]
             }
           },
 
         },
       },
-       plugins: [ChartDataLabels]
+      plugins: [ChartDataLabels]
     })
 
   }
 
-}
+  map() {
+    let htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
+    const map = new Map(htmlRefMap).setView([51.505, -0.09], 13);
+    tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 13,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+  }
 
+
+
+}

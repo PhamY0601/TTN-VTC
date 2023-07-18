@@ -1,14 +1,15 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {IconService} from "./shared/services/icon.service";
 import {COUNTRY} from "./app.constants";
 import {ReportBroadcastTimeService} from "./shared/services/report-broadcast-time.service";
+import {Map, tileLayer} from "leaflet";
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit, AfterViewInit{
   constructor(private iconService: IconService,
               private reportBroadcastTimeService$: ReportBroadcastTimeService
               ) {
@@ -17,9 +18,10 @@ export class AppComponent {
   title = 'VTC-ICS';
 
 
-  ngOnInit() {
-    console.log('đã vào app module')
+  ngOnInit() {}
+  ngAfterViewInit() {
 
   }
+
 
 }

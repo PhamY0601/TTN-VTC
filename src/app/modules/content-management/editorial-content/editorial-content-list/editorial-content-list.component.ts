@@ -6,6 +6,7 @@ import {ContentManagementService} from "../../../../shared/services/content-mana
 import {NgxSpinnerService} from "ngx-spinner";
 import {CitiesService} from "../../../../shared/services/cities.service";
 import {COUNTRY} from "../../../../app.constants";
+import {LocationsService} from "../../../../shared/services/locations.service";
 
 @Component({
   selector: 'app-editorial-content-list',
@@ -19,23 +20,22 @@ export class EditorialContentListComponent implements OnInit, AfterViewInit {
   dataSource: any;
   toDay = new Date();
   districtsData: any[] = [];
-  arrayDistrictsData: any[] = []
   wardsData: any[] = [];
-  arrayWardsData: any[] = [];
+
 
 
   constructor(
     private contentManagementService$: ContentManagementService,
     private spinner: NgxSpinnerService,
-    private citiesService$: CitiesService,
+    private locationsService$: LocationsService
   ) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
     this.loadData();
-    this.getDistrict(COUNTRY());
-    this.getWard();
+    this.getDistrict();
+
 
   }
 
@@ -54,39 +54,39 @@ export class EditorialContentListComponent implements OnInit, AfterViewInit {
     });
   }
 
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-      this.districtsData.forEach((item: any) => {
-        this.arrayDistrictsData.push(item.nameId)
+
+  getDistrict() {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        this.districtsData.push({
+          code: district.Code,
+          name: district.Name,
+        })
       })
+
     })
   }
 
-  getWard() {
-    let arrayWardsData: any[] = [];
-    this.citiesService$.getWards().subscribe((data) => {
-      arrayWardsData = data
-      for (let i in arrayWardsData) {
-        for (let j in this.arrayDistrictsData) {
-          if (this.arrayDistrictsData[j] === arrayWardsData[i].districtId) {
-            this.arrayWardsData.push(arrayWardsData[i])
-          }
-        }
-      }
-    })
-  }
-
-  changeWards(nameId: any) {
-    this.arrayWardsData.forEach((item:any) => {
-      if (item.districtId === nameId) {
-        this.wardsData.push(item)
-      }
-    })
-  }
-
-  districtEffect(nameId: any): void {
+  districtEffect(code: any): void {
     this.wardsData = [];
-    this.changeWards(nameId.value)
+    this.getWard(code)
   }
+
+  getWard(code:any):void {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        if(district.Code === code) {
+          district.children.forEach((ward:any) => {
+            this.wardsData.push({
+              code: ward.Code,
+              name: ward.Name,
+            })
+          })
+
+        }
+      })
+
+    })
+  }
+
 }

@@ -4,6 +4,7 @@ import {FormArray, FormBuilder, FormGroup} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../../../shared/services/cities.service";
 import {COUNTRY, currentTime} from "../../../../../app.constants";
+import {LocationsService} from "../../../../../shared/services/locations.service";
 
 
 @Component({
@@ -29,6 +30,7 @@ export class GeographicSourceContentComponent implements OnInit {
     private formBuilder: FormBuilder,
     private citiesService$: CitiesService,
     public dialogRef: MatDialogRef<GeographicSourceContentComponent>,
+    private locationsService$: LocationsService
   ) {
     this.formData = this.formBuilder.group({
       date: '',
@@ -41,7 +43,7 @@ export class GeographicSourceContentComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getDistrict(COUNTRY());
+    this.getDistrict();
     this.currentTime = currentTime;
   }
 
@@ -49,17 +51,42 @@ export class GeographicSourceContentComponent implements OnInit {
     console.log(this.data)
   }
 
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
+  getDistrict() {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        this.districtsData.push({
+          code: district.Code,
+          name: district.Name,
+        })
+      })
+
     })
   }
 
+  districtEffect(code: any): void {
+    this.wardsData = [];
+    this.getWard(code)
+  }
+
+  getWard(code:any):void {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        if(district.Code === code) {
+          district.children.forEach((ward:any) => {
+            this.wardsData.push({
+              code: ward.Code,
+              name: ward.Name,
+            })
+          })
+
+        }
+      })
+
+    })
+  }
+
+
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
     this.dialogRef.close(true);
   }
 

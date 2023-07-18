@@ -1,223 +1,223 @@
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <h1 matDialogTitle class="text-blue">{{(data.id) ? 'Cập nhật' : 'Tạo mới'}}</h1>
-    <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
-      <mat-icon>close</mat-icon>
-    </button>
-  </div>
-    <form (ngSubmit)="save()" novalidate #form="ngForm">
-      <div mat-dialog-content >
-        <div fxLayout="column" fxLayoutGap="20">
-          <div fxLayout="row" fxLayoutGap="20">
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Quận, huyện</mat-label>
-              <mat-select name="district" [(ngModel)]="data.district"
-                          (ngModelChange)="districtEffect($event)">
-                <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
-                  {{item.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="full-width" appearance="outline">
-              <mat-label>Xã, phường</mat-label>
-              <mat-select name="ward" [(ngModel)]="data.ward">
-                <mat-option *ngFor="let item of wardtemp" [value]="item.nameId">
-                  {{item.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">{{(data.id) ? 'Cập nhật' : 'Tạo mới'}}</h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<form (ngSubmit)="save()" novalidate #form="ngForm">
+  <div mat-dialog-content>
+    <div fxLayout="column" fxLayoutGap="30">
+      <div fxLayout="row" fxLayoutGap="20">
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Quận, huyện</mat-label>
+          <mat-select name="district" [(ngModel)]="data.district"
+                      (ngModelChange)="districtEffect($event)">
+            <mat-option *ngFor="let item of districtsData" [value]="item.code">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-label>Xã, phường</mat-label>
+          <mat-select name="ward" [(ngModel)]="data.ward">
+            <mat-option *ngFor="let item of wardsData" [value]="item.code">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
 
-          <div fxLayout="row" fxLayoutGap="20">
-            <mat-form-field fxFlex="50" class="full-width" appearance="outline">
-              <mat-label>Trạng thái</mat-label>
-              <mat-select name="status" [(ngModel)]="data.status">
-                <mat-option *ngFor="let item of statusData" [value]="item.value">
-                  {{item.name}}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+      <div fxLayout="row" fxLayoutGap="20">
+        <mat-form-field fxFlex="49" class="full-width" appearance="outline">
+          <mat-label>Trạng thái</mat-label>
+          <mat-select name="status" [(ngModel)]="data.status">
+            <mat-option *ngFor="let item of statusData" [value]="item.value">
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
 
-            <div fxLayout="row" fxLayoutGap="10">
-              <audio controls fxFlex="80" *ngIf="audSrc">
-                <source [src]="audSrc" type="audio/ogg">
-                <source [src]="audSrc" type="audio/mpeg">
-                <source [src]="audSrc" type="audio/wav">
-              </audio>
-              <input type="file" class="file-input"
-                     (change)="onFileSelected($event)" #fileUpload>
-              <button mat-icon-button class="btn-blue"
-                      (click)="fileUpload.click()">
-                <mat-icon class="fz-3">attach_file</mat-icon>
-              </button>
-            </div>
+        <div fxLayout="row" fxLayoutGap="10">
+          <audio controls fxFlex="80" *ngIf="audSrc">
+            <source [src]="audSrc" type="audio/ogg">
+            <source [src]="audSrc" type="audio/mpeg">
+            <source [src]="audSrc" type="audio/wav">
+          </audio>
+          <input type="file" class="file-input"
+                 (change)="onFileSelected($event)" #fileUpload>
+          <button mat-icon-button class="btn-blue"
+                  (click)="fileUpload.click()">
+            <mat-icon class="fz-3">attach_file</mat-icon>
+          </button>
+        </div>
 
-          </div>
+      </div>
 
-          <mat-form-field fxFlex="70" class="text-blue full-width" appearance="outline">
-            <input matInput name="url" [(ngModel)]="data.url" placeholder="URL">
+      <mat-form-field fxFlex="70" class="text-blue full-width" appearance="outline">
+        <input matInput name="url" [(ngModel)]="data.url" placeholder="URL">
+      </mat-form-field>
+
+      <div class="text-blue fz-2 fw-400 my-2">Lịch phát sóng</div>
+
+      <div fxLayout="row" fxLayoutGap="20">
+        <div class="full-width">
+          <mat-label>Từ ngày</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput name="date_from" [matDatepicker]="pickerFrom" [(ngModel)]="data.date_from">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+            <mat-datepicker #pickerFrom></mat-datepicker>
           </mat-form-field>
+        </div>
 
-          <div class="text-blue fz-2 fw-400 my-2">Lịch phát sóng</div>
-
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
-              <mat-label>Từ ngày</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="date_from" [matDatepicker]="pickerFrom" [(ngModel)]="data.date_from">
-                <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
-                <mat-datepicker #pickerFrom></mat-datepicker>
-              </mat-form-field>
-            </div>
-
-            <div class="full-width">
-              <mat-label>Đến ngày</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="date_to" [matDatepicker]="pickerTo" [(ngModel)]="data.date_to">
-                <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
-                <mat-datepicker #pickerTo></mat-datepicker>
-              </mat-form-field>
-            </div>
-          </div>
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-                Khung giờ
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-
-            <div fxLayout="row">
-              <div fxLayout="column" class="full-width">
-                <mat-label>Giờ từ</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_from"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-              <div fxLayout="column" class="full-width">
-                <mat-label>Đến</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_to"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-            </div>
-
-            <div fxLayout="row">
-              <div fxLayout="column" class="full-width">
-                <mat-label>Giờ từ</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_from"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-              <div fxLayout="column" class="full-width">
-                <mat-label>Đến</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_to"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-            </div>
-
-            <div fxLayout="row">
-              <div fxLayout="column" class="full-width">
-                <mat-label>Giờ từ</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_from"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-              <div fxLayout="column" class="full-width">
-                <mat-label>Đến</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_to"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-            </div>
-
-            <div fxLayout="row">
-              <div fxLayout="column" class="full-width">
-                <mat-label>Giờ từ</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_from"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-              <div fxLayout="column" class="full-width">
-                <mat-label>Đến</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_to"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-            </div>
-
-            <div fxLayout="row">
-              <div fxLayout="column" class="full-width">
-                <mat-label>Giờ từ</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_from"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-              <div fxLayout="column" class="full-width">
-                <mat-label>Đến</mat-label>
-                <ngx-mat-timepicker-field
-                  name="hour_to"
-                  [format]="24"
-                  [defaultTime]="currentTime"></ngx-mat-timepicker-field>
-              </div>
-            </div>
-
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-                Ngày trong tuần
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div fxLayout="row wrap" fxLayoutAlign="space-between center">
-              <div *ngFor="let item of week_day">
-                <mat-checkbox [checked]="item.checked" name="week_day">{{item.name}}</mat-checkbox>
-              </div>
-            </div>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-                Ngày
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div fxLayout="row wrap" fxLayoutAlign=" center">
-              <div *ngFor="let item of days">
-                <mat-checkbox [checked]="item.checked" name="week_day">{{item.value}}</mat-checkbox>
-              </div>
-            </div>
-          </mat-expansion-panel>
-
-          <mat-expansion-panel>
-            <mat-expansion-panel-header>
-              <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-                Tháng
-              </mat-panel-title>
-            </mat-expansion-panel-header>
-            <div fxLayout="row wrap" fxLayoutGap="20">
-              <div *ngFor="let item of months">
-                <mat-checkbox [checked]="item.checked" name="month">{{item.name}}</mat-checkbox>
-              </div>
-
-            </div>
-          </mat-expansion-panel>
-
+        <div class="full-width">
+          <mat-label>Đến ngày</mat-label>
+          <mat-form-field class="full-width" appearance="outline">
+            <input matInput name="date_to" [matDatepicker]="pickerTo" [(ngModel)]="data.date_to">
+            <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+            <mat-datepicker #pickerTo></mat-datepicker>
+          </mat-form-field>
         </div>
       </div>
-      <div mat-dialog-actions class="mt-1 px-4 py-3">
-        <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
-        <span fxFlex></span>
-        <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
-      </div>
-    </form>
+      <mat-expansion-panel class="py-2">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+            Khung giờ
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="column" fxLayoutGap="30">
+          <div fxLayout="row">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_from"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+            <div fxLayout="column" class="full-width">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_to"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_from"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+            <div fxLayout="column" class="full-width">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_to"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_from"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+            <div fxLayout="column" class="full-width">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_to"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_from"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+            <div fxLayout="column" class="full-width">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_to"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+          </div>
+
+          <div fxLayout="row">
+            <div fxLayout="column" class="full-width">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_from"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+            <div fxLayout="column" class="full-width">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                name="hour_to"
+                [format]="24"
+                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+            </div>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+            Ngày trong tuần
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutAlign="space-between center">
+          <div *ngFor="let item of week_day">
+            <mat-checkbox [checked]="item.checked" name="week_day">{{item.name}}</mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+            Ngày trong tháng
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutAlign=" center">
+          <div *ngFor="let item of days">
+            <mat-checkbox [checked]="item.checked" name="week_day">{{item.value}}</mat-checkbox>
+          </div>
+        </div>
+      </mat-expansion-panel>
+
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title class="text-blue fz-2 fw-400 my-2">
+            Tháng
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div fxLayout="row wrap" fxLayoutGap="20">
+          <div *ngFor="let item of months">
+            <mat-checkbox [checked]="item.checked" name="month">{{item.name}}</mat-checkbox>
+          </div>
+
+        </div>
+      </mat-expansion-panel>
+
+    </div>
+  </div>
+  <div mat-dialog-actions class="mt-1 px-4 py-3">
+    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+    <span fxFlex></span>
+    <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
+  </div>
+</form>
 

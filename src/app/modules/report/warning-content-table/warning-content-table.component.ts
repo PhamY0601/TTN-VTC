@@ -25,7 +25,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Thị trấn Sơn Lư',
       news: 'Bản tin 1',
       keywords: ['bieu tinh', 'ca cuoc', 'chich hut'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
     {
       id: 1,
@@ -35,7 +35,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Huyện Hoằng Hóa',
       news: 'Bản tin 2',
       keywords:  ['bieu tinh', 'ca cuoc', 'chich hut', 'ban tre em'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
     {
       id: 2,
@@ -45,7 +45,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Huyện Thiệu Hóa',
       news: 'Bản tin 3',
       keywords: [ 'ca cuoc', 'chich hut', 'ban tre em'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
     {
       id: 3,
@@ -55,7 +55,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Xã Hoằng Tiến',
       news: 'Bản tin 3',
       keywords:   ['ca cuoc', 'chich hut'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
     {
       id: 4,
@@ -65,7 +65,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Xã Hà Lĩnh',
       news: 'Bản tin 1',
       keywords: [ 'ca cuoc', 'chich hut', 'ban tre em'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
     {
       id: 5,
@@ -75,7 +75,7 @@ export class WarningContentTableComponent implements OnInit, AfterViewInit{
       ward: 'Phường An Hoạch',
       news: 'Bản tin 1',
       keywords: [ 'ca cuoc', 'chich hut', 'ban tre em'],
-      record: '../../../../../assets/audio/Vi_Toi_Con_Song_Tien_Tien.mp3'
+      record: ''
     },
   ]
 

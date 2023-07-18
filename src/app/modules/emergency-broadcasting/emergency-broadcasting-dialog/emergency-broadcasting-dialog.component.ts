@@ -122,7 +122,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
 
       //cập nhật trạng thái cua huyện
       district.check = district.children.every((child: any) => child.check);
-      console.log(district);
 
     }
     this.updateAllComplete()
@@ -154,7 +153,6 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
 
   private onSaveSuccess(): void {
     this.dialogRef.afterClosed().subscribe(result => {
-      console.log(result)
       this.emergencyBroadcastingService$.getEmergencyBroadcasting().subscribe((data:any) =>{
         this.emergencyBroadcastingService$.changeData(data);
       });

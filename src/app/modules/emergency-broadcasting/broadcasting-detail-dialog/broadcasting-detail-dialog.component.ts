@@ -92,7 +92,6 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
           devicesData = [...devicesData, ...agency.devices];
         }
       });
-      console.log(this.detailData)
 
       this.dialogRef.componentInstance.data = this.detailData
       //Lấy id

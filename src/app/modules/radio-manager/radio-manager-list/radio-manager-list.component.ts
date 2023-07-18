@@ -42,7 +42,6 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
       this.spinner.hide();
     }, 1500);
    this.radioManagementService$.getRadioManagement().subscribe((data) => {
-      console.log(data)
       this.dataSource.data = data;
     });
   }

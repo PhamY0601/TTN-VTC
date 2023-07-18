@@ -5,7 +5,7 @@
   </button>
 </div>
 <form [formGroup]="formData">
-  <div mat-dialog-content>
+  <div mat-dialog-content  fxLayout="column" fxLayoutGap="30px">
 
       <div class="full-width">
         <mat-label>Ngày</mat-label>
@@ -38,13 +38,31 @@
       <div fxLayout="column" class="full-width">
         <mat-label>Quận, huyện</mat-label>
         <mat-form-field class="full-width" appearance="outline">
-          <mat-select formArrayName="district" placeholder="Chọn quận, huyện">
-            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+          <mat-select  formArrayName="district"
+                       (selectionChange)="districtEffect($event.value)"
+                       placeholder="Chọn quận, huyện">
+            <mat-option *ngFor="let item of districtsData"
+                        [value]="item.code"
+                        >
               {{item.name}}
             </mat-option>
           </mat-select>
         </mat-form-field>
       </div>
+
+      <div fxLayout="column" class="full-width">
+        <mat-label>Xã, phường</mat-label>
+        <mat-form-field class="full-width" appearance="outline">
+          <mat-select  placeholder="Chọn xã, phường">
+            <mat-option *ngFor="let item of wardsData"
+                        [value]="item.code"
+            >
+              {{item.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
       <div fxLayout="column" class="full-width">
         <mat-label>Loại bản tin</mat-label>
         <mat-form-field class="full-width" appearance="outline">
@@ -57,7 +75,7 @@
 
     </div>
     <ng-container formArrayName="content">
-      <div fxLayout="row" fxLayoutAlign=" center" fxLayoutGap="10">
+      <div fxLayout="row" fxLayoutAlign=" center">
         <p>Nội dung</p>
         <button mat-icon-button class="text-blue mt--3" (click)="addLessons()">
           <mat-icon>add_circle</mat-icon>
@@ -65,7 +83,7 @@
       </div>
       <ng-container *ngFor="let item of value.controls; let i = index;">
         <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10">
-          <div fxFlex="95">
+          <div fxFlex="95"  fxLayout="column" fxLayoutGap="30px">
             <div fxLayout="row" fxLayoutGap="30">
               <div fxLayout="column" class="full-width">
                 <mat-label>Bắt đầu</mat-label>
@@ -123,9 +141,9 @@
 
   </div>
   <div mat-dialog-actions class="mt-1 px-4 py-3">
-    <button mat-raised-button class="btn-blue">Lưu</button>
-    <span fxFlex></span>
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+    <span fxFlex></span>
+    <button mat-raised-button class="btn-blue" >Lưu</button>
   </div>
 </form>
 

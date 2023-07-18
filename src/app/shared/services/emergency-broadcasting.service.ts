@@ -36,10 +36,15 @@ export class EmergencyBroadcastingService {
         });
 
         arr.forEach((item: any) => {
+          let areaDetailTempt: any[] = [];
           let areaDetail: any[] = [];
           item.destinations.forEach((district:any) => {
-            areaDetail.push(district.district_display)
+            areaDetailTempt.push(district.district_display)
+
           })
+          areaDetail = areaDetailTempt.filter((value, index, district) => {
+            return district.indexOf(value) === index;
+          });
 
           result.push({
             id: item.id,

@@ -6,7 +6,7 @@
 </div>
 
 <form #form="ngForm" (ngSubmit)="save()" novalidate>
-  <div fxLayout="column" fxLayoutGap="15" mat-dialog-content>
+  <div fxLayout="column" fxLayoutGap="30" mat-dialog-content>
     <div>
       <mat-label>Tiêu đề</mat-label>
       <mat-form-field appearance="outline" class="full-width">
@@ -114,7 +114,7 @@
       </div>
 
       <div *ngIf="selected !== -1"
-           [ngSwitch]="selected" class="full-width" fxLayout="column">
+           [ngSwitch]="selected" class="full-width" fxLayout="column" fxLayoutGap="30">
         <!--      Transmiiter-->
         <ng-container *ngSwitchCase="1">
           <mat-label>Transmitter</mat-label>
@@ -199,9 +199,9 @@
 
   </div>
   <div class="mt-1 px-4 py-3" mat-dialog-actions>
-    <button [disabled]="form.invalid" class="btn-blue" mat-raised-button>Lưu</button>
+    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
     <span fxFlex></span>
-    <button (click)="dialogRef.close(false)" color="warn" mat-button type="button">Hủy</button>
+    <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
   </div>
 </form>
 

@@ -31,7 +31,7 @@ export class AuthService {
        map((res) => {
          localStorage.setItem(this.AUTH_TOKEN_KEY, res.token);
          localStorage.setItem('currentUser', 'Thanh Hóa_42');
-         console.log(res)
+
          return true;
        }),
        catchError(err => {

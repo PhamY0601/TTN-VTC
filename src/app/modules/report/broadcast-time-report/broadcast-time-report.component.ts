@@ -1,11 +1,10 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY} from "../../../app.constants";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {Chart} from "chart.js/auto";
 import {NgxSpinnerService} from "ngx-spinner";
+import {LocationsService} from "../../../shared/services/locations.service";
 
 @Component({
   selector: 'app-broadcast-time-report',
@@ -14,9 +13,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 })
 export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
   districtsData: any[] = [];
-  arrayDistrictsData: any[] = []
   wardsData: any[] = [];
-  arrayWardsData: any[] = [];
 
   display: boolean = false;
   broadcastData = [
@@ -191,8 +188,8 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
   displayedColumn: string[] =
     ['stt', 'station', 'speaker', 'area', 'location', 'news', 'urgent_bulletin', 'play_time', 'request_duration', 'ratio'];
 
-  constructor(private citiesService$: CitiesService,
-              private elementRef: ElementRef,
+  constructor(private elementRef: ElementRef,
+              private locationsService$: LocationsService,
               private spinner: NgxSpinnerService) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -203,46 +200,41 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
     this.chartSuccess();
     this.chartUrgentBulletin();
     this.chartTime();
-    this.getDistrict(COUNTRY());
-    this.getWard();
-
-
+    this.getDistrict();
   }
 
-  getDistrict(city: any) {
-    this.citiesService$.getDistricts(city).subscribe((data) => {
-      this.districtsData = data;
-      this.districtsData.forEach((item: any) => {
-        this.arrayDistrictsData.push(item.nameId)
+  getDistrict() {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        this.districtsData.push({
+          code: district.Code,
+          name: district.Name,
+        })
       })
+
     })
   }
 
-  getWard() {
-    let arrayWardsData: any[] = [];
-    this.citiesService$.getWards().subscribe((data) => {
-      arrayWardsData = data
-      for (let i in arrayWardsData) {
-        for (let j in this.arrayDistrictsData) {
-          if (this.arrayDistrictsData[j] === arrayWardsData[i].districtId) {
-            this.arrayWardsData.push(arrayWardsData[i])
-          }
-        }
-      }
-    })
-  }
-
-  changeWards(nameId: any) {
-    this.arrayWardsData.forEach((item:any) => {
-      if (item.districtId === nameId) {
-        this.wardsData.push(item)
-      }
-    })
-  }
-
-  districtEffect(nameId: any): void {
+  districtEffect(code: any): void {
     this.wardsData = [];
-    this.changeWards(nameId.value)
+    this.getWard(code)
+  }
+
+  getWard(code:any):void {
+    this.locationsService$.getLocations().subscribe((data) => {
+      data[0].children.forEach((district:any) => {
+        if(district.Code === code) {
+          district.children.forEach((ward:any) => {
+            this.wardsData.push({
+              code: ward.Code,
+              name: ward.Name,
+            })
+          })
+
+        }
+      })
+
+    })
   }
 
   loadData() {

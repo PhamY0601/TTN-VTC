@@ -1,7 +1,7 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30">
   <mat-card>
     <mat-card-header class="text-blue fz-3 fw-500">Tham số thống kê</mat-card-header>
-    <mat-card-content class="mt-3">
+    <mat-card-content class="my-2" fxLayout="column" fxLayoutGap="30">
       <div fxLayout="row" fxLayoutGap="30" class="text-baseline">
         <div fxFlex="10" class="fz-2">Thời gian</div>
         <div fxFlex="45" class="full-width">
@@ -29,8 +29,8 @@
         <mat-form-field fxFlex="45" class="full-width" appearance="outline">
           <mat-label>Quận, huyện</mat-label>
           <mat-select name="district"
-                      (selectionChange)="districtEffect($event)">
-            <mat-option *ngFor="let item of districtsData" [value]="item.nameId">
+                      (selectionChange)="districtEffect($event.value)">
+            <mat-option *ngFor="let item of districtsData" [value]="item.code">
               {{item.name}}
             </mat-option>
           </mat-select>
@@ -38,7 +38,7 @@
         <mat-form-field fxFlex="45" class="full-width" appearance="outline">
           <mat-label>Xã, phường</mat-label>
           <mat-select name="ward">
-            <mat-option *ngFor="let item of wardsData" [value]="item.nameId">
+            <mat-option *ngFor="let item of wardsData" [value]="item.code">
               {{item.name}}
             </mat-option>
           </mat-select>

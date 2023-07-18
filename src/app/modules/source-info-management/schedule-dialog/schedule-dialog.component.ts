@@ -69,7 +69,6 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
       this.detailData = data;
 
       this.detailData = this.detailData.filter((item: any) => item.id === this.param);
-      console.log('detail', this.detailData )
 
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
@@ -78,7 +77,6 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
       this.dialogRef.componentInstance.snapshotUrl = a;
       this.dialogRef.componentInstance.data = this.detailData
       this.dialogRef.componentInstance.dataSource = this.detailData[0].content
-      console.log('content',  this.detailData[0].content)
 
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),

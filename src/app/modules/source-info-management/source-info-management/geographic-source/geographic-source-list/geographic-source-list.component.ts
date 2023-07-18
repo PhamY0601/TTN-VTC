@@ -42,7 +42,6 @@ export class GeographicSourceListComponent implements OnInit, AfterViewInit {
       this.spinner.hide();
     }, 1000);
     this.sourceInfoService$.getGeographicSource().subscribe((data) => {
-      console.log(data)
       this.dataSource.data = data
     });
   }
