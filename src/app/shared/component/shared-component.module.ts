@@ -26,6 +26,8 @@ import {AppConfirmService} from "../services/app-confirm/app-confirm.service";
 import { SeeMoreComponent } from './see-more/see-more.component';
 
 
+
+
 const components = [
   HeaderComponent,
   SidenavComponent,
@@ -40,6 +42,7 @@ const components = [
   ChangePasswordFormContentComponent,
   ChangePasswordFormDialogComponent,
   AppComfirmComponent,
+
 ];
 
 @NgModule({

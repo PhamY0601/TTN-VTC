@@ -4,6 +4,8 @@ import {AuthGuard} from "./shared/auth/auth.guard";
 import {
   ChangePasswordFormDialogComponent
 } from "./shared/component/change-password-form-dialog/change-password-form-dialog.component";
+import {InstallManagementComponent} from "./modules/install-management/install-management/install-management.component";
+
 
 export const rootRouterConfig: Routes = [
   {
@@ -23,7 +25,8 @@ export const rootRouterConfig: Routes = [
       },
       {
         path: 'install-management',
-        loadChildren: () => import('./modules/install-management/install-management.module').then(m => m.InstallManagementModule),
+         loadChildren: () => import('./modules/install-management/install-management.module').then(m => m.InstallManagementModule),
+        //component: InstallManagementComponent,
         data: { breadcrumb: 'Quản lý lắp đặt' },
       },
       {

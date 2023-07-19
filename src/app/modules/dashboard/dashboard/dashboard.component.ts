@@ -11,7 +11,7 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import {MatPaginator} from "@angular/material/paginator";
 
 @Component({
-  selector: 'app-install-management',
+  selector: 'app-dasboard',
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss']
 })

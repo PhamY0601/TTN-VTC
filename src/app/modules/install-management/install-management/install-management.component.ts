@@ -7,16 +7,17 @@ import {ActivatedRoute} from "@angular/router";
 import {DistrictService} from "../../../shared/services/district.service";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
-import {Map, tileLayer} from "leaflet";
 import {InstallationService} from "../../../shared/services/installation.service";
 import {Chart} from "chart.js/auto";
 import ChartDataLabels from "chartjs-plugin-datalabels";
+import * as L from "leaflet";
+import 'leaflet.markercluster';
 
 
 
 
 @Component({
-  selector: 'app-install-management',
+  selector: 'app-install',
   templateUrl: './install-management.component.html',
   styleUrls: ['./install-management.component.scss']
 })
@@ -39,6 +40,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   chart: any = [];
   backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
 
+  htmlRefMap: any
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
               private installationService$: InstallationService,
@@ -50,8 +52,9 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   }
 
   ngOnInit() {
-
     this.loadData(COUNTRY());
+    this.htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
+
   }
 
   ngAfterViewInit() {
@@ -61,8 +64,11 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
     this.dataSourceSecond.paginator = this.paginatorSecond;
     this.dataSourceSecond.sort = this.tableSecondSort;
+    setTimeout(() => {
+      this.initMap()
+      this.installationService$.makeCapitalMarkers(this.map)
+    }, 2000)
 
-    this.map()
   }
 
   ngOnDestroy() {
@@ -155,15 +161,29 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   }
 
-  map() {
-    let htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
-    const map = new Map(htmlRefMap).setView([51.505, -0.09], 13);
-    tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 13,
+
+
+  private map:any;
+
+
+
+  private initMap(): void {
+
+   // const markerCluster = L.markerClusterGroup();
+
+    this.map = L.map( this.htmlRefMap, {
+      center: [ 10.769444, 106.681944 ],
+      zoom: 10
+    });
+
+    const tiles =  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(map);
+    });
+
+    tiles.addTo(this.map);
+
+  var marker = L.marker([10.769444, 106.681944]).addTo(this.map);
   }
-
-
 
 }

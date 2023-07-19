@@ -2,8 +2,9 @@ import {Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
+import * as L from 'leaflet';
 
-
+import * as L1 from 'leaflet.markercluster'
 @Injectable({
   providedIn: 'root'
 })
@@ -144,5 +145,25 @@ export class InstallationService {
 
   }
 
+
+
+  makeCapitalMarkers(data: L.Map): void {
+    let cluster = new L.MarkerClusterGroup()
+
+    const headers = this.header;
+    this.http.get(`${API.INSTALLATION_URL}`, {headers}).subscribe((res:any) => {
+      let array = res.data;
+      this.getData(array, 'device_positions').forEach((item: any) => {
+        const lng =  item.Lng
+        const lat = item.Lat
+        const marker = L.marker([lat, lng]);
+
+        cluster.addLayer(marker.addTo(data))
+
+      })
+
+    })
+    data.addLayer(cluster)
+  }
 
 }
