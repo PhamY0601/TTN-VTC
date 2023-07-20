@@ -171,9 +171,18 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     var markers = L.markerClusterGroup();
 
     this.installationService$.makeCapitalMarkers().subscribe((data:any) => {
-
+      console.log(data)
       data.forEach((item:any) => {
-      const marker = L.marker([item.Lat, item.Lng])
+         const marker = L.marker([item.Lat, item.Lng]).addTo(this.map)
+                                      .bindPopup(
+                                        `<div>Tỉnh, thành phố: ${ item.province }</div>` +
+                                                `<div>Quận, huyện: ${ item.district }</div>` +
+                                                `<div>Xã, phường: ${ item.ward }</div>` +
+                                                `<div>Loại thiết bị: ${ item.type_display }</div>` +
+                                                `<div>Trạng thái phát: ${ item.Status }</div>`
+                                      )
+
+
         markers.addLayer(marker)
       })
 
