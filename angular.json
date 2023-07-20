@@ -18,7 +18,9 @@
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
             "allowedCommonJsDependencies":[
-              "moment"
+              "moment",
+              "leaflet",
+              "leaflet.markercluster"
             ],
             "outputPath": "dist/ttn",
             "index": "src/index.html",

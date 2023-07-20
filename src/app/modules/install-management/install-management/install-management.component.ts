@@ -66,7 +66,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.dataSourceSecond.sort = this.tableSecondSort;
     setTimeout(() => {
       this.initMap()
-      this.installationService$.makeCapitalMarkers(this.map)
+      //this.installationService$.makeCapitalMarkers(this.map)
     }, 2000)
 
   }
@@ -161,29 +161,24 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   }
 
-
-
   private map:any;
-
-
 
   private initMap(): void {
 
-   // const markerCluster = L.markerClusterGroup();
+   this.map = L.map(this.htmlRefMap).setView([ 10.769444, 106.681944 ], 10)
+   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
 
-    this.map = L.map( this.htmlRefMap, {
-      center: [ 10.769444, 106.681944 ],
-      zoom: 10
-    });
+    var markers = L.markerClusterGroup();
 
-    const tiles =  L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      maxZoom: 19,
-      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-    });
+    this.installationService$.makeCapitalMarkers().subscribe((data:any) => {
 
-    tiles.addTo(this.map);
+      data.forEach((item:any) => {
+      const marker = L.marker([item.Lat, item.Lng])
+        markers.addLayer(marker)
+      })
 
-  var marker = L.marker([10.769444, 106.681944]).addTo(this.map);
+    })
+    this.map.addLayer(markers);
   }
 
 }

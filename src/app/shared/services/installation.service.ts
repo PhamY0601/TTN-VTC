@@ -147,23 +147,15 @@ export class InstallationService {
 
 
 
-  makeCapitalMarkers(data: L.Map): void {
-    let cluster = new L.MarkerClusterGroup()
-
-    const headers = this.header;
-    this.http.get(`${API.INSTALLATION_URL}`, {headers}).subscribe((res:any) => {
+  makeCapitalMarkers(): Observable<any> {
+     const headers = this.header;
+    return this.http.get(`${API.INSTALLATION_URL}`, {headers}).pipe(map((res: any) => {
       let array = res.data;
-      this.getData(array, 'device_positions').forEach((item: any) => {
-        const lng =  item.Lng
-        const lat = item.Lat
-        const marker = L.marker([lat, lng]);
 
-        cluster.addLayer(marker.addTo(data))
 
-      })
+     return this.getData(array, 'device_positions')
 
-    })
-    data.addLayer(cluster)
+    }));
   }
 
 }
