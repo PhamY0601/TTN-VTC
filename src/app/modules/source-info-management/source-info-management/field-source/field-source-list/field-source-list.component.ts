@@ -20,6 +20,8 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['stt', 'name', 'type', 'schedule','url', 'listens', 'status'];
   dataSource: any;
+  dataDialog: any[] = []
+
 
   constructor( private spinner: NgxSpinnerService,
                public dialog: MatDialog,
@@ -48,7 +50,40 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
     });
   }
 
+  openDialog(id: any): void {
+    this.sourceInfoService$.getFieldSource().subscribe((data) => {
+      this.dataDialog = data.filter((item: any) => item.id === id);
+      let dialogRef = this.dialog.open(AudioDialogComponent, {
+        width: '500px',
+        data: this.dataDialog[0].url,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
 
+    })
+  }
+
+}
+
+@Component({
+  selector: 'audio-dialog-dialog',
+  templateUrl: './audio-dialog.component.html',
+})
+export class AudioDialogComponent implements OnInit {
+
+  constructor(
+    public dialogRef: MatDialogRef<any>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+  }
 
 
 }
+

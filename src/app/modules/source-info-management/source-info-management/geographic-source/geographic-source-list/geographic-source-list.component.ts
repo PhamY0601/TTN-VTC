@@ -5,6 +5,8 @@ import {CitiesService} from "../../../../../shared/services/cities.service";
 import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SourceInfoManagementService} from "../../../../../shared/services/source-info-management.service";
+import {AudioDialogComponent} from "../../field-source/field-source-list/field-source-list.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-geographic-source',
@@ -16,8 +18,9 @@ export class GeographicSourceListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['stt', 'province', 'district', 'ward', 'type','schedule', 'url', 'listens', 'status'];
   dataSource: any;
-
+  dataDialog: any[] = []
   constructor( private spinner: NgxSpinnerService,
+               public dialog: MatDialog,
                private sourceInfoService$: SourceInfoManagementService) {
     this.dataSource = new MatTableDataSource([]);
   }
@@ -44,5 +47,20 @@ export class GeographicSourceListComponent implements OnInit, AfterViewInit {
     this.sourceInfoService$.getGeographicSource().subscribe((data) => {
       this.dataSource.data = data
     });
+  }
+
+  openDialog(id: any): void {
+    this.sourceInfoService$.getGeographicSource().subscribe((res) => {
+
+      this.dataDialog =  Object.values(res).filter((item: any) => item.id === id);
+      let dialogRef = this.dialog.open(AudioDialogComponent, {
+        width: '500px',
+        data: this.dataDialog[0].url,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+
+
+    })
   }
 }

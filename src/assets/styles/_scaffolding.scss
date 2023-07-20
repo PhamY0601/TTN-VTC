@@ -385,6 +385,13 @@ td {
   display: none !important;
 }
 
+.url-copy {
+  color: #646464 !important;
+}
+.url-dialog:hover, .url-copy:hover {
+  cursor: pointer;
+  color: #08B1BD !important;
+}
 @media only screen and (max-width : 480px) {
   /* Styles */
 }

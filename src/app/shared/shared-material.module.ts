@@ -23,6 +23,7 @@ import {NgxMatTimepickerModule} from "ngx-mat-timepicker";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatBadgeModule} from "@angular/material/badge";
 import {MatTreeModule} from "@angular/material/tree";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 
 
@@ -52,7 +53,8 @@ import {MatTreeModule} from "@angular/material/tree";
     MatCheckboxModule,
     MatTooltipModule,
     MatBadgeModule,
-    MatTreeModule
+    MatTreeModule,
+    ClipboardModule
   ]
 })
 export class SharedMaterialModule {}

@@ -66,7 +66,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.dataSourceSecond.sort = this.tableSecondSort;
     setTimeout(() => {
       this.initMap()
-      //this.installationService$.makeCapitalMarkers(this.map)
+
     }, 2000)
 
   }

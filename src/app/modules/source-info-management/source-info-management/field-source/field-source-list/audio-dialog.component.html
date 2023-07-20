@@ -1,0 +1,15 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">Nghe thử</h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-divider></mat-divider>
+<div mat-dialog-content fxLayout="column" fxLayoutGap="30">
+  <audio controls class="full-width">
+    <source src="{{data}}" type="audio/wav">
+  </audio>
+</div>
+
+
