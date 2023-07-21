@@ -11,8 +11,9 @@ import { FlexModule } from '@angular/flex-layout';
 import {NgxSpinnerModule} from "ngx-spinner";
 import {RouterModule} from "@angular/router";
 import {BreadcrumbModule} from "xng-breadcrumb";
-import {SharedComponentModule} from "./shared/component/shared-component.module";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
+import {SharedComponentModule} from "./shared/component/shared-component.module";
+import {NewsCardDialogComponent} from "./shared/component/news-card/news-card.component";
 
 
 
@@ -25,8 +26,6 @@ const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
 @NgModule({
   declarations: [
     AppComponent,
-
-
   ],
   imports: [
     HttpClientModule,

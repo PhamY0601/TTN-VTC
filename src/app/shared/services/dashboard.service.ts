@@ -68,14 +68,22 @@ export class DashboardService {
       })
 
       this.getData(array, 'record_active').forEach((item: any) => {
+        //
+        // const substringToRemove = "http://localhost:57088/ttn_/";
+        //
+        // const resultURL = item.Uri.replace(substringToRemove, "");
+        // console.log(resultURL)
+
         recordData.push({
+          id: item.Id,
           title: item.Title,
           province: item.province,
           district: item.district,
           ward: item.ward,
           date: item.ActivedDate,
           starttime: item.Start,
-          endtime: item.End
+          endtime: item.End,
+          url: item.Uri
         })
       })
 

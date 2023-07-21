@@ -14,8 +14,6 @@ import * as L from "leaflet";
 import 'leaflet.markercluster';
 
 
-
-
 @Component({
   selector: 'app-install',
   templateUrl: './install-management.component.html',
@@ -41,6 +39,8 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
 
   htmlRefMap: any
+  private map: any;
+
   constructor(private citiesService$: CitiesService,
               private districtService$: DistrictService,
               private installationService$: InstallationService,
@@ -73,7 +73,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnDestroy() {
   }
-
 
   onSearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
@@ -161,26 +160,25 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   }
 
-  private map:any;
-
   private initMap(): void {
 
-   this.map = L.map(this.htmlRefMap).setView([ 10.769444, 106.681944 ], 10)
-   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
+    this.map = L.map(this.htmlRefMap).setView([10.769444, 106.681944], 10)
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
 
     var markers = L.markerClusterGroup();
 
-    this.installationService$.makeCapitalMarkers().subscribe((data:any) => {
+    this.installationService$.makeCapitalMarkers().subscribe((data: any) => {
       console.log(data)
-      data.forEach((item:any) => {
-         const marker = L.marker([item.Lat, item.Lng]).addTo(this.map)
-                                      .bindPopup(
-                                        `<div>Tỉnh, thành phố: ${ item.province }</div>` +
-                                                `<div>Quận, huyện: ${ item.district }</div>` +
-                                                `<div>Xã, phường: ${ item.ward }</div>` +
-                                                `<div>Loại thiết bị: ${ item.type_display }</div>` +
-                                                `<div>Trạng thái phát: ${ item.Status }</div>`
-                                      )
+      data.forEach((item: any) => {
+        const marker = L.marker([item.Lat, item.Lng]).addTo(this.map)
+          .bindPopup(
+            `<div><strong>Thiết bị: ${item.type_display}</strong></div>` +
+                    `<div>Tỉnh, thành phố: ${item.province}</div>` +
+                    `<div>Quận, huyện: ${item.district}</div>` +
+                    `<div>Xã, phường: ${item.ward}</div>` +
+                    `<div>Trạng thái phát: ${item.Status}</div>` +
+                    `<div>Nhà cung cấp: ${item.agencies_name}</div>`
+          )
 
 
         markers.addLayer(marker)

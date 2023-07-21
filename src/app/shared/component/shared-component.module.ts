@@ -9,7 +9,7 @@ import {NgxSpinnerModule} from "ngx-spinner";
 import {HeaderComponent} from "./header/header.component";
 import {SidenavComponent} from "./sidenav/sidenav.component";
 import {OverviewCardComponent} from "./overview-card/overview-card.component";
-import {NewsCardComponent} from "./news-card/news-card.component";
+import {NewsCardComponent, NewsCardDialogComponent} from "./news-card/news-card.component";
 import {AvatarComponent} from "./avatar/avatar.component";
 import {ContentCardComponent} from "./content-card/content-card.component";
 import {FooterComponent} from "./footer/footer.component";
@@ -33,6 +33,7 @@ const components = [
   SidenavComponent,
   OverviewCardComponent,
   NewsCardComponent,
+  NewsCardDialogComponent,
   AvatarComponent,
   ContentCardComponent,
   FooterComponent,
@@ -42,13 +43,13 @@ const components = [
   ChangePasswordFormContentComponent,
   ChangePasswordFormDialogComponent,
   AppComfirmComponent,
+  SeeMoreComponent,
 
 ];
 
 @NgModule({
   declarations: [
     ...components,
-    SeeMoreComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +62,7 @@ const components = [
   ],
     exports: [
         ...components,
-        SeeMoreComponent
+
     ],
   providers: [AppConfirmService]
 })

@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 4000);
+    }, 2000);
 
     //lấy số liệu
     this.dashboardService$.getTotal().subscribe((res) => {

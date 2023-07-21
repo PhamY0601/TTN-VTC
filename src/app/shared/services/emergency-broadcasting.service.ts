@@ -40,7 +40,6 @@ export class EmergencyBroadcastingService {
           let areaDetail: any[] = [];
           item.destinations.forEach((district:any) => {
             areaDetailTempt.push(district.district_display)
-
           })
           areaDetail = areaDetailTempt.filter((value, index, district) => {
             return district.indexOf(value) === index;

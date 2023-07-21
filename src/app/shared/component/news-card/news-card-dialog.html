@@ -1,0 +1,43 @@
+<div fxLayout="row" fxLayoutAlign="space-between center">
+  <h1 matDialogTitle class="text-blue">Chi tiết bản tin đang phát </h1>
+  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+<mat-divider></mat-divider>
+<div mat-dialog-content fxLayout="column" fxLayoutGap="20px">
+  <audio controls class="full-width">
+    <source src="{{data.data[0].url}}" type="audio/wav">
+  </audio>
+
+<div  fxLayout="column" fxLayoutGap="10px">
+  <div fxLayout="row" fxLayoutGap="5">
+    <div class="text-blue fw-500">Tên phát thanh:</div>
+    <div class="text-gray">{{data.data[0].title}}</div>
+  </div>
+
+  <div fxLayout="row" fxLayoutGap="5">
+    <div class="text-blue fw-500">Thời gian phát:</div>
+    <div class="text-gray">{{data.data[0].date| date:'dd-MM-yyyy'}} {{data.data[0].starttime}} - {{data.data[0].endtime}}</div>
+  </div>
+
+  <ul *ngFor="let item of data.area">
+    <li>{{ item.districts }}</li>
+    <ul>
+      <li *ngFor="let ward of item.wards">{{ ward }}</li>
+    </ul>
+  </ul>
+</div>
+
+
+
+<!--  <div fxLayout="row" fxLayoutGap="5">-->
+<!--    <div class="text-blue fw-500">Tên phát thanh:</div>-->
+<!--    <div class="text-gray">{{data[0].title}}</div>-->
+<!--  </div>-->
+
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+</div>
+

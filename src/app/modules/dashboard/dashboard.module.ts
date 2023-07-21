@@ -6,6 +6,7 @@ import {SharedMaterialModule} from "../../shared/shared-material.module";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {SharedComponentModule} from "../../shared/component/shared-component.module";
+import {MatDividerModule} from "@angular/material/divider";
 
 
 @NgModule({
@@ -15,7 +16,7 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
     RouterModule.forChild(DashboardRoutes),
     SharedMaterialModule,
     NgxSpinnerModule,
-
+    MatDividerModule,
   ],
   exports: [
     DashboardComponent

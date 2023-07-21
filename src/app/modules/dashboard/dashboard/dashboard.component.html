@@ -1,3 +1,4 @@
+<router-outlet></router-outlet>
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
   <div fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="30px"
        fxLayout.xs= "column"
@@ -12,10 +13,10 @@
       </app-overview-card>
     </div>
   </div>
-  <div style="height: 500px"
+  <div style="height: 450px"
     fxLayout="row" fxLayoutAlign=" stretch" fxLayoutGap="30px">
 
-    <mat-card fxFlex="30" class="p-1" >
+    <mat-card fxFlex="30" >
       <app-news-card [newsData]="newsData"></app-news-card>
     </mat-card>
     <div fxFlex="70">

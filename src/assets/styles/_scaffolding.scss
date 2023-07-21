@@ -388,10 +388,16 @@ td {
 .url-copy {
   color: #646464 !important;
 }
-.url-dialog:hover, .url-copy:hover {
+.url-dialog:hover, .url-copy:hover, .icon-custom:hover {
   cursor: pointer;
   color: #08B1BD !important;
 }
-@media only screen and (max-width : 480px) {
-  /* Styles */
+
+.mat-mdc-paginator-container {
+  min-height: auto;
+}
+
+.icon-custom {
+  color: #646464 !important;
+  font-size: 24px;
 }
