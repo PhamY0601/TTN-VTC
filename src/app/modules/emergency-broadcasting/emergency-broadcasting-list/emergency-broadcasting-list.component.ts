@@ -15,7 +15,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
-  displayedColumns: string[] = ['stt', 'date', 'start_time', 'end_time', 'title', 'content',  'area', 'station', 'speaker', 'action'];
+  displayedColumns: string[] = ['stt', 'date', 'title', 'content', 'start_time', 'end_time',  'area', 'station', 'speaker', 'action'];
   dataSource: any;
   dataDialog: any[] = []
 

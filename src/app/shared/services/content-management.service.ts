@@ -26,8 +26,8 @@ export class ContentManagementService {
 
       res.data.forEach((item: any) => {
         let contentBody = item.content[0].ContentBody
-        if (contentBody) {
 
+        if (contentBody) {
           let content = JSON.parse(contentBody)
           item.content[0].contentData = content.text
         }

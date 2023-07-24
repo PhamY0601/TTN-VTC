@@ -5,7 +5,7 @@
   </button>
 </div>
 
-<form #form="ngForm" (ngSubmit)="save()" novalidate>
+<form #form="ngForm" novalidate>
   <div fxLayout="column" fxLayoutGap="30" mat-dialog-content>
     <div>
       <mat-label>Tiêu đề</mat-label>
@@ -114,7 +114,7 @@
       </div>
 
       <div *ngIf="selected !== -1"
-           [ngSwitch]="selected" class="full-width" fxLayout="column" fxLayoutGap="30">
+           [ngSwitch]="selected" class="full-width" fxLayout="column" >
         <!--      Transmiiter-->
         <ng-container *ngSwitchCase="1">
           <mat-label>Transmitter</mat-label>
@@ -128,16 +128,16 @@
         </ng-container>
 
         <!--         Thư viện-->
-        <ng-container *ngSwitchCase="2">
-          <mat-label>Thư viện</mat-label>
-          <mat-form-field appearance="outline">
-            <mat-select placeholder="Thư viện">
-              <mat-option *ngFor="let item of libraryData" [value]="item">
-                {{item}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
+<!--        <ng-container *ngSwitchCase="2">-->
+<!--          <mat-label>Thư viện</mat-label>-->
+<!--          <mat-form-field appearance="outline">-->
+<!--            <mat-select placeholder="Thư viện">-->
+<!--              <mat-option *ngFor="let item of libraryData" [value]="item">-->
+<!--                {{item}}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--        </ng-container>-->
 
         <ng-container *ngSwitchCase="3">
           <div class="text-gray">File âm thanh</div>
@@ -149,10 +149,12 @@
             </audio>
             <input #fileUpload (change)="onFileSelected($event)"
                    class="file-input" type="file">
+
             <button (click)="fileUpload.click()" class="btn-blue"
                     mat-icon-button>
               <mat-icon class="fz-3">attach_file</mat-icon>
             </button>
+
           </div>
         </ng-container>
 
@@ -184,16 +186,16 @@
 
         </ng-container>
 
-        <ng-container *ngSwitchCase="5">
-          <mat-label> Tiếp âm</mat-label>
-          <mat-form-field appearance="outline">
-            <mat-select placeholder="Chọn tiếp âm">
-              <mat-option *ngFor="let item of relayData" [value]="item">
-                {{item}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </ng-container>
+<!--        <ng-container *ngSwitchCase="5">-->
+<!--          <mat-label> Tiếp âm</mat-label>-->
+<!--          <mat-form-field appearance="outline">-->
+<!--            <mat-select placeholder="Chọn tiếp âm">-->
+<!--              <mat-option *ngFor="let item of relayData" [value]="item">-->
+<!--                {{item}}-->
+<!--              </mat-option>-->
+<!--            </mat-select>-->
+<!--          </mat-form-field>-->
+<!--        </ng-container>-->
       </div>
     </div>
 
@@ -201,7 +203,7 @@
   <div class="mt-1 px-4 py-3" mat-dialog-actions>
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
     <span fxFlex></span>
-    <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
+    <button mat-raised-button class="btn-blue" [disabled]="form.invalid" (click)="save()">Lưu</button>
   </div>
 </form>
 

@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
   selector: 'app-content-card',
@@ -6,15 +6,11 @@ import {Component, Input} from '@angular/core';
   styleUrls: ['./content-card.component.scss']
 })
 export class ContentCardComponent {
-  @Input() district?: string;
-  @Input() speaker_on?: number;
-  @Input() speaker_establish?:number;
-  @Input() speaker_off?: number;
-  @Input() video_onl?: number;
-  @Input() video_establish?:number;
-  @Input() video_off?: number;
-  @Input() transmitter_onl?: number;
-  @Input() transmitter_off?: number;
-  @Input() transmitter_establish?: number
 
+  @Input() contentCardItem? : any
+  // @Output() itemSelected = new EventEmitter<any>();
+
+  // getItem() {
+  //   this.itemSelected.emit(this.contentCardItem);
+  // }
 }

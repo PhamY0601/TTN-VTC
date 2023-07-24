@@ -38,7 +38,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   chart: any = [];
   backgroundColor = ['#2155CD', '#009EFF', '#00E7FF', '#00FFF6', '#0B1BFF'];
 
-  htmlRefMap: any
   private map: any;
 
   constructor(private citiesService$: CitiesService,
@@ -53,7 +52,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnInit() {
     this.loadData(COUNTRY());
-    this.htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
+
 
   }
 
@@ -66,7 +65,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.dataSourceSecond.sort = this.tableSecondSort;
     setTimeout(() => {
       this.initMap()
-
     }, 2000)
 
   }
@@ -160,17 +158,17 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   }
 
-  private initMap(): void {
-
-    this.map = L.map(this.htmlRefMap).setView([10.769444, 106.681944], 10)
+  initMap(): void {
+    let htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
+    this.map = L.map( htmlRefMap).setView([10.769444, 106.681944], 10)
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
 
     var markers = L.markerClusterGroup();
 
     this.installationService$.makeCapitalMarkers().subscribe((data: any) => {
-      console.log(data)
+
       data.forEach((item: any) => {
-        const marker = L.marker([item.Lat, item.Lng]).addTo(this.map)
+        const marker = L.marker([item.Lat, item.Lng])
           .bindPopup(
             `<div><strong>Thiết bị: ${item.type_display}</strong></div>` +
                     `<div>Tỉnh, thành phố: ${item.province}</div>` +
@@ -179,7 +177,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
                     `<div>Trạng thái phát: ${item.Status}</div>` +
                     `<div>Nhà cung cấp: ${item.agencies_name}</div>`
           )
-
 
         markers.addLayer(marker)
       })

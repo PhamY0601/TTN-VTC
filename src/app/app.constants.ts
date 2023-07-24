@@ -17,8 +17,9 @@ export const sourceData = {
     {name: 'File âm thanh', completed: false, value: 3},
     {name: 'Văn bản', completed: false, value: 4},
     {name: 'Transmitter', completed: false, value: 1},
-    {name: 'Thư viện', completed: false, value: 2},
-    {name: 'Tiếp âm', completed: false, value: 5},],
+    // {name: 'Thư viện', completed: false, value: 2},
+    // {name: 'Tiếp âm', completed: false, value: 5},
+  ],
 };
 export const voiceData = [
   {name:'Mặc định', value: 'female_north_ngochoa'},

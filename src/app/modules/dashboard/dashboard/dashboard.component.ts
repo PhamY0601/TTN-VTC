@@ -24,7 +24,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   title_country: any;
 
 
-
   title: any[] = [];
   data: any[] = [];
   chart: any = [];
@@ -73,7 +72,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   }
 
- //Lấy dữ liệu từ API
+  //Lấy dữ liệu từ API
   loadData(): void {
     this.spinner.show();
     setTimeout(() => {
@@ -86,7 +85,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       arrayOverview[0].sort((item1: any, item2: any) => {
         return item1.id - item2.id;
       });
-      this.overviewData =  arrayOverview[0];
+      this.overviewData = arrayOverview[0];
 
       //Bản tin đang phát
       let arrayRecordActive = res.filter((item: any) => item.name === 'record_active').map((item: any) => item.value)
@@ -106,19 +105,21 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       let arrayRecordField = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
       this.typeData = arrayRecordField[0]
       this.createChart(arrayRecordField[0])
+
+     //  let arrayDeviceDistrict = res.filter((item: any) => item.name === 'device_status_district').map((item: any) => item.value)
+     // console.log(arrayDeviceDistrict[0])
     })
   }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
-
   }
 
-  createChart(chartData:any): void {
+  createChart(chartData: any): void {
 
     this.dataSource.data = chartData;
-    this.title = chartData.map((item:any) => item.name);
-    this.data = chartData.map((item:any) => item.count);
+    this.title = chartData.map((item: any) => item.name);
+    this.data = chartData.map((item: any) => item.count);
     // let htmlRef = this.elementRef.nativeElement.querySelector(`#canvas`)
 
     this.chart = new Chart('canvas', {

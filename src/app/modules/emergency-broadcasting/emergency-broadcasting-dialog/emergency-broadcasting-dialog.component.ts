@@ -86,6 +86,7 @@ export class EmergencyBroadcastingContentComponent implements OnInit {
   }
 
   onFileSelected(event: any) {
+    console.log(event)
     if (event.target.files && event.target.files[0]) {
       this.audSrc = URL.createObjectURL(event.target.files[0]);
     }

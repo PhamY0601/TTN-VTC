@@ -68,11 +68,15 @@ export class DashboardService {
       })
 
       this.getData(array, 'record_active').forEach((item: any) => {
-        //
-        // const substringToRemove = "http://localhost:57088/ttn_/";
-        //
-        // const resultURL = item.Uri.replace(substringToRemove, "");
-        // console.log(resultURL)
+
+        const substringToRemove = "http://localhost:57088/ttn_/";
+        let resultURL:string;
+
+        if(item.Uri.startsWith("http://localhost:57088/ttn_/")){
+          resultURL =  API.AUDIO_URL + item.Uri.replace(substringToRemove, "");
+        } else {
+          resultURL = item.Uri
+        }
 
         recordData.push({
           id: item.Id,
@@ -83,9 +87,10 @@ export class DashboardService {
           date: item.ActivedDate,
           starttime: item.Start,
           endtime: item.End,
-          url: item.Uri
+          url: resultURL
         })
       })
+
 
       this.getData(array, 'record_field').forEach((item: any) => {
         fieldData.push({
@@ -99,7 +104,8 @@ export class DashboardService {
       this.getData(array, 'device_status').forEach((item: any) => {
         arrayDevice.push(item)
       })
-      const groupedDevice = arrayDevice.reduce((acc, cur) => {
+
+      let groupedDevice = arrayDevice.reduce((acc, cur) => {
         let key: any
         if (cur.districtCode === '') {
           key = `${cur.provinceCode}`;
@@ -113,10 +119,22 @@ export class DashboardService {
         return acc;
       }, {});
 
+      let groupedDeviceArray = Object.entries(groupedDevice).map(([code, data]) => ({ code, data }));
+
+      let testDistrictsData: any[] = [];
+
+      groupedDeviceArray.forEach((district:any)=> {
+        console.log(district)
+
+      })
+
+      console.log(testDistrictsData)
+
       Object.values(groupedDevice).forEach((group: any) => {
 
         let province: any = '';
         let district: any = '';
+        let ward: any = '';
         let speaker_off = 0;
         let speaker_establish = 0;
         let speaker_on = 0;
@@ -130,62 +148,64 @@ export class DashboardService {
         group.forEach((device: any) => {
 
           if (device.type === "AudioBox") {
-            province = device.provinceName;
-            district = device.districtName;
             switch (device.STATUS) {
               case "0":
-                speaker_off = device.total;
+                speaker_off += device.total;
                 break;
+
               case "1":
-                speaker_on = device.total;
+                speaker_on += device.total;
                 break;
+
               case "2":
-                speaker_establish = device.total;
+                speaker_establish += device.total;
                 break;
+
               case null:
-                speaker_off = device.total;
+                speaker_off += device.total;
             }
-
-
           }
+
           if (device.type === "Transmiter") {
-            province = device.provinceName;
-            district = device.districtName
-
             switch (device.STATUS) {
-
               case "0":
-                transmitter_off = device.total;
+                transmitter_off += device.total;
                 break;
+
               case "1":
-                transmitter_onl = device.total
+                transmitter_onl += device.total
                 break;
+
               case "2":
-                transmitter_establish = device.total;
+                transmitter_establish += device.total;
                 break;
             }
           }
           if (device.type === "MediaBox") {
-            province = device.provinceName;
-            district = device.districtName
-
             switch (device.STATUS) {
               case "0":
-                video_off = device.total;
+                video_off += device.total;
                 break;
+
               case "1":
-                video_onl = device.total
+                video_onl += device.total
                 break;
+
               case "2":
-                video_establish = device.total;
+                video_establish += device.total;
                 break;
             }
           }
+
+          province = device.provinceName;
+          district = device.districtName;
+          ward = device.wardName;
         });
 
         deviceData.push({
           province: province,
           district: district,
+          ward: ward,
           speaker_off: speaker_off,
           speaker_establish: speaker_establish,
           speaker_on: speaker_on,
@@ -198,10 +218,13 @@ export class DashboardService {
         })
       });
 
+     // console.log(deviceData)
+
       result.push({name: 'total', value: totalData});
       result.push({name: 'record_active', value: recordData});
       result.push({name: 'record_field', value: fieldData});
-      result.push({name: 'device_status', value: deviceData})
+      result.push({name: 'device_status', value: deviceData});
+      result.push({name: 'device_status_district', value: groupedDevice})
       return result
     }));
 

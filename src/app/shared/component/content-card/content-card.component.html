@@ -1,22 +1,24 @@
 <mat-card class="p-1">
-  <mat-card-header class="fz-3 fw-500 py-3">{{district}}</mat-card-header>
+  <mat-card-header class="fz-3 fw-500 py-3">{{contentCardItem.district}}</mat-card-header>
+
   <mat-card-content fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="speaker_gray"></mat-icon>
       <div class="status-text text-green fw-500"
-           matTooltip="Kết nối">
+           matTooltip="Kết nối"
+           [matMenuTriggerFor]="menu">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{speaker_on}}</div>
+        <div>{{contentCardItem.speaker_on}}</div>
       </div>
       <div class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{speaker_establish}}</div>
+        <div>{{contentCardItem.speaker_establish}}</div>
       </div>
       <div class="status-text text-gray fw-500"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{speaker_off}}</div>
+        <div>{{contentCardItem.speaker_off}}</div>
       </div>
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
@@ -24,17 +26,17 @@
       <div class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{video_onl}}</div>
+        <div>{{contentCardItem.video_onl}}</div>
       </div>
       <div class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{video_establish}}</div>
+        <div>{{contentCardItem.video_establish}}</div>
       </div>
       <div class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{video_off}}</div>
+        <div>{{contentCardItem.video_off}}</div>
       </div>
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
@@ -42,21 +44,31 @@
       <div class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{transmitter_onl}}</div>
+        <div>{{contentCardItem.transmitter_onl}}</div>
       </div>
 
       <div class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{transmitter_establish}}</div>
+        <div>{{contentCardItem.transmitter_establish}}</div>
       </div>
 
       <div class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{transmitter_off}}</div>
+        <div>{{contentCardItem.transmitter_off}}</div>
       </div>
 
     </div>
   </mat-card-content>
 </mat-card>
+
+<mat-menu #menu="matMenu" style="width: 300px">
+  <div class="text-blue fw-500 p-3">Danh sách thiết bị</div>
+  <mat-divider></mat-divider>
+  <div class="p-3">
+    <p>Thiết bị 1 </p>
+    <p>Thiết bị 2 </p>
+  </div>
+
+</mat-menu>
