@@ -16,6 +16,13 @@
       <div class="text-gray">{{data.data[0].title}}</div>
     </div>
 
+    <div fxLayout="row" fxLayoutGap="5"
+          *ngIf="data.data[0].content !== ''">
+      <div class="text-blue fw-500">Nội dung phát:</div>
+<!--      <div class="text-gray">{{data.data[0].content}}</div>-->
+      <app-see-more [content]="data.data[0].content"></app-see-more>
+    </div>
+
     <div fxLayout="row" fxLayoutGap="5">
       <div class="text-blue fw-500">Thời gian phát:</div>
       <div class="text-gray">{{data.data[0].date| date:'dd-MM-yyyy'}} {{data.data[0].starttime}}
@@ -44,16 +51,14 @@
       </div>
     </div>
 
+
+    <!--  <div fxLayout="row" fxLayoutGap="5">-->
+    <!--    <div class="text-blue fw-500">Tên phát thanh:</div>-->
+    <!--    <div class="text-gray">{{data[0].title}}</div>-->
+    <!--  </div>-->
+
   </div>
-
-
-  <!--  <div fxLayout="row" fxLayoutGap="5">-->
-  <!--    <div class="text-blue fw-500">Tên phát thanh:</div>-->
-  <!--    <div class="text-gray">{{data[0].title}}</div>-->
-  <!--  </div>-->
-
-</div>
-<div mat-dialog-actions align="end">
-  <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
-</div>
+  <div mat-dialog-actions align="end">
+    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+  </div>
 

@@ -148,7 +148,7 @@
               <source [src]="audSrc" type="audio/wav">
             </audio>
             <input #fileUpload (change)="onFileSelected($event)"
-                   class="file-input" type="file">
+                   class="file-input" type="file" accept="audio/*" >
 
             <button (click)="fileUpload.click()" class="btn-blue"
                     mat-icon-button>

@@ -22,7 +22,8 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   typeData: any[] = [];
   param?: string | null = '';
   title_country: any;
-
+  title_district: any;
+  arrayDeviceDistrict: any[] = []
 
   title: any[] = [];
   data: any[] = [];
@@ -35,8 +36,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
   constructor(private dashboardService$: DashboardService,
               private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService,
-              private elementRef: ElementRef) {
+              private spinner: NgxSpinnerService) {
     this.dataSource = new MatTableDataSource([])
   }
 
@@ -77,7 +77,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
-    }, 2000);
+    }, 1000);
 
     //lấy số liệu
     this.dashboardService$.getTotal().subscribe((res) => {
@@ -97,17 +97,22 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       });
       this.newsData = arrayRecordActive[0];
 
-      //Số lượng lắp đặt
-      let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
-      this.installData = arrayDeviceStatus[0];
-
       //Loại bản tin
       let arrayRecordField = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
       this.typeData = arrayRecordField[0]
       this.createChart(arrayRecordField[0])
 
-     //  let arrayDeviceDistrict = res.filter((item: any) => item.name === 'device_status_district').map((item: any) => item.value)
-     // console.log(arrayDeviceDistrict[0])
+      this.arrayDeviceDistrict = res.filter((item: any) => item.name === 'device_status_district').map((item: any) => item.value)
+
+      //Số lượng lắp đặt
+      if(this.param) {
+        this.installData  = this.dashboardService$.getDetailDevice( this.arrayDeviceDistrict[0], this.param)
+        this.title_district = this.installData[0].district
+
+      } else {
+        let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
+        this.installData = arrayDeviceStatus[0];
+      }
     })
   }
 
@@ -164,7 +169,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
 
     })
 
-    //this.chart.destroy()
   }
 
 

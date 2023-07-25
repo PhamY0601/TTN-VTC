@@ -71,13 +71,26 @@
     </div>
   </div>
   <mat-card class="p-4" fxLayout="column" fxLayoutAlign="space-around strecth" fxLayoutGap="30">
-    <div class="text-blue fz-3 fw-500">{{param ? (param | replaceStr) : (title_country | replaceStr)  }}</div>
+
+    <div *ngIf="!param then districtData; else wardData"> </div>
+
+    <ng-template #districtData>
+      <div class="text-blue fz-3 fw-500">{{ title_country | replaceStr}}</div>
+    </ng-template>
+
+    <ng-template #wardData >
+      <div fxLayout="row" fxLayoutGap="10">
+        <a class="text-blue fz-3 fw-500"
+           [routerLink]="['/dashboard']">{{ title_country | replaceStr}}</a>
+        <span>&#47;</span>
+        <span class="text-blue fz-3 fw-500">{{title_district}}</span>
+      </div>
+
+    </ng-template>
+
     <div class="parent">
       <div class="child" *ngFor="let item of installData">
-
-        <app-content-card [contentCardItem]="item"
-                          ></app-content-card>
-
+        <app-content-card [contentCardItem]="item"></app-content-card>
       </div>
     </div>
   </mat-card>

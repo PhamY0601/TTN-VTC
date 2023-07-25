@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {combineLatestAll, map, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
+import {group} from "@angular/animations";
 
 
 @Injectable({
@@ -70,13 +71,16 @@ export class DashboardService {
       this.getData(array, 'record_active').forEach((item: any) => {
 
         const substringToRemove = "http://localhost:57088/ttn_/";
-        let resultURL:string;
+        let resultURL: string;
 
-        if(item.Uri.startsWith("http://localhost:57088/ttn_/")){
-          resultURL =  API.AUDIO_URL + item.Uri.replace(substringToRemove, "");
+        if (item.Uri.startsWith("http://localhost:57088/ttn_/")) {
+          resultURL = API.AUDIO_URL + item.Uri.replace(substringToRemove, "");
         } else {
           resultURL = item.Uri
         }
+
+        let content = item.content ? JSON.parse(item.content) : ''
+
 
         recordData.push({
           id: item.Id,
@@ -87,7 +91,9 @@ export class DashboardService {
           date: item.ActivedDate,
           starttime: item.Start,
           endtime: item.End,
-          url: resultURL
+          url: resultURL,
+          field: item.field_display,
+          content: item.content ? content.text : content
         })
       })
 
@@ -105,126 +111,22 @@ export class DashboardService {
         arrayDevice.push(item)
       })
 
-      let groupedDevice = arrayDevice.reduce((acc, cur) => {
-        let key: any
-        if (cur.districtCode === '') {
-          key = `${cur.provinceCode}`;
-        } else {
-          key = `${cur.provinceCode}-${cur.districtCode}`;
-        }
-        if (!acc[key]) {
-          acc[key] = [];
-        }
-        acc[key].push(cur);
-        return acc;
-      }, {});
+      //nhóm theo district
+      let groupedByDistrict = this.groupByProperty(arrayDevice, 'districtCode')
 
-      let groupedDeviceArray = Object.entries(groupedDevice).map(([code, data]) => ({ code, data }));
+      //tạo mảng mới chứa mã district và tat cả ward
+      let groupedByDistrictArray = Object.entries(groupedByDistrict).map(([district, wards]) => ({district, wards}));
 
-      let testDistrictsData: any[] = [];
-
-      groupedDeviceArray.forEach((district:any)=> {
-        console.log(district)
-
-      })
-
-      console.log(testDistrictsData)
-
-      Object.values(groupedDevice).forEach((group: any) => {
-
-        let province: any = '';
-        let district: any = '';
-        let ward: any = '';
-        let speaker_off = 0;
-        let speaker_establish = 0;
-        let speaker_on = 0;
-        let video_establish = 0;
-        let video_onl = 0;
-        let video_off = 0;
-        let transmitter_onl = 0;
-        let transmitter_off = 0;
-        let transmitter_establish = 0;
-
-        group.forEach((device: any) => {
-
-          if (device.type === "AudioBox") {
-            switch (device.STATUS) {
-              case "0":
-                speaker_off += device.total;
-                break;
-
-              case "1":
-                speaker_on += device.total;
-                break;
-
-              case "2":
-                speaker_establish += device.total;
-                break;
-
-              case null:
-                speaker_off += device.total;
-            }
-          }
-
-          if (device.type === "Transmiter") {
-            switch (device.STATUS) {
-              case "0":
-                transmitter_off += device.total;
-                break;
-
-              case "1":
-                transmitter_onl += device.total
-                break;
-
-              case "2":
-                transmitter_establish += device.total;
-                break;
-            }
-          }
-          if (device.type === "MediaBox") {
-            switch (device.STATUS) {
-              case "0":
-                video_off += device.total;
-                break;
-
-              case "1":
-                video_onl += device.total
-                break;
-
-              case "2":
-                video_establish += device.total;
-                break;
-            }
-          }
-
-          province = device.provinceName;
-          district = device.districtName;
-          ward = device.wardName;
-        });
-
-        deviceData.push({
-          province: province,
-          district: district,
-          ward: ward,
-          speaker_off: speaker_off,
-          speaker_establish: speaker_establish,
-          speaker_on: speaker_on,
-          video_onl: video_onl,
-          video_establish: video_establish,
-          video_off: video_off,
-          transmitter_onl: transmitter_onl,
-          transmitter_off: transmitter_off,
-          transmitter_establish: transmitter_establish
-        })
+      // dem device theo district
+      Object.values(groupedByDistrict).forEach((group: any) => {
+        deviceData.push(this.countDevice(group))
       });
-
-     // console.log(deviceData)
 
       result.push({name: 'total', value: totalData});
       result.push({name: 'record_active', value: recordData});
       result.push({name: 'record_field', value: fieldData});
       result.push({name: 'device_status', value: deviceData});
-      result.push({name: 'device_status_district', value: groupedDevice})
+      result.push({name: 'device_status_district', value:  groupedByDistrictArray})
       return result
     }));
 
@@ -234,15 +136,131 @@ export class DashboardService {
   getData(array: any, name: string): any {
     for (let i in array) {
       if (array[i].name === name) {
-        if(array[i].value === null || array[i].value === 'null' ) {
+        if (array[i].value === null || array[i].value === 'null') {
           return []
         }
         return array[i].value
       }
     }
-
-
   }
 
+  groupByProperty(list: any[], property: string) {
+    return list.reduce((groups: any, item: any) => {
+      const key = item[property];
+      (groups[key] = groups[key] || []).push(item);
+      return groups;
+    }, {});
+  }
+
+  getDetailDevice(data:any, districtCode:any) {
+
+    let result: any[] = []
+    let dataByDistrict = data.filter((item:any) => item.district === districtCode)
+
+    let wards = dataByDistrict[0].wards
+    let groupByWard = this.groupByProperty(wards, 'wardCode')
+    let groupByWardArray = Object.entries(groupByWard).map(([wardCode, wardData]) => ({wardCode, wardData}));
+
+    groupByWardArray.forEach((wards:any) => {
+     result.push(this.countDevice(wards.wardData))
+    })
+    return result
+  }
+
+
+  countDevice(data:any[]):any {
+    let province: any = '';
+    let district: any = '';
+    let ward: any = '';
+    let provinceCode: any = '';
+    let districtCode: any = '';
+    let wardCode: any = '';
+    let speaker_off = 0;
+    let speaker_establish = 0;
+    let speaker_on = 0;
+    let video_establish = 0;
+    let video_onl = 0;
+    let video_off = 0;
+    let transmitter_onl = 0;
+    let transmitter_off = 0;
+    let transmitter_establish = 0;
+
+    data.forEach((device: any) => {
+
+      if (device.type === "AudioBox") {
+        switch (device.STATUS) {
+          case "0":
+            speaker_off += device.total;
+            break;
+
+          case "1":
+            speaker_on += device.total;
+            break;
+
+          case "2":
+            speaker_establish += device.total;
+            break;
+
+          case null:
+            speaker_off += device.total;
+        }
+      }
+
+      if (device.type === "Transmiter") {
+        switch (device.STATUS) {
+          case "0":
+            transmitter_off += device.total;
+            break;
+
+          case "1":
+            transmitter_onl += device.total
+            break;
+
+          case "2":
+            transmitter_establish += device.total;
+            break;
+        }
+      }
+      if (device.type === "MediaBox") {
+        switch (device.STATUS) {
+          case "0":
+            video_off += device.total;
+            break;
+
+          case "1":
+            video_onl += device.total
+            break;
+
+          case "2":
+            video_establish += device.total;
+            break;
+        }
+      }
+
+      province = device.provinceName;
+      district = device.districtName;
+      ward = device.wardName;
+      provinceCode = device.provinceCode;
+      districtCode = device.districtCode;
+      wardCode = device.wardCode;
+    });
+    return  {
+      province: province,
+      district: district,
+      ward: ward,
+      provinceCode: provinceCode,
+      districtCode: districtCode,
+      wardCode: wardCode,
+      speaker_off: speaker_off,
+      speaker_establish: speaker_establish,
+      speaker_on: speaker_on,
+      video_onl: video_onl,
+      video_establish: video_establish,
+      video_off: video_off,
+      transmitter_onl: transmitter_onl,
+      transmitter_off: transmitter_off,
+      transmitter_establish: transmitter_establish
+    }
+  }
 
 }

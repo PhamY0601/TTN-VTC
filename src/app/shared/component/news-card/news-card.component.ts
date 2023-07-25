@@ -43,7 +43,6 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   loadData(): void {
-
     const groupedData = this.newsData.reduce((result:any, current:any) => {
       const { id, province, district, ward, ...rest } = current;
       if (!result[id]) {
@@ -54,6 +53,7 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
       return result;
     }, {});
 
+    console.log(Object.values(groupedData))
     this.dataSource.data = Object.values(groupedData);
 
 

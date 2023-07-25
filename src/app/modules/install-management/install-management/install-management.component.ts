@@ -52,8 +52,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnInit() {
     this.loadData(COUNTRY());
-
-
   }
 
   ngAfterViewInit() {
@@ -63,9 +61,9 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
     this.dataSourceSecond.paginator = this.paginatorSecond;
     this.dataSourceSecond.sort = this.tableSecondSort;
-    setTimeout(() => {
-      this.initMap()
-    }, 2000)
+
+    this.initMap()
+    window.dispatchEvent(new Event("resize"));
 
   }
 
@@ -84,7 +82,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     }, 1500);
 
     this.installationService$.getInstall().subscribe((data) => {
-      let arrayDeviceInstall = data.filter((item: any) => item.name === 'device_install').map((item: any) => item.value)
+      let arrayDeviceInstall = data.filter((item: any) => item.name === 'district_total').map((item: any) => item.value)
       this.dataSourceFirst.data = arrayDeviceInstall[0];
 
       let arrayDevicePositions = data.filter((item: any) => item.name === 'device_positions').map((item: any) => item.value)
@@ -160,7 +158,8 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   initMap(): void {
     let htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
-    this.map = L.map( htmlRefMap).setView([10.769444, 106.681944], 10)
+    this.map = L.map( htmlRefMap).setView([10.769444, 106.681944], 10);
+
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
 
     var markers = L.markerClusterGroup();
@@ -185,4 +184,9 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     this.map.addLayer(markers);
   }
 
+  invalidateSize() {
+    if (this.map) {
+      setTimeout(() => {this.map.invalidateSize(true)},100);
+    }
+  }
 }

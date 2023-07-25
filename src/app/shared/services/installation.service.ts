@@ -2,9 +2,7 @@ import {Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
 import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
-import * as L from 'leaflet';
 
-import * as L1 from 'leaflet.markercluster'
 @Injectable({
   providedIn: 'root'
 })
@@ -12,8 +10,7 @@ export class InstallationService {
   private AUTH_TOKEN_KEY = 'token';
   header = new HttpHeaders({'Authorization': `Bearer ${localStorage.getItem(this.AUTH_TOKEN_KEY)}`})
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
 
   getInstall(): Observable<any> {
@@ -129,7 +126,7 @@ export class InstallationService {
 
       result.push({name: 'device_total', value: deviceTotalData});
       result.push({name: 'device_positions', value: devicePositionData})
-      result.push({name:'device_install', value: deviceInstallData})
+      result.push({name:'district_total', value: deviceInstallData})
       return result
     }));
 
@@ -145,16 +142,11 @@ export class InstallationService {
 
   }
 
-
-
   makeCapitalMarkers(): Observable<any> {
      const headers = this.header;
     return this.http.get(`${API.INSTALLATION_URL}`, {headers}).pipe(map((res: any) => {
       let array = res.data;
-
-
-     return this.getData(array, 'device_positions')
-
+      return this.getData(array, 'device_positions')
     }));
   }
 

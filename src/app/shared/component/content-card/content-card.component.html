@@ -1,5 +1,16 @@
 <mat-card class="p-1">
-  <mat-card-header class="fz-3 fw-500 py-3">{{contentCardItem.district}}</mat-card-header>
+  <div *ngIf="param !== contentCardItem.districtCode then districtData; else wardData"> </div>
+
+  <ng-template #districtData>
+    <mat-card-header class="fz-3 fw-500 py-3 url-dialog"
+                     [routerLink]="contentCardItem.districtCode">
+      {{contentCardItem.district}}</mat-card-header>
+  </ng-template>
+
+  <ng-template #wardData>
+    <mat-card-header class="fz-3 fw-500 py-3">
+      {{contentCardItem.ward}}</mat-card-header>
+  </ng-template>
 
   <mat-card-content fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">

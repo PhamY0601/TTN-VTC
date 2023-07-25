@@ -66,21 +66,21 @@
         <div class="text-gray" fxLayout="row">
           <button [ngClass]="display ?  'text-blue':'text-gray'"
                   mat-icon-button (click)="display=true">
-            <mat-icon>map</mat-icon>
+            <mat-icon>grid_on</mat-icon>
           </button>
           <button [ngClass]="display ?  'text-gray':'text-blue'"
-                  mat-icon-button (click)="display=false">
-            <mat-icon>grid_on</mat-icon>
+                  mat-icon-button (click)="display=false; invalidateSize()">
+            <mat-icon>map</mat-icon>
           </button>
 
         </div>
-        <mat-form-field *ngIf="!display" class="text-blue" appearance="outline">
+        <mat-form-field *ngIf="display" class="text-blue" appearance="outline">
           <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
           <mat-icon matSuffix>search</mat-icon>
         </mat-form-field>
       </div>
     </div>
-    <div [hidden]="display">
+    <div [hidden]="!display">
       <div class="mat-elevation-z2 bg-white full-width" fxLayout="column" fxLayoutAlign="space-between stretch">
         <table mat-table [dataSource]="dataSourceSecond"
                #tableSecondSort="matSort" matSort
@@ -166,8 +166,8 @@
 
       </div>
     </div>
-    <div [hidden]="!display">
-      <div id="map"></div>
+    <div [hidden]="display">
+      <div id="map" ></div>
     </div>
   </mat-card>
 </div>
