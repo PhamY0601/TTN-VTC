@@ -1,13 +1,11 @@
 import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {MatSort, Sort} from "@angular/material/sort";
+import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SourceInfoManagementService} from "../../../../../shared/services/source-info-management.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-import {
-  AreaDialogComponent
-} from "../../../../emergency-broadcasting/emergency-broadcasting-list/emergency-broadcasting-list.component";
+
 
 @Component({
   selector: 'app-field-source',
@@ -59,7 +57,6 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
       });
       dialogRef.afterClosed().subscribe(result => {
       });
-
     })
   }
 

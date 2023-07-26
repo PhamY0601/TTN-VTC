@@ -60,7 +60,7 @@ export class DashboardService {
             totalData.push({
               name: item.name,
               total: item.total,
-              name_display: 'Nhà cung cấp',
+              name_display: 'Trạm phát',
               icon: "supplier",
               id: 4
             })

@@ -43,7 +43,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.overviewData = [
       {
-        "title": "Nhà cung cấp",
+        "title": "Trạm phát",
         "count": 0,
         "icon": "supplier"
       },

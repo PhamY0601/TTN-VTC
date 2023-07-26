@@ -169,12 +169,24 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
       data.forEach((item: any) => {
         const marker = L.marker([item.Lat, item.Lng])
           .bindPopup(
-            `<div><strong>Thiết bị: ${item.type_display}</strong></div>` +
-                    `<div>Tỉnh, thành phố: ${item.province}</div>` +
-                    `<div>Quận, huyện: ${item.district}</div>` +
-                    `<div>Xã, phường: ${item.ward}</div>` +
-                    `<div>Trạng thái phát: ${item.Status}</div>` +
-                    `<div>Nhà cung cấp: ${item.agencies_name}</div>`
+            `<table>
+                      <tr>
+                        <th>Thiết bị</th>
+                        <th>Trạm phát</th>
+                        <th>Tỉnh/Thành</th>
+                        <th>Quận/Huyện</th>
+                        <th>Xã/Phường</th>
+                        <th>Trạng thái phát</th>
+                      </tr>
+                      <tr>
+                        <td>${item.type_display}</td>
+                        <td>${item.agencies_name}</td>
+                        <td>${item.province}</td>
+                        <td>${item.district}</td>
+                        <td> ${item.ward}</td>
+                        <td>${item.status_display}</td>
+                      </tr>
+                    </table>`
           )
 
         markers.addLayer(marker)

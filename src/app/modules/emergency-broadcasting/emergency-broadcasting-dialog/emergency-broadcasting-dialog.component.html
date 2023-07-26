@@ -159,30 +159,33 @@
         </ng-container>
 
         <ng-container *ngSwitchCase="4">
-          <div fxLayout="column">
-            <mat-label>Văn bản</mat-label>
-            <mat-form-field appearance="outline" style="height: 100px">
+          <div fxLayout="column" fxLayoutGap="20">
+            <div fxLayout="column">
+              <mat-label>Văn bản</mat-label>
+              <mat-form-field appearance="outline" style="height: 100px">
               <textarea #text="ngModel"
                         [(ngModel)]="textToSpeechData.text"
                         matInput name="text"
                         placeholder="Nội dung văn bản"
                         required></textarea>
-              <div *ngIf="text.invalid && (text.dirty || text.touched)" class="mt-2">
-                <mat-error *ngIf="text.errors">Văn bản không được để trống</mat-error>
-              </div>
-            </mat-form-field>
+                <div *ngIf="text.invalid && (text.dirty || text.touched)" class="mt-2">
+                  <mat-error *ngIf="text.errors">Văn bản không được để trống</mat-error>
+                </div>
+              </mat-form-field>
+            </div>
+
+            <div class="full-width" fxLayout="column">
+              <mat-label>Chất giọng</mat-label>
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-select [(ngModel)]="textToSpeechData.region" name="voice"
+                            placeholder=" Chọn chất giọng">
+                  <mat-option *ngFor="let item of voiceData"
+                              [value]="item.value">{{item.name}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
           </div>
 
-          <div class="full-width" fxLayout="column">
-            <mat-label>Chất giọng</mat-label>
-            <mat-form-field appearance="outline" class="full-width">
-              <mat-select [(ngModel)]="textToSpeechData.region" name="voice"
-                          placeholder=" Chọn chất giọng">
-                <mat-option *ngFor="let item of voiceData"
-                            [value]="item.value">{{item.name}}</mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
 
         </ng-container>
 

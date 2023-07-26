@@ -8,6 +8,7 @@ import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppConfirmService} from "../../../shared/services/app-confirm/app-confirm.service";
 import {RadioManagementService} from "../../../shared/services/radio-management.service";
+import {ScheduleListService} from "../../../shared/services/schedule-list.service";
 
 @Component({
   selector: 'app-radio-manager-list',
@@ -25,7 +26,8 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
 
   constructor(private radioManagementService$: RadioManagementService,
               private confirmService: AppConfirmService,
-              private spinner: NgxSpinnerService,) {
+              private spinner: NgxSpinnerService,
+              private scheduleListService$: ScheduleListService) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -44,6 +46,8 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
    this.radioManagementService$.getRadioManagement().subscribe((data) => {
       this.dataSource.data = data;
     });
+
+    this.scheduleListService$.getScheduleList().subscribe();
   }
 
   onSearch(event: Event) {

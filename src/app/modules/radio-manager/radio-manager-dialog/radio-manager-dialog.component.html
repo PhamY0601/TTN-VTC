@@ -8,34 +8,43 @@
   <div mat-dialog-content>
     <div fxLayout="column" fxLayoutGap="30">
       <div fxLayout="row" fxLayoutGap="20">
-        <mat-form-field class="full-width" appearance="outline">
+        <div class="full-width" fxLayout="column">
           <mat-label>Quận, huyện</mat-label>
-          <mat-select name="district" [(ngModel)]="data.district"
-                      (ngModelChange)="districtEffect($event)">
-            <mat-option *ngFor="let item of districtsData" [value]="item.code">
-              {{item.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="full-width" appearance="outline">
+          <mat-form-field class="full-width" appearance="outline">
+
+            <mat-select name="district" [(ngModel)]="data.district"
+                        (ngModelChange)="districtEffect($event)">
+              <mat-option *ngFor="let item of districtsData" [value]="item.code">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="full-width" fxLayout="column">
           <mat-label>Xã, phường</mat-label>
-          <mat-select name="ward" [(ngModel)]="data.ward">
-            <mat-option *ngFor="let item of wardsData" [value]="item.code">
-              {{item.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+            <mat-select name="ward" [(ngModel)]="data.ward">
+              <mat-option *ngFor="let item of wardsData" [value]="item.code">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
 
-      <div fxLayout="row" fxLayoutGap="20">
-        <mat-form-field fxFlex="49" class="full-width" appearance="outline">
+      <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20">
+        <div class="full-width" fxFlex="49" fxLayout="column">
           <mat-label>Trạng thái</mat-label>
-          <mat-select name="status" [(ngModel)]="data.status">
-            <mat-option *ngFor="let item of statusData" [value]="item.value">
-              {{item.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+          <mat-form-field class="full-width" appearance="outline">
+
+            <mat-select name="status" [(ngModel)]="data.status">
+              <mat-option *ngFor="let item of statusData" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
         <div fxLayout="row" fxLayoutGap="10">
           <audio controls fxFlex="80" *ngIf="audSrc">
@@ -53,9 +62,12 @@
 
       </div>
 
-      <mat-form-field fxFlex="70" class="text-blue full-width" appearance="outline">
-        <input matInput name="url" [(ngModel)]="data.url" placeholder="URL">
-      </mat-form-field>
+      <div class="full-width" fxLayout="column">
+        <mat-label>URL</mat-label>
+        <mat-form-field fxFlex="70" class="text-blue full-width" appearance="outline">
+          <input matInput name="url" [(ngModel)]="data.url" placeholder="Nhập URL">
+        </mat-form-field>
+      </div>
 
       <div class="text-blue fz-2 fw-400 my-2">Lịch phát sóng</div>
 

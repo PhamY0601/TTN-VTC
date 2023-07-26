@@ -120,6 +120,7 @@ export class InstallationService {
           type: item.type_display,
           date: item.CreatedDate,
           status: item.Status ? item.Status : "0",
+          status_display: item.status_display,
           agencies_name: item.agencies_name
         })
       })

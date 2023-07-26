@@ -22,4 +22,17 @@
   width: 100%;
 }
 
+:host ::ng-deep.leaflet-popup-content {
+  width: 600px !important;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td, th {
+    border: 1px solid #dddddd;
+    text-align: center;
+    padding: 8px;
+  }
+
+}
 
