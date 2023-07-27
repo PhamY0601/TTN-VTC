@@ -3,14 +3,10 @@ import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
 import {CitiesService} from "../../../shared/services/cities.service";
-import {COUNTRY, currentTime} from "../../../app.constants";
-import {
-  EmergencyBroadcastingContentComponent
-} from "../../emergency-broadcasting/emergency-broadcasting-dialog/emergency-broadcasting-dialog.component";
+import {currentTime} from "../../../app.constants";
 import {LocationsService} from "../../../shared/services/locations.service";
 
 @Component({
-  // tslint:disable-next-line:component-selector
   selector: 'radio-manager-content-componet',
   templateUrl: './radio-manager-dialog.component.html',
   styleUrls: ['./radio-manager-dialog.component.scss']

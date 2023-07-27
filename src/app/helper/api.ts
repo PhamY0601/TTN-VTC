@@ -25,5 +25,5 @@ export class API {
   public static AUDIO_URL = `${environment.apiUrl}ttn_/tts/`;
   public static LOCATIONS_URL = `${environment.apiUrl}api/common/get?action=locations`;
   public static SCHEDULE_LIST_URL = `${environment.apiUrl}api/common/get?action=schedule_list`;
-
+  public static SCHEDULE_DETAIL_URL = `${environment.apiUrl}api/common/get?action=schedule_detail&recordId=`;
 }

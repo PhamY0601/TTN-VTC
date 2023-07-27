@@ -1,16 +1,13 @@
-.mat-column-actions, .mat-column-type{
+.mat-column-actions, .mat-column-type,.mat-column-agency, .mat-column-location {
   text-align: center;
 }
 
+.mat-column-title {
+  width: 300px;
+}
 
 .mat-column-url {
-  width: 450px;
-}
-
-.mat-column-schedule{
-  width: 100px;
-  text-align: center;
-  padding-right: 20px;
+  width: 350px;
 }
 
 td {
@@ -19,8 +16,3 @@ td {
     text-decoration: underline;
   }
 }
-
-.mat-column-province, .mat-column-district, .mat-column-ward, .mat-column-agency {
-  width: 150px;
-}
-

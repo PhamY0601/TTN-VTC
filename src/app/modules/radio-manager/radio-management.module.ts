@@ -4,7 +4,7 @@ import {PERFECT_SCROLLBAR_CONFIG, PerfectScrollbarConfigInterface, PerfectScroll
 import {RouterModule} from "@angular/router";
 import {RadioManagementRoutes} from "./radio-management.routing";
 import {SharedMaterialModule} from "../../shared/shared-material.module";
-import {RadioManagerListComponent} from "./radio-manager-list/radio-manager-list.component";
+import {AreaDialogComponent, RadioManagerListComponent} from "./radio-manager-list/radio-manager-list.component";
 import {
   RadioManagerContentComponent,
   RadioManagerDialogComponent
@@ -46,7 +46,8 @@ export const MY_FORMATS = {
       RadioManagerContentComponent,
       RadioManagerDialogComponent,
       ScheduleDialogComponent,
-      ScheduleContentComponent
+      ScheduleContentComponent,
+      AreaDialogComponent
     ],
   providers: [
     {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

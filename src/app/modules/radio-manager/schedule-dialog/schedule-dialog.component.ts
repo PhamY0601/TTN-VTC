@@ -15,37 +15,37 @@ export class ScheduleContentComponent implements OnInit {
   week_day = [
     {
       name: 'Chủ nhật',
-      value: '1',
+      value: '0',
       checked: false
     },
     {
       name: 'Thứ 2',
-      value: '2',
+      value: '1',
       checked: false
     },
     {
       name: 'Thứ 3',
-      value: '3',
+      value: '2',
       checked: false
     },
     {
       name: 'Thứ 4',
-      value: '4',
+      value: '3',
       checked: false
     },
     {
       name: 'Thứ 5',
-      value: '5',
+      value: '4',
       checked: false
     },
     {
       name: 'Thứ 6',
-      value: '6',
+      value: '5',
       checked: false
     },
     {
       name: 'Thứ 7',
-      value: '7',
+      value: '6',
       checked: false
     },
   ];
@@ -112,6 +112,10 @@ export class ScheduleContentComponent implements OnInit {
     },
   ];
   days = [
+    {
+      value: '0',
+      checked: false
+    },
     {
       value: '1',
       checked: false
@@ -234,10 +238,7 @@ export class ScheduleContentComponent implements OnInit {
       value: '30',
       checked: false
     },
-    {
-      value: '31',
-      checked: false
-    },
+
   ];
   checkedDays: any[] = []
   checkedDays2: any;
@@ -258,10 +259,7 @@ export class ScheduleContentComponent implements OnInit {
 
 
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
+
     this.dialogRef.close(true);
   }
 
@@ -288,22 +286,17 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
+      console.log(data)
+      console.log(data.repeat_week_day)
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
         width: '1000px',
-
       });
-      data.week_day = data.week_day.split(',');
-      data.month = data.month.split(',');
-      data.day = data.day.split('');
-      this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.week_day);
-      this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
-      this.weekDayEffect(this.dialogRef.componentInstance.days, data.day)
-      this.dialogRef.componentInstance.data = data;
 
-      // this.dialogRef.componentInstance.checkedDays = data.week_day.split(',').map((n: any) => "Thứ " + n);
-      // this.dialogRef.componentInstance.checkedDays2 = data.week_day.split(',').map((n: any) => true);
-      // console.log(this.dialogRef.componentInstance.checkedDays2)
+      this.dialogRef.componentInstance.data = data;
+      this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.repeat_week_day);
+      this.weekDayEffect(this.dialogRef.componentInstance.days, data.repeat_month_day)
+
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),
         () => this.previousState());

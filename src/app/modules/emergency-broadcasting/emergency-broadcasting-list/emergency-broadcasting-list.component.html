@@ -21,7 +21,7 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày phát</th>
-        <td mat-cell *matCellDef="let element" class="py-2 line-height-25"> {{element.date | date:"dd/MM/yyyy"}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.date | date:"dd/MM/yyyy"}} </td>
       </ng-container>
 
       <ng-container matColumnDef="title">
@@ -50,9 +50,9 @@
 
           <div *ngFor="let item of element.areaDetail| slice:0:3">{{item}}</div>
 
-          <div *ngIf="element.areaDetail.length > 3"
+          <div
                class="button-underline text-blue cursor"
-               (click)="openDialog(element.id)">Xem thêm</div>
+               (click)="openDialog(element.id)">Xem chi tiết</div>
         </td>
       </ng-container>
 

@@ -2,26 +2,25 @@ export interface IRadioManagement {
   id?: any, //id huyện
   district?: string,
   ward?: string,
-  status?: string,
-  url?: string;
-  date_from?: string;
-  date_to?: string;
-  hour_from?: string;
-  hour_to?: string;
-  week_day?: string;
-  day?: string;
-  month?: string;
-  hour_from1?: string;
-  hour_to1?: string;
-  c_hour_from2?: string;
-  c_hour_to2?: string;
-  c_hour_from3?: string;
-  c_hour_to3?: string;
-  c_hour_from4?: string;
-  c_hour_to4?: string;
-  c_hour_from5?: string;
-  c_hour_to5?: string;
-
+  start?: string;
+  end?: string;
+  h1_start?: string;
+  h1_end?: string;
+  h2_start?: string;
+  h2_end?: string;
+  h3_start?: string;
+  h3_end?: string;
+  h4_start?: string;
+  h4_end?: string;
+  h5_start?: string;
+  h5_end?: string;
+  h1_field?: string;
+  h2_field?: string;
+  h3_field?: string;
+  h4_field?: string;
+  h5_field?: string;
+  repeat_week_day?: string;
+  hrepeat_h3_start_day?: string;
 }
 
 export class RadioManagement implements IRadioManagement {
@@ -29,48 +28,48 @@ export class RadioManagement implements IRadioManagement {
     public id?: any,
     public district?: string,
     public ward?: string,
-    public status?: string,
-    public url?: string,
-    public date_from?: string,
-    public date_to?: string,
-    public hour_from?: string,
-    public hour_to?: string,
-    public week_day?: string,
-    public day?: string,
-    public month?: string,
-    public hour_from1?: string,
-    public hour_to1?: string,
-    public c_hour_from2?: string,
-    public c_hour_to2?: string,
-    public c_hour_from3?: string,
-    public c_hour_to3?: string,
-    public c_hour_from4?: string,
-    public c_hour_to4?: string,
-    public c_hour_from5?: string,
-    public c_hour_to5?: string,
+    public start?: string,
+    public end?: string,
+    public h1_start?: string,
+    public h1_end?: string,
+    public h2_start?: string,
+    public h2_end?: string,
+    public h3_start?: string,
+    public h3_end?: string,
+    public h4_start?: string,
+    public h4_end?: string,
+    public h5_start?: string,
+    public h5_end?: string,
+    public h1_field?: string,
+    public h2_field?: string,
+    public h3_field?: string,
+    public h4_field?: string,
+    public h5_field?: string,
+    public repeat_week_day?: string,
+    public repeat_month_day?: string,
   ) {
     this.id = id ? id : null;
     this.district = district ? district : '';
     this.ward = ward ? ward : '';
-    this.status = status ? status : '';
-    this.url = url ? url : '';
-    this.date_from = date_from ? date_from : '';
-    this.date_to = date_to ? date_to : '';
-    this.hour_from = hour_from ? hour_from : '';
-    this.hour_to = hour_to ? hour_to : '';
-    this.week_day = week_day ? week_day : '';
-    this.day = day ? day : '';
-    this.month = month ? month : '';
-    this.hour_from1 = hour_from1 ? hour_from1 : '';
-    this.hour_to1 = hour_to1 ? hour_to1 : '';
-    this.c_hour_from2 = c_hour_from2 ? c_hour_from2 : '';
-    this.c_hour_to2 = c_hour_to2 ? c_hour_to2 : '';
-    this.c_hour_from3 = c_hour_from3 ? c_hour_from3 : '';
-    this.c_hour_to3 = c_hour_to3 ? c_hour_to3 : '';
-    this.c_hour_from4 = c_hour_from4 ? c_hour_from4 : '';
-    this.c_hour_to4 = c_hour_to4 ? c_hour_to4 : '';
-    this.c_hour_from5 = c_hour_from5 ? c_hour_from5 : '';
-    this.c_hour_to5 = c_hour_to5 ? c_hour_to5 : '';
+    this.start = start ? start : '';
+    this.end = end ? end : '';
+    this.h1_start = h1_start ? h1_start : '';
+    this.h1_end = h1_end ? h1_end : '';
+    this.h2_start = h2_start ? h2_start : '';
+    this.h2_end = h2_end ? h2_end : '';
+    this.h3_start = h3_start ? h3_start : '';
+    this.h3_end = h3_end ? h3_end : '';
+    this.h4_start = h4_start ? h4_start : '';
+    this.h4_end = h4_end ? h4_end : '';
+    this.h5_start = h5_start ? h5_start : '';
+    this.h5_end = h5_end ? h5_end : '';
+    this.h1_field = h1_field ? h1_field : '';
+    this.h2_field = h2_field ? h2_field : '';
+    this.h3_field = h3_field ? h3_field : '';
+    this.h4_field = h4_field ? h4_field : '';
+    this.h5_field = h5_field ? h5_field : '';
+    this.repeat_week_day = repeat_week_day ? repeat_week_day : '';
+    this.repeat_month_day = repeat_month_day ? repeat_month_day : '';
 
   }
 }

@@ -75,7 +75,7 @@
         <div class="full-width">
           <mat-label>Từ ngày</mat-label>
           <mat-form-field class="full-width" appearance="outline">
-            <input matInput name="date_from" [matDatepicker]="pickerFrom" [(ngModel)]="data.date_from">
+            <input matInput name="date_from" [matDatepicker]="pickerFrom" [(ngModel)]="data.start">
             <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
             <mat-datepicker #pickerFrom></mat-datepicker>
           </mat-form-field>
@@ -84,7 +84,7 @@
         <div class="full-width">
           <mat-label>Đến ngày</mat-label>
           <mat-form-field class="full-width" appearance="outline">
-            <input matInput name="date_to" [matDatepicker]="pickerTo" [(ngModel)]="data.date_to">
+            <input matInput name="date_to" [matDatepicker]="pickerTo" [(ngModel)]="data.end">
             <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
             <mat-datepicker #pickerTo></mat-datepicker>
           </mat-form-field>

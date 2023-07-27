@@ -1,8 +1,8 @@
 import {Injectable} from '@angular/core';
 import {map, Observable} from 'rxjs';
-import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {API} from "../../helper/api";
-import {COUNTRY, COUNTRY_TITLE, header} from "../../app.constants";
+import {header} from "../../app.constants";
 
 
 @Injectable({
@@ -64,5 +64,17 @@ export class LocationsService {
     return nestedData;
   }
 
+  getAllLocations(): Observable<any> {
+    const headers = header;
+    let result: any[] = [];
+    let arr: any[] = []
+    return this.http.get(`${API.LOCATIONS_URL}`, {headers}).pipe(
+      map((res) => {
+
+       return res
+      })
+    );
+
+  }
 
 }

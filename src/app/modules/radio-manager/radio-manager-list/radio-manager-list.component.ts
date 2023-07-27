@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {CitiesService} from "../../../shared/services/cities.service";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
@@ -8,46 +8,46 @@ import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
 import {AppConfirmService} from "../../../shared/services/app-confirm/app-confirm.service";
 import {RadioManagementService} from "../../../shared/services/radio-management.service";
-import {ScheduleListService} from "../../../shared/services/schedule-list.service";
+import {ScheduleService} from "../../../shared/services/schedule.service";
+import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
+
 
 @Component({
   selector: 'app-radio-manager-list',
   templateUrl: './radio-manager-list.component.html',
   styleUrls: ['./radio-manager-list.component.scss']
 })
-export class RadioManagerListComponent implements OnInit, AfterViewInit  {
+export class RadioManagerListComponent implements OnInit, AfterViewInit {
 
   dataSource: any;
-  @ViewChild(MatPaginator,{ static: true }) paginator!: MatPaginator;
+  dataDialog: any[] = [];
+  @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-
-  displayedColumn: string[] = ['stt', 'province', 'district', 'ward', 'agency', 'type', 'url', 'status','schedule', 'actions'];
+  displayedColumn: string[] = ['stt', 'title', 'type', 'start_date', 'end_date', 'url', 'agency', 'location', 'actions'];
 
   constructor(private radioManagementService$: RadioManagementService,
               private confirmService: AppConfirmService,
               private spinner: NgxSpinnerService,
-              private scheduleListService$: ScheduleListService) {
+              private scheduleService$: ScheduleService,
+              public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource([]);
   }
 
   ngOnInit() {
-
-    // this.changedList()
     this.loadData(COUNTRY())
-
   }
 
-  loadData(_COUNTRY:any): void {
+  loadData(_COUNTRY: any): void {
     this.spinner.show();
     setTimeout(() => {
       this.spinner.hide();
     }, 1500);
-   this.radioManagementService$.getRadioManagement().subscribe((data) => {
-      this.dataSource.data = data;
-    });
 
-    this.scheduleListService$.getScheduleList().subscribe();
+    this.scheduleService$.getScheduleList().subscribe((data: any) => {
+      console.log(data)
+      this.dataSource.data = data
+    });
   }
 
   onSearch(event: Event) {
@@ -61,13 +61,53 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit  {
     this.dataSource.sort = this.sort;
   }
 
-  deleteItem(row:any) {
+  deleteItem(row: any) {
     this.confirmService.confirm({message: `Bạn có chắc chắn muốn xóa ${row.name}?`})
       .subscribe(res => {
         if (res) {
-         console.log(res)
+          console.log(res)
         }
       });
   }
+
+  openDialog(id: any): void {
+    this.scheduleService$.getScheduleDetail(id).subscribe((data) => {
+
+      console.log(data)
+      this.dataDialog = data.locations
+      console.log(this.dataDialog)
+
+      let dialogRef = this.dialog.open(AreaDialogComponent, {
+        width: '500px',
+        data: this.dataDialog,
+      });
+      dialogRef.afterClosed().subscribe(result => {
+      });
+
+    })
+  }
+
+}
+
+@Component({
+  selector: 'area-schedule-dialog',
+  templateUrl: './area-schedule-dialog.component.html',
+
+})
+export class AreaDialogComponent implements OnInit {
+
+  constructor(
+    public dialogRef: MatDialogRef<RadioManagerListComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) {
+  }
+
+  closeDialog(): void {
+    this.dialogRef.close();
+  }
+
+  ngOnInit(): void {
+  }
+
 
 }
