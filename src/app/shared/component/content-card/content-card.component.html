@@ -74,12 +74,12 @@
   </mat-card-content>
 </mat-card>
 
-<mat-menu #menu="matMenu" style="width: 300px">
+<mat-menu #menu="matMenu" style="width: 600px">
   <div class="text-blue fw-500 p-3">Danh sách thiết bị</div>
   <mat-divider></mat-divider>
-  <div class="p-3">
-    <p>Thiết bị 1 </p>
-    <p>Thiết bị 2 </p>
+  <div  *ngFor="let item of contentCardItem.speaker_on_devices" >
+    <p>{{item}}</p>
+
   </div>
 
 </mat-menu>

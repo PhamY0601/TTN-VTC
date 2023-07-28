@@ -1,146 +1,143 @@
 <div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Lịch phát sóng</h1>
-  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
+  <h1 class="text-blue" matDialogTitle>Lịch phát sóng</h1>
+  <button (click)="dialogRef.close(false)" class="me-2" color="warn" mat-icon-button>
     <mat-icon>close</mat-icon>
   </button>
 </div>
 
-<form (ngSubmit)="save()" novalidate #form="ngForm">
+<form #form="ngForm" (ngSubmit)="save()" novalidate>
   <div mat-dialog-content>
     <div fxLayout="column" fxLayoutGap="20">
       <div fxLayout="row" fxLayoutGap="20">
         <div class="full-width">
           <mat-label>Từ ngày</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <input [ngModel]="data.start"
-                   matInput name="start" readonly
-                   [matDatepicker]="pickerFrom">
-            <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
+          <mat-form-field appearance="outline" class="full-width">
+            <input [matDatepicker]="pickerFrom"
+                   [ngModel]="data.start" matInput name="start"
+                   readonly>
+            <mat-datepicker-toggle [for]="pickerFrom" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #pickerFrom></mat-datepicker>
           </mat-form-field>
         </div>
 
         <div class="full-width">
           <mat-label>Đến ngày</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <input [ngModel]="data.end"
-                   matInput name="end" readonly
-                   [matDatepicker]="pickerTo">
-            <mat-datepicker-toggle matIconSuffix [for]="pickerTo"></mat-datepicker-toggle>
+          <mat-form-field appearance="outline" class="full-width">
+            <input [matDatepicker]="pickerTo"
+                   [ngModel]="data.end" matInput name="end"
+                   readonly>
+            <mat-datepicker-toggle [for]="pickerTo" matIconSuffix></mat-datepicker-toggle>
             <mat-datepicker #pickerTo></mat-datepicker>
           </mat-form-field>
         </div>
       </div>
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="data.h1_start !==''">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Khung giờ
           </mat-panel-title>
         </mat-expansion-panel-header>
 
-        <div fxLayout="column" fxLayoutGap="20">
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
+        <div class="mb-2" fxLayout="column" fxLayoutGap="30">
+          <div fxLayout="row" fxLayoutGap="30">
+            <div *ngIf="data.h1_start"
+                 class="full-width" fxLayout="column">
               <mat-label>Giờ từ</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input [ngModel]="data.h1_start"
-                       matInput name="h1_start"
-                       type="time" readonly >
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h1_start" [format]="24"
+                name="h1_start"
+              ></ngx-mat-timepicker-field>
             </div>
-            <div class="full-width">
+            <div *ngIf="data.h1_end"
+                 class="full-width" fxLayout="column">
               <mat-label>Đến</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input [ngModel]="data.h1_end"
-                       matInput name="h1_end" type="time" readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h1_end"
+                [format]="24"
+                name="h1_end"></ngx-mat-timepicker-field>
             </div>
-
           </div>
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
-              <mat-label>Giờ từ</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="hour_from1" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
-            <div class="full-width">
-              <mat-label>Đến</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="hour_to1" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
 
+          <div *ngIf="data.h2_start"
+               fxLayout="row" fxLayoutGap="30">
+            <div class="full-width" fxLayout="column">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h2_start"
+                [format]="24"
+                name="h2_start"></ngx-mat-timepicker-field>
+            </div>
+            <div *ngIf="data.h2_end"
+                 class="full-width" fxLayout="column">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h2_end"
+                [format]="24"
+                name="h2_end"></ngx-mat-timepicker-field>
+            </div>
           </div>
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
-              <mat-label>Giờ từ</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_from2" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
-            <div class="full-width">
-              <mat-label>Đến</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_to2" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
 
+          <div *ngIf="data.h3_start"
+               fxLayout="row" fxLayoutGap="30">
+            <div class="full-width" fxLayout="column">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h3_start"
+                [format]="24"
+                name="h3_start"></ngx-mat-timepicker-field>
+            </div>
+            <div *ngIf="data.h3_end"
+                 class="full-width" fxLayout="column">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h3_end"
+                [format]="24"
+                name="h3_end"></ngx-mat-timepicker-field>
+            </div>
           </div>
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
-              <mat-label>Giờ từ</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_from3" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
-            <div class="full-width">
-              <mat-label>Đến</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_to3" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
 
+          <div *ngIf="data.h4_start"
+               fxLayout="row" fxLayoutGap="30">
+            <div class="full-width" fxLayout="column">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h4_start"
+                [format]="24"
+                name="h4_start"></ngx-mat-timepicker-field>
+            </div>
+            <div *ngIf="data.h4_end"
+                 class="full-width" fxLayout="column">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h4_end"
+                [format]="24"
+                name="h4_end"></ngx-mat-timepicker-field>
+            </div>
           </div>
-          <div fxLayout="row" fxLayoutGap="20">
-            <div class="full-width">
-              <mat-label>Giờ từ</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_from4" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
-            <div class="full-width">
-              <mat-label>Đến</mat-label>
-              <mat-form-field class="full-width" appearance="outline">
-                <input matInput name="c_hour_to4" type="time"
-                       readonly>
-                <mat-icon matSuffix>query_builder</mat-icon>
-              </mat-form-field>
-            </div>
 
+          <div *ngIf="data.h5_start"
+               fxLayout="row" fxLayoutGap="30">
+            <div class="full-width" fxLayout="column">
+              <mat-label>Giờ từ</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h5_start"
+                [format]="24"
+                name="h5_start"></ngx-mat-timepicker-field>
+            </div>
+            <div *ngIf="data.h5_end"
+                 class="full-width" fxLayout="column">
+              <mat-label>Đến</mat-label>
+              <ngx-mat-timepicker-field
+                [(ngModel)]="data.h5_end"
+                [format]="24"
+                name="h5_end"></ngx-mat-timepicker-field>
+            </div>
           </div>
         </div>
 
-
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="data.h1_start !==''">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Ngày trong tuần
@@ -154,21 +151,21 @@
         </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="data.repeat_month_day.length>0">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
-            Ngày
+            Ngày trong tháng
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div fxLayout="row wrap" fxLayoutAlign=" center">
           <div *ngFor="let item of days">
             <mat-checkbox [checked]="item.checked" disabled
-                          name="week_day">{{item.value}}</mat-checkbox>
+                          name="week_day">{{item.display}}</mat-checkbox>
           </div>
         </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded]="data.repeat_month_year.length>0">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Tháng
@@ -183,10 +180,8 @@
       </mat-expansion-panel>
     </div>
   </div>
-  <div mat-dialog-actions class="mt-1 px-4 py-3">
-    <button mat-raised-button class="btn-blue" [disabled]="form.invalid">Lưu</button>
-    <span fxFlex></span>
-    <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
+  <div align="end" class="mt-1 px-4 py-3" mat-dialog-actions>
+    <button (click)="dialogRef.close(false)" color="warn" mat-button type="button">Hủy</button>
   </div>
 </form>
 

@@ -45,7 +45,6 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit {
     }, 1500);
 
     this.scheduleService$.getScheduleList().subscribe((data: any) => {
-      console.log(data)
       this.dataSource.data = data
     });
   }
@@ -72,11 +71,7 @@ export class RadioManagerListComponent implements OnInit, AfterViewInit {
 
   openDialog(id: any): void {
     this.scheduleService$.getScheduleDetail(id).subscribe((data) => {
-
-      console.log(data)
       this.dataDialog = data.locations
-      console.log(this.dataDialog)
-
       let dialogRef = this.dialog.open(AreaDialogComponent, {
         width: '500px',
         data: this.dataDialog,

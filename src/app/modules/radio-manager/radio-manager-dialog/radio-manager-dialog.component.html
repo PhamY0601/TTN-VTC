@@ -7,71 +7,164 @@
 <form (ngSubmit)="save()" novalidate #form="ngForm">
   <div mat-dialog-content>
     <div fxLayout="column" fxLayoutGap="30">
-      <div fxLayout="row" fxLayoutGap="20">
-        <div class="full-width" fxLayout="column">
-          <mat-label>Quận, huyện</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-
-            <mat-select name="district" [(ngModel)]="data.district"
-                        (ngModelChange)="districtEffect($event)">
-              <mat-option *ngFor="let item of districtsData" [value]="item.code">
-                {{item.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div class="full-width" fxLayout="column">
-          <mat-label>Xã, phường</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-            <mat-select name="ward" [(ngModel)]="data.ward">
-              <mat-option *ngFor="let item of wardsData" [value]="item.code">
-                {{item.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-      </div>
-
-      <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20">
-        <div class="full-width" fxFlex="49" fxLayout="column">
-          <mat-label>Trạng thái</mat-label>
-          <mat-form-field class="full-width" appearance="outline">
-
-            <mat-select name="status" [(ngModel)]="data.status">
-              <mat-option *ngFor="let item of statusData" [value]="item.value">
-                {{item.name}}
-              </mat-option>
-            </mat-select>
-          </mat-form-field>
-        </div>
-
-        <div fxLayout="row" fxLayoutGap="10">
-          <audio controls fxFlex="80" *ngIf="audSrc">
-            <source [src]="audSrc" type="audio/ogg">
-            <source [src]="audSrc" type="audio/mpeg">
-            <source [src]="audSrc" type="audio/wav">
-          </audio>
-          <input type="file" class="file-input"
-                 (change)="onFileSelected($event)" #fileUpload>
-          <button mat-icon-button class="btn-blue"
-                  (click)="fileUpload.click()">
-            <mat-icon class="fz-3">attach_file</mat-icon>
-          </button>
-        </div>
-
-      </div>
-
-      <div class="full-width" fxLayout="column">
-        <mat-label>URL</mat-label>
-        <mat-form-field fxFlex="70" class="text-blue full-width" appearance="outline">
-          <input matInput name="url" [(ngModel)]="data.url" placeholder="Nhập URL">
+      <div>
+        <mat-label>Tiêu đề</mat-label>
+        <mat-form-field appearance="outline" class="full-width">
+          <input #title="ngModel" [(ngModel)]="data.title" matInput
+                 name="title" placeholder="Tiêu đề bản tin"
+                 required
+          >
+          <div *ngIf="title.invalid && (title.dirty || title.touched)">
+            <mat-error *ngIf="title.errors">Tiêu đề không được để trống</mat-error>
+          </div>
         </mat-form-field>
+      </div>
+
+
+      <!--      chọn khu vực phát-->
+      <div>
+        <div fxLayout="row" fxLayoutAlign=" center">
+          <div (click)="displayDistrict = !displayDistrict" class="cursor">
+            <mat-icon>{{displayDistrict ? 'expand_more' : 'chevron_right'}}</mat-icon>
+          </div>
+          <mat-checkbox
+            (change)="selectAllChanged()"
+            [checked]="this.cityData[0]?.check"
+            [indeterminate]="someChecked(cityData[0])"
+          >
+            {{cityData[0]?.Name}}
+          </mat-checkbox>
+        </div>
+
+        <div [class.hiddenItem]="!displayDistrict">
+          <ul>
+            <li *ngFor="let district of cityData[0]?.children; let i = index">
+              <div fxLayout="row" fxLayoutAlign=" center">
+                <div (click)="district.display = !district.display"
+                     *ngIf="district.children.length > 0"
+                     class="cursor">
+                  <mat-icon>{{district.display ? 'expand_more' : 'chevron_right'}}</mat-icon>
+                </div>
+                <mat-checkbox [(ngModel)]="district.check"
+                              (ngModelChange)="districtChanged(district)"
+                              [indeterminate]="someChecked(district)"
+                              [class.ms-4]="district.children.length === 0"
+                              [ngModelOptions]="{standalone: true}">
+                  {{district?.Name}}
+                </mat-checkbox>
+              </div>
+
+              <div [class.hiddenItem]="!district.display">
+                <ul class="ms-2">
+                  <li *ngFor="let ward of district.children; let i = index">
+                    <mat-checkbox (ngModelChange)="wardChanged(ward)"
+                                  [(ngModel)]="ward.check"
+                                  [ngModelOptions]="{standalone: true}"
+                                  required>
+                      {{ward?.Name}}
+                    </mat-checkbox>
+                  </li>
+                </ul>
+              </div>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+      <!--    Chọn nguồn phát-->
+      <div [fxLayout]="selected===4 ? 'column' : 'row'" class="mt-2" fxLayoutGap="30">
+        <!--      Nguồn phát-->
+        <div class="full-width" fxLayout="column">
+          <mat-label>Chọn nguồn phát</mat-label>
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-select (selectionChange)="select($event)" name="source"
+                        placeholder=" Chọn nguồn phát ">
+              <mat-option *ngFor="let item of sourceData.subtasks" [value]="item.value">
+                {{item.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div *ngIf="selected !== -1"
+             [ngSwitch]="selected" class="full-width" fxLayout="column" >
+          <!--      Transmiiter-->
+          <ng-container *ngSwitchCase="1">
+            <mat-label>Transmitter</mat-label>
+            <mat-form-field appearance="outline">
+              <mat-select placeholder=" Chọn transmitter">
+                <mat-option *ngFor="let item of transmitterData" [value]="item">
+                  {{item}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="3">
+            <div class="text-gray">File âm thanh</div>
+            <div fxLayout="row" fxLayoutGap="10">
+              <audio *ngIf="audSrc" controls fxFlex="80">
+                <source [src]="audSrc" type="audio/ogg">
+                <source [src]="audSrc" type="audio/mpeg">
+                <source [src]="audSrc" type="audio/wav">
+              </audio>
+              <input #fileUpload (change)="onFileSelected($event)"
+                     class="file-input" type="file" accept="audio/*" >
+
+              <button (click)="fileUpload.click()" class="btn-blue"
+                      mat-icon-button>
+                <mat-icon class="fz-3">attach_file</mat-icon>
+              </button>
+
+            </div>
+          </ng-container>
+
+          <ng-container *ngSwitchCase="4">
+            <div fxLayout="column" fxLayoutGap="20">
+              <div fxLayout="column">
+                <mat-label>Văn bản</mat-label>
+                <mat-form-field appearance="outline" style="height: 200px">
+              <textarea style="height: 160px"
+                        [(ngModel)]="data.src_param"
+                        matInput name="text"
+                        placeholder="Nội dung văn bản"
+                        required></textarea>
+
+                </mat-form-field>
+              </div>
+
+              <div class="full-width" fxLayout="column">
+                <mat-label>Chất giọng</mat-label>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-select  name="voice"
+                              placeholder=" Chọn chất giọng">
+                    <mat-option *ngFor="let item of voiceData"
+                                [value]="item.value">{{item.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+
+
+          </ng-container>
+
+          <!--        <ng-container *ngSwitchCase="5">-->
+          <!--          <mat-label> Tiếp âm</mat-label>-->
+          <!--          <mat-form-field appearance="outline">-->
+          <!--            <mat-select placeholder="Chọn tiếp âm">-->
+          <!--              <mat-option *ngFor="let item of relayData" [value]="item">-->
+          <!--                {{item}}-->
+          <!--              </mat-option>-->
+          <!--            </mat-select>-->
+          <!--          </mat-form-field>-->
+          <!--        </ng-container>-->
+        </div>
       </div>
 
       <div class="text-blue fz-2 fw-400 my-2">Lịch phát sóng</div>
 
-      <div fxLayout="row" fxLayoutGap="20">
+      <div fxLayout="row" fxLayoutGap="30">
         <div class="full-width">
           <mat-label>Từ ngày</mat-label>
           <mat-form-field class="full-width" appearance="outline">
@@ -90,101 +183,104 @@
           </mat-form-field>
         </div>
       </div>
-      <mat-expansion-panel class="py-2">
+      <mat-expansion-panel class="py-2" [expanded] = "data.h1_start !==''">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Khung giờ
           </mat-panel-title>
         </mat-expansion-panel-header>
-        <div fxLayout="column" fxLayoutGap="30">
-          <div fxLayout="row">
+
+        <div class="mb-2" fxLayout="column" fxLayoutGap="30">
+          <div fxLayout="row" fxLayoutGap="30">
             <div fxLayout="column" class="full-width">
               <mat-label>Giờ từ</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_from"
+                name="h1_start"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h1_start"
+              ></ngx-mat-timepicker-field>
             </div>
             <div fxLayout="column" class="full-width">
               <mat-label>Đến</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_to"
+                name="h1_end"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h1_end"></ngx-mat-timepicker-field>
             </div>
           </div>
 
-          <div fxLayout="row">
+          <div fxLayout="row" fxLayoutGap="30">
             <div fxLayout="column" class="full-width">
               <mat-label>Giờ từ</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_from"
-                [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                name="h2_start"
+                [(ngModel)]="data.h2_start"
+                [format]="24"></ngx-mat-timepicker-field>
             </div>
             <div fxLayout="column" class="full-width">
               <mat-label>Đến</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_to"
+                name="h2_end"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h2_end"></ngx-mat-timepicker-field>
             </div>
           </div>
 
-          <div fxLayout="row">
+          <div fxLayout="row" fxLayoutGap="30">
             <div fxLayout="column" class="full-width">
               <mat-label>Giờ từ</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_from"
+                name="h3_start"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h3_start"></ngx-mat-timepicker-field>
             </div>
             <div fxLayout="column" class="full-width">
               <mat-label>Đến</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_to"
+                name="h3_end"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h3_end"></ngx-mat-timepicker-field>
             </div>
           </div>
 
-          <div fxLayout="row">
+          <div fxLayout="row" fxLayoutGap="30">
             <div fxLayout="column" class="full-width">
               <mat-label>Giờ từ</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_from"
+                name="h4_start"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h4_start"></ngx-mat-timepicker-field>
             </div>
             <div fxLayout="column" class="full-width">
               <mat-label>Đến</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_to"
+                name="h4_end"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h4_end"></ngx-mat-timepicker-field>
             </div>
           </div>
 
-          <div fxLayout="row">
+          <div fxLayout="row" fxLayoutGap="30">
             <div fxLayout="column" class="full-width">
               <mat-label>Giờ từ</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_from"
+                name="h5_start"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h5_start"></ngx-mat-timepicker-field>
             </div>
             <div fxLayout="column" class="full-width">
               <mat-label>Đến</mat-label>
               <ngx-mat-timepicker-field
-                name="hour_to"
+                name="h5_end"
                 [format]="24"
-                [defaultTime]="currentTime"></ngx-mat-timepicker-field>
+                [(ngModel)]="data.h5_end"></ngx-mat-timepicker-field>
             </div>
           </div>
         </div>
+
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded] = "data.repeat_week_day.length>0">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Ngày trong tuần
@@ -197,7 +293,7 @@
         </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded] = "data.repeat_month_day.length>0">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Ngày trong tháng
@@ -210,7 +306,7 @@
         </div>
       </mat-expansion-panel>
 
-      <mat-expansion-panel>
+      <mat-expansion-panel [expanded] = "data.repeat_month_year.length>0">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
             Tháng

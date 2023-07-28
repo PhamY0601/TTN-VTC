@@ -21,6 +21,7 @@ export interface IRadioManagement {
   h5_field?: string;
   repeat_week_day?: string;
   hrepeat_h3_start_day?: string;
+  repeat_month_year?:string;
 }
 
 export class RadioManagement implements IRadioManagement {
@@ -47,6 +48,7 @@ export class RadioManagement implements IRadioManagement {
     public h5_field?: string,
     public repeat_week_day?: string,
     public repeat_month_day?: string,
+    public repeat_month_year?:string,
   ) {
     this.id = id ? id : null;
     this.district = district ? district : '';
@@ -70,6 +72,6 @@ export class RadioManagement implements IRadioManagement {
     this.h5_field = h5_field ? h5_field : '';
     this.repeat_week_day = repeat_week_day ? repeat_week_day : '';
     this.repeat_month_day = repeat_month_day ? repeat_month_day : '';
-
+    this.repeat_month_year = repeat_month_year ? repeat_month_year : ''
   }
 }

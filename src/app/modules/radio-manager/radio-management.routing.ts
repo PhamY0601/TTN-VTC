@@ -36,7 +36,7 @@ export const RadioManagementRoutes: Routes = [
         data: { breadcrumb: 'Thêm' }
       },
       {
-        path: 'edit',
+        path: 'edit/:id',
         component:  RadioManagerDialogComponent,
         resolve: {
           data: RadioManagementResolve,

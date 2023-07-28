@@ -2,9 +2,9 @@ import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
 import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
-import {CitiesService} from "../../../shared/services/cities.service";
-import {currentTime} from "../../../app.constants";
+import {currentTime, voiceData} from "../../../app.constants";
 import {LocationsService} from "../../../shared/services/locations.service";
+import {week_day, months, days, sourceData} from "../../../app.constants";
 
 @Component({
   selector: 'radio-manager-content-componet',
@@ -14,311 +14,39 @@ import {LocationsService} from "../../../shared/services/locations.service";
 export class RadioManagerContentComponent implements OnInit {
   data: any;
   isSaving = false;
-  week_day = [
-    {
-      name: 'Chủ nhật',
-      value: '1',
-      checked: false
-    },
-    {
-      name: 'Thứ 2',
-      value: '2',
-      checked: false
-    },
-    {
-      name: 'Thứ 3',
-      value: '3',
-      checked: false
-    },
-    {
-      name: 'Thứ 4',
-      value: '4',
-      checked: false
-    },
-    {
-      name: 'Thứ 5',
-      value: '5',
-      checked: false
-    },
-    {
-      name: 'Thứ 6',
-      value: '6',
-      checked: false
-    },
-    {
-      name: 'Thứ 7',
-      value: '7',
-      checked: false
-    },
-  ];
-  months = [
-    {
-      name: 'Tháng 1',
-      value: '1',
-      checked: false
-    },
-    {
-      name: 'Tháng 2',
-      value: '2',
-      checked: false
-    },
-    {
-      name: 'Tháng 3',
-      value: '3',
-      checked: false
-    },
-    {
-      name: 'Tháng 4',
-      value: '4',
-      checked: false
-    },
-    {
-      name: 'Tháng 5',
-      value: '5',
-      checked: false
-    },
-    {
-      name: 'Tháng 6',
-      value: '6',
-      checked: false
-    },
-    {
-      name: 'Tháng 7',
-      value: '7',
-      checked: false
-    },
-    {
-      name: 'Tháng 8',
-      value: '8',
-      checked: false
-    },
-    {
-      name: 'Tháng 9',
-      value: '9',
-      checked: false
-    },
-    {
-      name: 'Tháng 10',
-      value: '10',
-      checked: false
-    },
-    {
-      name: 'Tháng 11',
-      value: '11',
-      checked: false
-    },
-    {
-      name: 'Tháng 12',
-      value: '12',
-      checked: false
-    },
-  ];
-  days = [
-    {
-      value: '1',
-      checked: false
-    },
-    {
-      value: '2',
-      checked: false
-    },
-    {
-      value: '3',
-      checked: false
-    },
-    {
-      value: '4',
-      checked: false
-    },
-    {
-      value: '5',
-      checked: false
-    },
-    {
-      value: '6',
-      checked: false
-    },
-    {
-      value: '7',
-      checked: false
-    },
-    {
-      value: '8',
-      checked: false
-    },
-    {
-      value: '9',
-      checked: false
-    },
-    {
-      value: '10',
-      checked: false
-    },
-    {
-      value: '11',
-      checked: false
-    },
-    {
-      value: '12',
-      checked: false
-    },
+  displayDistrict = false;
+  cityData: any[] = []
+  week_day = week_day;
+  months = months;
+  days = days;
+  voiceData = voiceData;
+  transmitterData = ['#01', '#02', '#03', '#04', '#05'];
 
-    {
-      value: '13',
-      checked: false
-    },
-    {
-      value: '14',
-      checked: false
-    },
-    {
-      value: '15',
-      checked: false
-    },
-    {
-      value: '16',
-      checked: false
-    },
-    {
-      value: '17',
-      checked: false
-    },
-    {
-      value: '18',
-      checked: false
-    },
-    {
-      value: '19',
-      checked: false
-    },
-    {
-      value: '20',
-      checked: false
-    },
-    {
-      value: '21',
-      checked: false
-    },
-    {
-      value: '22',
-      checked: false
-    },
-    {
-      value: '23',
-      checked: false
-    },
-    {
-      value: '24',
-      checked: false
-    },
-
-    {
-      value: '25',
-      checked: false
-    },
-    {
-      value: '26',
-      checked: false
-    },
-    {
-      value: '27',
-      checked: false
-    },
-    {
-      value: '27',
-      checked: false
-    },
-    {
-      value: '29',
-      checked: false
-    },
-    {
-      value: '30',
-      checked: false
-    },
-    {
-      value: '31',
-      checked: false
-    },
-  ];
+  selected = -1;
+  sourceData = sourceData;
 
   districtsData: any[] = [];
   wardsData: any[] = [];
-  statusData = [
-    {
-      name: 'Chờ phát thanh',
-      value: 'RS01'
-    },
-    {
-      name: 'Bắt đầu phát thanh',
-      value: 'RS02'
-    },
-    {
-      name: 'Đang phát',
-      value: 'RS03'
-    },
-    {
-      name: 'Tạm dừng',
-      value: 'RS04'
-    },
-    {
-      name: 'Kết thúc',
-      value: 'RS05'
-    },
-  ];
   audSrc: any;
-  currentTime:any;
+  currentTime: any;
 
   constructor(
-      private formBuilder: FormBuilder,
-      private locationsService$: LocationsService,
+    private formBuilder: FormBuilder,
+    private locationsService$: LocationsService,
     public dialogRef: MatDialogRef<RadioManagerContentComponent>,
   ) {
   }
 
   ngOnInit(): void {
-    this.getDistrict()
 
     this.currentTime = currentTime;
+
   }
 
   save() {
     console.log(this.data)
   }
-  getDistrict() {
-    this.locationsService$.getLocations().subscribe((data) => {
-      data[0].children.forEach((district:any) => {
-        this.districtsData.push({
-          code: district.Code,
-          name: district.Name,
-        })
-      })
 
-    })
-  }
-
-  districtEffect(code: any): void {
-
-    this.wardsData = [];
-    this.getWard(code)
-  }
-
-  getWard(code:any):void {
-    this.locationsService$.getLocations().subscribe((data) => {
-      data[0].children.forEach((district:any) => {
-        if(district.Code === code) {
-          district.children.forEach((ward:any) => {
-            this.wardsData.push({
-              code: ward.Code,
-              name: ward.Name,
-            })
-          })
-
-        }
-      })
-
-    })
-  }
 
   onFileSelected(event: any) {
     if (event.target.files && event.target.files[0]) {
@@ -327,17 +55,72 @@ export class RadioManagerContentComponent implements OnInit {
     }
   }
 
+  select(event: any) {
+    this.selected = event.value;
+  }
+
+
+  selectAllChanged() {
+
+    this.cityData[0].check = !this.cityData[0].check;
+
+    this.cityData[0].children.forEach((district: any) => {
+      district.check = this.cityData[0].check;
+
+      if (district.children) {
+        district.children.forEach((child: any) => {
+          child.check = this.cityData[0].check;
+        });
+      }
+    });
+  }
+
+  districtChanged(district: any) {
+    if (district.children) {
+      district.children.forEach((ward: any) => ward.check = district.check);
+    }
+    this.updateAllComplete()
+  }
+
+  wardChanged(ward: any) {
+    ward.check = !ward.check
+    // tìm huyện có xã được check
+    let district = this.cityData[0].children.find((district: any) => district.Code === ward.ParentCode);
+
+    if (district) {
+
+      //cập nhật trạng thái cua huyện
+      district.check = district.children.every((child: any) => child.check);
+
+    }
+    this.updateAllComplete()
+  }
+
+
+  updateAllComplete() {
+    this.cityData[0].check = this.cityData[0].children.every((item: any) => item.check);
+
+  }
+
+  someChecked(item: any) {
+    if (!item?.children || item?.children.length === 0) {
+      return false;
+    }
+
+    const checkedChildren = item?.children.filter((child: any) => child?.check);
+    return checkedChildren.length > 0 && checkedChildren.length < item?.children.length;
+  }
+
+
   private onSaveSuccess(): void {
-    // this.eventManager.broadcast({
-    //   name: 'radioManagerModified',
-    //   content: '',
-    // });
     this.dialogRef.close(true);
   }
 
   private onSaveError() {
     this.isSaving = false;
   }
+
+
 }
 
 @Component({
@@ -352,7 +135,7 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private dialog: MatDialog,
-    private citiesService$: CitiesService,
+    private locationsService$: LocationsService
   ) {
   }
 
@@ -362,14 +145,17 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
         width: '1000px',
       });
       this.dialogRef.componentInstance.data = data;
-      data.week_day = data.week_day.split(',');
-      data.month = data.month.split(',');
-      data.day = data.day.split(',');
-      this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.week_day);
-      this.weekDayEffect(this.dialogRef.componentInstance.months, data.month);
-      this.weekDayEffect(this.dialogRef.componentInstance.days, data.day);
+
+      this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.repeat_week_day);
+      this.weekDayEffect(this.dialogRef.componentInstance.days, data.repeat_month_day);
+      this.weekDayEffect(this.dialogRef.componentInstance.months, data.repeat_month_year);
+
       this.dialogRef.componentInstance.data = data;
 
+      this.locationsService$.getLocations().subscribe(location => {
+        this.dialogRef!.componentInstance.cityData = location
+        this.dialogRef!.componentInstance.cityData = this.locationEffect(this.dialogRef!.componentInstance.cityData, data.locations)
+      })
 
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),
@@ -390,14 +176,37 @@ export class RadioManagerDialogComponent implements OnInit, OnDestroy {
   }
 
   weekDayEffect(days: any, week_day: any) {
-    for (let i in days) {
-      for (let j in week_day) {
-        if (days[i].value === week_day[j]) {
-          days[i].checked = true;
-        }
-      }
+    if(week_day) {
+      days.forEach((day_1: any) => {
+        week_day.forEach((day_2: any) => {
+          if (day_1.value === day_2) {
+            day_1.checked = true
+          }
+        })
+      })
     }
+
   }
 
+  locationEffect(locationData: any, location: any): any {
+    if(location) {
+      locationData[0].children.forEach((district: any) => {
+        location.forEach((loca: any) => {
+          if (district.Code === loca.districtCode) {
+            district.check = true
+            district.children.forEach((ward: any) => {
+              loca.wards.forEach((item: any) => {
+                if (ward.Code === item.wardCode) {
+                  ward.check = true
+                }
+              })
+            })
+          }
+        })
+      })
+    }
+
+    return locationData
+  }
 
 }

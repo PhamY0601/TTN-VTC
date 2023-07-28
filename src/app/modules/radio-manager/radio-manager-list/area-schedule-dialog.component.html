@@ -18,13 +18,28 @@
       <p class="fw-500">{{ item.district }}</p>
     </div>
 
-    <div [class.hiddenItem]="!item.display">
-      <ul class="ms-2 mt--1">
-        <li *ngFor="let ward of item.wards; let i = index">
-          {{ward}}
-        </li>
-      </ul>
-    </div>
+
+    <div *ngIf="data.length === 1 then displayData; else hiddenData"> </div>
+
+    <ng-template #displayData>
+        <ul class="ms-2 mt--1">
+          <li *ngFor="let ward of item.wards; let i = index">
+            {{ward.wardName}}
+          </li>
+        </ul>
+    </ng-template>
+
+    <ng-template #hiddenData>
+      <div [class.hiddenItem]="!item.display">
+        <ul class="ms-2 mt--1">
+          <li *ngFor="let ward of item.wards; let i = index">
+            {{ward.wardName}}
+          </li>
+        </ul>
+      </div>
+    </ng-template>
+
+
   </div>
 
 </div>

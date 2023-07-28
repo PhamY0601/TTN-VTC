@@ -112,6 +112,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       } else {
         let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
         this.installData = arrayDeviceStatus[0];
+        console.log(arrayDeviceStatus[0])
       }
     })
   }

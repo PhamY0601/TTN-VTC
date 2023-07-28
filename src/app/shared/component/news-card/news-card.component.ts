@@ -53,7 +53,6 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
       return result;
     }, {});
 
-    console.log(Object.values(groupedData))
     this.dataSource.data = Object.values(groupedData);
 
 

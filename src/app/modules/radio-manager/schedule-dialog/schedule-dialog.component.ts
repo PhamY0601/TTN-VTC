@@ -1,7 +1,8 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {MatDialogRef, MatDialog} from '@angular/material/dialog';
-import {FormBuilder} from "@angular/forms";
 import {ActivatedRoute, Data, Router} from "@angular/router";
+import {week_day, months, days} from "../../../app.constants";
+
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -12,240 +13,13 @@ import {ActivatedRoute, Data, Router} from "@angular/router";
 export class ScheduleContentComponent implements OnInit {
   data: any;
   isSaving = false;
-  week_day = [
-    {
-      name: 'Chủ nhật',
-      value: '0',
-      checked: false
-    },
-    {
-      name: 'Thứ 2',
-      value: '1',
-      checked: false
-    },
-    {
-      name: 'Thứ 3',
-      value: '2',
-      checked: false
-    },
-    {
-      name: 'Thứ 4',
-      value: '3',
-      checked: false
-    },
-    {
-      name: 'Thứ 5',
-      value: '4',
-      checked: false
-    },
-    {
-      name: 'Thứ 6',
-      value: '5',
-      checked: false
-    },
-    {
-      name: 'Thứ 7',
-      value: '6',
-      checked: false
-    },
-  ];
-  months = [
-    {
-      name: 'Tháng 1',
-      value: '1',
-      checked: false
-    },
-    {
-      name: 'Tháng 2',
-      value: '2',
-      checked: false
-    },
-    {
-      name: 'Tháng 3',
-      value: '3',
-      checked: false
-    },
-    {
-      name: 'Tháng 4',
-      value: '4',
-      checked: false
-    },
-    {
-      name: 'Tháng 5',
-      value: '5',
-      checked: false
-    },
-    {
-      name: 'Tháng 6',
-      value: '6',
-      checked: false
-    },
-    {
-      name: 'Tháng 7',
-      value: '7',
-      checked: false
-    },
-    {
-      name: 'Tháng 8',
-      value: '8',
-      checked: false
-    },
-    {
-      name: 'Tháng 9',
-      value: '9',
-      checked: false
-    },
-    {
-      name: 'Tháng 10',
-      value: '10',
-      checked: false
-    },
-    {
-      name: 'Tháng 11',
-      value: '11',
-      checked: false
-    },
-    {
-      name: 'Tháng 12',
-      value: '12',
-      checked: false
-    },
-  ];
-  days = [
-    {
-      value: '0',
-      checked: false
-    },
-    {
-      value: '1',
-      checked: false
-    },
-    {
-      value: '2',
-      checked: false
-    },
-    {
-      value: '3',
-      checked: false
-    },
-    {
-      value: '4',
-      checked: false
-    },
-    {
-      value: '5',
-      checked: false
-    },
-    {
-      value: '6',
-      checked: false
-    },
-    {
-      value: '7',
-      checked: false
-    },
-    {
-      value: '8',
-      checked: false
-    },
-    {
-      value: '9',
-      checked: false
-    },
-    {
-      value: '10',
-      checked: false
-    },
-    {
-      value: '11',
-      checked: false
-    },
-    {
-      value: '12',
-      checked: false
-    },
+  week_day = week_day
+  months = months
+  days = days
 
-    {
-      value: '13',
-      checked: false
-    },
-    {
-      value: '14',
-      checked: false
-    },
-    {
-      value: '15',
-      checked: false
-    },
-    {
-      value: '16',
-      checked: false
-    },
-    {
-      value: '17',
-      checked: false
-    },
-    {
-      value: '18',
-      checked: false
-    },
-    {
-      value: '19',
-      checked: false
-    },
-    {
-      value: '20',
-      checked: false
-    },
-    {
-      value: '21',
-      checked: false
-    },
-    {
-      value: '22',
-      checked: false
-    },
-    {
-      value: '23',
-      checked: false
-    },
-    {
-      value: '24',
-      checked: false
-    },
-
-    {
-      value: '25',
-      checked: false
-    },
-    {
-      value: '26',
-      checked: false
-    },
-    {
-      value: '27',
-      checked: false
-    },
-    {
-      value: '27',
-      checked: false
-    },
-    {
-      value: '29',
-      checked: false
-    },
-    {
-      value: '30',
-      checked: false
-    },
-
-  ];
-  checkedDays: any[] = []
-  checkedDays2: any;
   param?: string | null = '';
 
   constructor(
-    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ScheduleContentComponent>,
   ) {
   }
@@ -287,7 +61,7 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.activatedRoute.data.subscribe(({data}: Data) => {
       console.log(data)
-      console.log(data.repeat_week_day)
+      console.log(data.repeat_month_year)
       this.dialogRef = this.dialog.open(ScheduleContentComponent, {
         disableClose: true,
         width: '1000px',
@@ -295,7 +69,8 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
 
       this.dialogRef.componentInstance.data = data;
       this.weekDayEffect(this.dialogRef.componentInstance.week_day, data.repeat_week_day);
-      this.weekDayEffect(this.dialogRef.componentInstance.days, data.repeat_month_day)
+      this.weekDayEffect(this.dialogRef.componentInstance.days, data.repeat_month_day);
+      this.weekDayEffect(this.dialogRef.componentInstance.months, data.repeat_month_year)
 
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),
@@ -315,15 +90,14 @@ export class ScheduleDialogComponent implements OnInit, OnDestroy {
     this.dialogRef = undefined;
   }
 
-  weekDayEffect(days:any, week_day: any) {
-    for(let i in days) {
-      for( let j in week_day) {
-        if(days[i].value === week_day[j])
-        {
-          days[i].checked = true;
+  weekDayEffect(days: any, week_day: any) {
+    days.forEach((day_1:any) => {
+      week_day.forEach((day_2:any)=> {
+        if(day_1.value === day_2) {
+          day_1.checked = true
         }
-      }
-    }
-
+      })
+    })
   }
+
 }

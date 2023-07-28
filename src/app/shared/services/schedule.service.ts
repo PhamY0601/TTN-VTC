@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
 import {LocationsService} from "./locations.service";
 import {header} from "../../app.constants";
+import * as moment from "moment";
+
 
 
 @Injectable({
@@ -86,6 +88,7 @@ export class ScheduleService {
     locationsArray = Object.entries(locationsData).map(([key, wards]) => ({key, wards, display: false}));
 
     let districtName: string;
+    let districtCode: string;
     let wardName: any[] = [];
 
     locationsArray.forEach((district:any) => {
@@ -93,17 +96,19 @@ export class ScheduleService {
 
         if(district.key === loc.Code) {
           districtName = loc.Name
+          districtCode = loc.Code
         }
 
         district.wards.forEach((ward: any) =>{
           if(ward === loc.Code) {
-            wardName.push(loc.Name)
+            wardName.push({wardName: loc.Name, wardCode: loc.Code})
           }
         })
       })
 
       result.push({
         district: districtName,
+        districtCode: districtCode,
         wards: wardName
       })
 
@@ -121,8 +126,9 @@ export class ScheduleService {
 
         return this.locationsService$.getAllLocations().pipe(
           map((res: any) => {
-            const districtData = res.data;
-            const location = this.formatLocation(districtData, item.Locations);
+            let districtData = res.data;
+            let location = this.formatLocation(districtData, item.Locations);
+           let src_param = JSON.parse(item.Src_Params)
 
             return {
               id: item.Id,
@@ -130,29 +136,32 @@ export class ScheduleService {
               locations: location,
               start: item.Start,
               end: item.End,
-              h1_start: item.h1_start ? item.h1_start : '',
-              h1_end: item.h1_end ? item.h1_end : '',
-              h2_start: item.h2_start ? item.h2_start : '',
-              h2_end: item.h2_start ? item.h2_start : '',
+              h1_start: item.h1_start ? item.h1_start.slice(0,-3) : '',
+              h1_end: item.h1_end ? item.h1_end.slice(0,-3) : '',
+              h2_start: item.h2_start ? item.h2_start.slice(0,-3) : '',
+              h2_end: item.h2_end ? item.h2_end.slice(0,-3) : '',
               h3_start: item.h3_start ? item.h3_start : '',
-              h3_end: item.h3_start ? item.h3_start : '',
+              h3_end: item.h3_end ? item.h3_end.slice(0,-3) : '',
               h4_start: item.h4_start ? item.h4_start : '',
-              h4_end: item.h4_start ? item.h4_start : '',
+              h4_end: item.h4_end ? item.h4_end.slice(0,-3) : '',
               h5_start: item.h5_start ? item.h5_start : '',
-              h5_end: item.h5_start ? item.h5_start : '',
+              h5_end: item.h5_end ? item.h5_end.slice(0,-3) : '',
               h1_field: item.h1_field ? item.h1_field : '',
               h2_field: item.h2_field ? item.h2_field : '',
               h3_field: item.h3_field ? item.h3_field : '',
               h4_field: item.h4_field ? item.h4_field : '',
               h5_field: item.h5_field ? item.h5_field : '',
-              repeat_week_day: item.RepeateWeekDay ? item.RepeateWeekDay : '',
-              repeat_month_day: item.RepeateMonthDay ? item.RepeateMonthDay : '',
+              repeat_week_day: item.RepeatWeekDay ? JSON.parse(item.RepeatWeekDay) : [],
+              repeat_month_day: item.RepeatMonthDay ? JSON.parse(item.RepeatMonthDay) : [],
+              repeat_month_year: item.RepeatMonthYear ? JSON.parse(item.RepeatMonthYear) : [],
+              src_param: src_param.text
             };
           })
         );
       })
     );
   }
+
 
 }
 

@@ -185,24 +185,38 @@ export class DashboardService {
     let transmitter_off = 0;
     let transmitter_establish = 0;
 
+    let speaker_off_devices: any[] = [];
+    let speaker_establish_devices:  any[] = [];
+    let speaker_on_devices: any[] = [];
+    let video_establish_devices: any[] = [];
+    let video_onl_devices: any[] = [];
+    let video_off_devices: any[] = [];
+    let transmitter_onl_devices : any[] = [];
+    let transmitter_off_devices: any[] = [];
+    let transmitter_establish_devices: any[] = [];
+
     data.forEach((device: any) => {
 
       if (device.type === "AudioBox") {
         switch (device.STATUS) {
           case "0":
             speaker_off += device.total;
+            speaker_off_devices.push(device.deviceId)
             break;
 
           case "1":
             speaker_on += device.total;
+            speaker_on_devices.push(device.deviceId)
             break;
 
           case "2":
             speaker_establish += device.total;
+            speaker_establish_devices.push(device.deviceId)
             break;
 
           case null:
             speaker_off += device.total;
+            speaker_off_devices.push(device.deviceId)
         }
       }
 
@@ -210,14 +224,17 @@ export class DashboardService {
         switch (device.STATUS) {
           case "0":
             transmitter_off += device.total;
+            transmitter_off_devices.push(device.deviceId)
             break;
 
           case "1":
             transmitter_onl += device.total
+            transmitter_onl_devices.push(device.deviceId)
             break;
 
           case "2":
             transmitter_establish += device.total;
+            transmitter_establish_devices.push(device.deviceId)
             break;
         }
       }
@@ -225,14 +242,17 @@ export class DashboardService {
         switch (device.STATUS) {
           case "0":
             video_off += device.total;
+            video_off_devices.push(device.deviceId)
             break;
 
           case "1":
             video_onl += device.total
+            video_onl_devices.push(device.deviceId)
             break;
 
           case "2":
             video_establish += device.total;
+            video_establish_devices.push(device.deviceId)
             break;
         }
       }
@@ -259,7 +279,17 @@ export class DashboardService {
       video_off: video_off,
       transmitter_onl: transmitter_onl,
       transmitter_off: transmitter_off,
-      transmitter_establish: transmitter_establish
+      transmitter_establish: transmitter_establish,
+
+      speaker_off_devices: speaker_off_devices,
+      speaker_establish_devices: speaker_establish_devices,
+      speaker_on_devices: speaker_on_devices,
+      video_onl_devices: video_onl_devices,
+      video_establish_devices: video_establish_devices,
+      video_off_devices: video_off_devices,
+      transmitter_onl_devices: transmitter_onl_devices,
+      transmitter_off_devices: transmitter_off_devices,
+      transmitter_establish_devices: transmitter_establish_devices
     }
   }
 
