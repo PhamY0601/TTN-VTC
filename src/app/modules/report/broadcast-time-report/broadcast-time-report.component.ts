@@ -172,7 +172,7 @@ export class BroadcastTimeReportComponent implements OnInit, AfterViewInit {
       request_duration: 3600
     },
   ];
-  toDay = new Date();
+  today = new Date();
   beforeDay = new Date();
 
   chartByPlaySuccess: any = [];

@@ -1,11 +1,3 @@
-#notificationMenu {
-  width: 400px !important;
-}
-
-
-.mat-mdc-menu-panel.notification {
-  max-width: 500px !important;
-}
 
 .view-all:hover {
   color: #08B1BD !important;
@@ -13,4 +5,13 @@
 }
 .mdc-list-item__primary-text {
   width: 100% !important;
+}
+.notification {
+  width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+.mat-mdc-menu-item .mat-icon {
+   margin-right: 0
 }

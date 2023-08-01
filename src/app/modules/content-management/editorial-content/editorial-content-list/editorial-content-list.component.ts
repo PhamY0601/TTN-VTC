@@ -18,7 +18,7 @@ export class EditorialContentListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['stt', 'date', 'radio-station', 'field', 'type', 'time', 'content', 'status'];
   dataSource: any;
-  toDay = new Date();
+  today = new Date();
   districtsData: any[] = [];
   wardsData: any[] = [];
 

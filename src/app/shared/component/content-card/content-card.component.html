@@ -1,9 +1,9 @@
 <mat-card class="p-1">
-  <div *ngIf="param !== contentCardItem.districtCode then districtData; else wardData"> </div>
+  <div *ngIf="param !== contentCardItem.districtCode then districtData; else wardData"></div>
 
   <ng-template #districtData>
-    <mat-card-header class="fz-3 fw-500 py-3 url-dialog"
-                     [routerLink]="contentCardItem.districtCode">
+    <mat-card-header [routerLink]="contentCardItem.districtCode"
+                     class="fz-3 fw-500 py-3 url-dialog">
       {{contentCardItem.district}}</mat-card-header>
   </ng-template>
 
@@ -15,18 +15,20 @@
   <mat-card-content fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="speaker_gray"></mat-icon>
-      <div class="status-text text-green fw-500"
-           matTooltip="Kết nối"
-           [matMenuTriggerFor]="menu">
+      <div [matMenuTriggerFor]="speakerOnline"
+           class="status-text text-green fw-500"
+           matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_on}}</div>
       </div>
-      <div class="status-text text-dark-blue fw-500"
+      <div [matMenuTriggerFor]="speakerEstablish"
+           class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_establish}}</div>
       </div>
-      <div class="status-text text-gray fw-500"
+      <div [matMenuTriggerFor]="speakerOffline"
+           class="status-text text-gray fw-500"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_off}}</div>
@@ -34,17 +36,20 @@
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="youtube_gray"></mat-icon>
-      <div class="status-text text-green fw-500"
+      <div [matMenuTriggerFor]="videoOnline"
+           class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_onl}}</div>
       </div>
-      <div class="status-text text-dark-blue fw-500"
+      <div [matMenuTriggerFor]="videoEstablish"
+          class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_establish}}</div>
       </div>
-      <div class="status-text fw-500 text-gray"
+      <div [matMenuTriggerFor]="videoOffline"
+           class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_off}}</div>
@@ -52,19 +57,22 @@
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
       <mat-icon svgIcon="transmitter"></mat-icon>
-      <div class="status-text text-green fw-500"
+      <div [matMenuTriggerFor]="transmitterOnline"
+          class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_onl}}</div>
       </div>
 
-      <div class="status-text text-dark-blue fw-500"
+      <div [matMenuTriggerFor]="transmitterEstablish"
+          class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_establish}}</div>
       </div>
 
-      <div class="status-text fw-500 text-gray"
+      <div [matMenuTriggerFor]="transmitterOffline"
+           class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_off}}</div>
@@ -74,12 +82,95 @@
   </mat-card-content>
 </mat-card>
 
-<mat-menu #menu="matMenu" style="width: 600px">
-  <div class="text-blue fw-500 p-3">Danh sách thiết bị</div>
-  <mat-divider></mat-divider>
-  <div  *ngFor="let item of contentCardItem.speaker_on_devices" >
-    <p>{{item}}</p>
+<!--thiết bị loa-->
+<!--danh sach loa dang onl-->
+<mat-menu #speakerOnline>
+  <app-devices-menu [id]="speakerOnline"
+                    [title_device]="'thiết bị loa'"
+                    [title]="'kết nối'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.speaker_on_devices">
+  </app-devices-menu>
+</mat-menu>
 
-  </div>
+<!--danh sach loa dang phat-->
+<mat-menu #speakerEstablish>
+  <app-devices-menu [id]="speakerEstablish"
+                    [title_device]="'thiết bị loa'"
+                    [title]="'đang phát'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.speaker_establish_devices">
+  </app-devices-menu>
+</mat-menu>
 
+<!--danh sách loa off-->
+<mat-menu #speakerOffline>
+  <app-devices-menu [id]="speakerOffline"
+                    [title_device]="'thiết bị loa'"
+                    [title]="'tạm dừng'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.speaker_off_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--bản tin điện tử-->
+<!--danh sách ban tin online-->
+<mat-menu #videoOnline>
+  <app-devices-menu [id]="videoOnline"
+                    [title_device]="'bản tin điện tử'"
+                    [title]="'kết nối'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.video_onl_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--danh sách ban tin dang phat-->
+<mat-menu #videoEstablish class="speaker-onl">
+  <app-devices-menu [id]="videoEstablish"
+                    [title_device]="'bản tin điện tử'"
+                    [title]="'đang phát'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.video_establish_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--danh sách ban tin dang phat-->
+<mat-menu #videoOffline class="speaker-onl">
+  <app-devices-menu [id]="videoOffline"
+                    [title_device]="'bản tin điện tử'"
+                    [title]="'tạm dừng'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.video_off_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--transmitter-->
+<!--transmitter online-->
+<mat-menu #transmitterOnline>
+  <app-devices-menu [id]="transmitterOnline"
+                    [title_device]="'transmitter'"
+                    [title]="'kết nối'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.transmitter_onl_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--danh sách ban tin dang phat-->
+<mat-menu #transmitterEstablish class="speaker-onl">
+  <app-devices-menu [id]="videoEstablish"
+                    [title_device]="'transmitter'"
+                    [title]="'đang phát'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.transmitter_establish_devices">
+  </app-devices-menu>
+</mat-menu>
+
+<!--danh sách ban tin dang phat-->
+<mat-menu #transmitterOffline class="speaker-onl">
+  <app-devices-menu [id]="transmitterOffline"
+                    [title_device]="'transmitter'"
+                    [title]="'tạm dừng'"
+                    [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
+                    [device]="contentCardItem.transmitter_off_devices">
+  </app-devices-menu>
 </mat-menu>

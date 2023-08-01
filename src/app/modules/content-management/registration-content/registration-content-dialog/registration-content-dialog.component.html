@@ -11,7 +11,7 @@
         <mat-label>Ngày</mat-label>
         <mat-form-field class="full-width" appearance="outline">
           <input matInput formArrayName="date"
-                 [matDatepicker]="pickerFrom" [value]="toDay">
+                 [matDatepicker]="pickerFrom" [value]="today">
           <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
           <mat-datepicker #pickerFrom></mat-datepicker>
         </mat-form-field>
@@ -131,7 +131,6 @@
 
   </div>
   <div mat-dialog-actions class="mt-1 px-4 py-3">
-
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
     <span fxFlex></span>
     <button mat-raised-button class="btn-blue" >Lưu</button>

@@ -1,8 +1,6 @@
 import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {CitiesService} from "../../../shared/services/cities.service";
 import {ActivatedRoute} from "@angular/router";
 import {COUNTRY} from "../../../app.constants";
-import {DistrictService} from "../../../shared/services/district.service";
 import {NgxSpinnerService} from "ngx-spinner";
 import {DashboardService} from "../../../shared/services/dashboard.service";
 import {MatTableDataSource} from "@angular/material/table";
@@ -13,8 +11,9 @@ import {MatPaginator} from "@angular/material/paginator";
 @Component({
   selector: 'app-dasboard',
   templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  styleUrls: ['./dashboard.component.scss'],
 })
+
 export class DashboardComponent implements OnInit, AfterViewInit {
   overviewData: any[] = [];
   newsData: any[] = [];

@@ -17,7 +17,7 @@ export class GeographicSourceContentComponent implements OnInit {
   isSaving = false;
   districtsData: any[] = [];
   wardsData: any[] = [];
-  toDay = new Date();
+  today = new Date();
   formData!: FormGroup;
   content = {
     hour_from: '',

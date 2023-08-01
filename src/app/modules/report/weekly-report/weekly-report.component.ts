@@ -9,7 +9,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 })
 export class WeeklyReportComponent implements OnInit{
   title_country: any;
-  toDay = new Date();
+  today = new Date();
   beforeDay = new Date();
 
   constructor(  private spinner: NgxSpinnerService,) {}

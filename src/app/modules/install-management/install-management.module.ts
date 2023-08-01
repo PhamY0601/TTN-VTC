@@ -19,7 +19,6 @@ import {SharedComponentModule} from "../../shared/component/shared-component.mod
   ],
   declarations: [
     InstallManagementComponent,
-
   ]
 })
 export class InstallManagementModule {

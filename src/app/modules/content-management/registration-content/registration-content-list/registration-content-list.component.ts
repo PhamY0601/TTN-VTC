@@ -18,7 +18,7 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort!: MatSort;
   displayedColumns: string[] = ['stt', 'date', 'time', 'type', 'url', 'content', 'area'];
   dataSource: any;
-  toDay = new Date();
+  today = new Date();
   districtsData: any[] = [];
 
   wardsData: any[] = [];

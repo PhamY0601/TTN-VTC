@@ -9,7 +9,7 @@ import {NgxSpinnerService} from "ngx-spinner";
 })
 export class DailyReportComponent implements OnInit{
   title_country: any
-  toDay = new Date();
+  today = new Date();
 
   constructor(  private spinner: NgxSpinnerService,) {
   }

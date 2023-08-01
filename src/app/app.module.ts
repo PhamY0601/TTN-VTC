@@ -13,9 +13,6 @@ import {RouterModule} from "@angular/router";
 import {BreadcrumbModule} from "xng-breadcrumb";
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {SharedComponentModule} from "./shared/component/shared-component.module";
-import {NewsCardDialogComponent} from "./shared/component/news-card/news-card.component";
-
-
 
 
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {

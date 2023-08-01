@@ -13,7 +13,7 @@ export class DateReportComponent implements OnInit {
   districtsData: any[] = [];
   wardsData: any[] = [];
   title_country: any
-  toDay = new Date();
+  today = new Date();
   beforeDay = new Date();
   display: boolean = false;
 

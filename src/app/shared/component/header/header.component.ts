@@ -7,10 +7,11 @@ import {AuthService} from "../../auth/auth.service";
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  encapsulation: ViewEncapsulation.None,
+
 })
 export class HeaderComponent implements OnInit {
-title_country: any;
+  title_country: any;
+  today = new Date();
 
   constructor( private fb: FormBuilder,
                private authService: AuthService) {

@@ -54,7 +54,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./modules/emergency-broadcasting/emergency-broadcasting.module').then(m => m.EmergencyBroadcastingModule),
         data: { breadcrumb: 'Phát thanh khẩn cấp' }
       },
-
+      {
+        path: 'user-profile',
+        loadChildren: () => import('./modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
+        data: { breadcrumb: 'Trang cá nhân' }
+      },
     ]
   },
   {
