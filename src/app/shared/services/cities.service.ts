@@ -287,11 +287,11 @@ export class CitiesService {
     );
   }
 
-  getWards(): Observable<any> {
+  getWards(districtId: any): Observable<any> {
     return this.wards.pipe(
       map((res) => {
-        // return Object.values(res).filter((item) => item.districtId )
-        return Object.values(res)
+         return Object.values(res).filter((item) => item.districtId === districtId )
+        // return Object.values(res)
       })
     );
   }

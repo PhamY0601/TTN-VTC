@@ -8,8 +8,8 @@ export class API {
   public static PLAYSTREAM_URL = `${environment.apiUrl}lookups/model/Playstreams`; //loại bản tin
   public static RADIO_MANAGEMENT_URL = `${environment.apiUrl}api/common/get?action=danhsachlichphat`; //quản lý lịch phát thanh
   public static PLAYSCHEDULE_URL = `${environment.apiUrl}lookups/model/Playschedule`; //lập lịch làm việc
-  public static DISTRICTS_URL = `${environment.apiUrl}lookups/model/Districts`; //quận
-  public static WARDS_URL = `${environment.apiUrl}lookups/model/Wards`; //xã
+  public static DISTRICTS_URL = `http://ttn.vtctelecom.com.vn/index.php/api/lookups/model/Districts`; //quận
+  public static WARDS_URL = `http://ttn.vtctelecom.com.vn/index.php/api/lookups/model/Wards`; //xã
   public static CITIES_URL = `${environment.apiUrl}lookups/model/Provinces`; //xã
   public static FIELDSOURCE_URL = `${environment.apiUrl}api/common/get?action=uri_field`; //TNN theo lĩnh vực
   public static GEOGRAPHICSOURCE_URL = `${environment.apiUrl}api/common/get?action=geographic`; //TTN theo địa lý

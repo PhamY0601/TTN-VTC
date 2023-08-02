@@ -59,6 +59,11 @@ export const rootRouterConfig: Routes = [
         loadChildren: () => import('./modules/user-profile/user-profile.module').then(m => m.UserProfileModule),
         data: { breadcrumb: 'Trang cá nhân' }
       },
+      {
+        path: 'notifications',
+        loadChildren: () => import('./modules/notifications/notifications.module').then(m => m.NotificationsModule),
+        data: { breadcrumb: 'Trang cá nhân' }
+      },
     ]
   },
   {

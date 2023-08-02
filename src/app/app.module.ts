@@ -15,6 +15,7 @@ import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import {SharedComponentModule} from "./shared/component/shared-component.module";
 
 
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };

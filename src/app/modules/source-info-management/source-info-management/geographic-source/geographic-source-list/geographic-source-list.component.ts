@@ -59,8 +59,6 @@ export class GeographicSourceListComponent implements OnInit, AfterViewInit {
       });
       dialogRef.afterClosed().subscribe(result => {
       });
-
-
     })
   }
 }

@@ -2,13 +2,10 @@
   text-align: center;
 }
 
-.mat-column-title {
+.mat-column-title, .mat-column-url  {
   width: 300px;
 }
 
-.mat-column-url {
-  width: 350px;
-}
 
 td {
   a:hover {

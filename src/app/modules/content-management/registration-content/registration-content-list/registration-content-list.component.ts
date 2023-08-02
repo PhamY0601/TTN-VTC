@@ -4,8 +4,6 @@ import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {ContentManagementService} from "../../../../shared/services/content-management.service";
 import {NgxSpinnerService} from "ngx-spinner";
-import {CitiesService} from "../../../../shared/services/cities.service";
-import {COUNTRY} from "../../../../app.constants";
 import {LocationsService} from "../../../../shared/services/locations.service";
 
 @Component({
@@ -20,9 +18,7 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit {
   dataSource: any;
   today = new Date();
   districtsData: any[] = [];
-
   wardsData: any[] = [];
-
 
 
   constructor(

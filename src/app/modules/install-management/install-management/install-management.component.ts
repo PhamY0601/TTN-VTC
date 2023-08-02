@@ -52,6 +52,14 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   ngOnInit() {
     this.loadData(COUNTRY());
+
+    this.citiesService$.getDistricts('Bến Tre_2').subscribe((data:any) => {
+      data.forEach((item:any) => {
+        this.citiesService$.getWards(item.nameId).subscribe((res:any) => {
+          console.log(res)
+        })
+      })
+    })
   }
 
   ngAfterViewInit() {
