@@ -4,7 +4,6 @@ import {HttpClient, HttpHeaders, HttpResponse} from '@angular/common/http';
 import {API} from "../../helper/api";
 import {LocationsService} from "./locations.service";
 import {header} from "../../app.constants";
-import * as moment from "moment";
 
 
 
@@ -20,7 +19,7 @@ export class ScheduleService {
               private locationsService$: LocationsService) {
   }
 
-
+ //danh sách lịch phát
   getScheduleList(): Observable<any> {
     const headers = this.header;
     let districtData: any[] = [];
@@ -29,46 +28,33 @@ export class ScheduleService {
 
     return this.http.get(`${API.SCHEDULE_LIST_URL}`, {headers}).pipe(map((res: any) => {
       let data = res.data;
-      let result: any[] = []
+      let scheduleGroup = this.groupByProperty(data, 'Id');
+      let schedule: any[] = [];
 
-      //duyet qua mang va group theo district
-      data.forEach((item: any) => {
-        let location = this.formatLocation(districtData, item.Locations)
-        result.push({
-          id: item.Id,
-          title: item.Title,
-          locations: location,
-          type: item.type_display,
-          src_type: item.src_type_display,
-          url: item.url,
-          agency: item.agency,
-          start: item.Start,
-          end: item.End,
-          h1_start: item.h1_start ? item.h1_start : '',
-          h1_end: item.h1_end ? item.h1_end : '',
-          h2_start: item.h2_start ? item.h2_start : '',
-          h2_end: item.h2_start ? item.h2_start : '',
-          h3_start: item.h3_start ? item.h3_start : '',
-          h3_end: item.h3_start ? item.h3_start : '',
-          h4_start: item.h4_start ? item.h4_start : '',
-          h4_end: item.h4_start ? item.h4_start : '',
-          h5_start: item.h5_start ? item.h5_start : '',
-          h5_end: item.h5_start ? item.h5_start : '',
-          h1_field: item.h1_field ? item.h1_field : '',
-          h2_field: item.h2_field ? item.h2_field : '',
-          h3_field: item.h3_field ? item.h3_field : '',
-          h4_field: item.h4_field ? item.h4_field : '',
-          h5_field: item.h5_field ? item.h5_field: '',
-          repeat_week_day: item.RepeateWeekDay ? item.RepeateWeekDay : '',
-          repeat_month_day: item.RepeateMonthDay ? item.RepeateMonthDay : '',
-          agencyId: item.agencyId
+      Object.values(scheduleGroup).forEach((item:any) => {
+        let agencies: any[] = [];
+
+        item.forEach((value:any) => {
+          agencies.push(value.agency)
         })
+
+        schedule.push({
+          id: item[0].Id,
+          title: item[0].Title,
+          agency: agencies,
+          type: item[0].type_display,
+          start: item[0].Start,
+          end: item[0].End,
+          url: item[0].url
+        })
+
       })
 
-      return result
+      return schedule
     }))
   }
 
+  //khu vuc phát
   formatLocation(districtData:any,location:any) {
     let result: any[] = [];
     let locationsArray: any[] = [];
@@ -116,7 +102,7 @@ export class ScheduleService {
     return result
   }
 
-
+//chi tiết lịch phát
   getScheduleDetail(id:any): Observable<any> {
     const headers = header;
 
@@ -128,7 +114,7 @@ export class ScheduleService {
           map((res: any) => {
             let districtData = res.data;
             let location = this.formatLocation(districtData, item.Locations);
-           let src_param = JSON.parse(item.Src_Params)
+            let src_param = JSON.parse(item.Src_Params);
 
             return {
               id: item.Id,
@@ -162,6 +148,14 @@ export class ScheduleService {
     );
   }
 
+
+  groupByProperty(list: any[], property: string) {
+    return list.reduce((groups: any, item: any) => {
+      const key = item[property];
+      (groups[key] = groups[key] || []).push(item);
+      return groups;
+    }, {});
+  }
 
 }
 

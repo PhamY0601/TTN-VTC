@@ -13,7 +13,8 @@
       <div (click)="item.display = !item.display"
            *ngIf="item.wards.length > 0"
            class="cursor">
-        <mat-icon>{{item.display ? 'expand_more' : 'chevron_right'}}</mat-icon>
+        <mat-icon *ngIf="data.length > 1">{{(item.display && data.length >1)? 'expand_more' : 'chevron_right'}}</mat-icon>
+        <mat-icon *ngIf="data.length === 1">expand_more</mat-icon>
       </div>
       <p class="fw-500">{{ item.district }}</p>
     </div>
@@ -22,7 +23,7 @@
     <div *ngIf="data.length === 1 then displayData; else hiddenData"> </div>
 
     <ng-template #displayData>
-        <ul class="ms-2 mt--1">
+        <ul class="ms-2 mt--1" style="line-height: 180%">
           <li *ngFor="let ward of item.wards; let i = index">
             {{ward.wardName}}
           </li>
@@ -31,17 +32,14 @@
 
     <ng-template #hiddenData>
       <div [class.hiddenItem]="!item.display">
-        <ul class="ms-2 mt--1">
+        <ul class="ms-2 mt--1" style="line-height: 180%">
           <li *ngFor="let ward of item.wards; let i = index">
             {{ward.wardName}}
           </li>
         </ul>
       </div>
     </ng-template>
-
-
   </div>
-
 </div>
 
 

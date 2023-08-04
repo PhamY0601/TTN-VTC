@@ -13,9 +13,10 @@ import {week_day, months, days, sourceData} from "../../../app.constants";
 })
 export class RadioManagerContentComponent implements OnInit {
   data: any;
+
   isSaving = false;
   displayDistrict = false;
-  cityData: any[] = []
+  cityData: any[] = [];
   week_day = week_day;
   months = months;
   days = days;
@@ -28,19 +29,14 @@ export class RadioManagerContentComponent implements OnInit {
   districtsData: any[] = [];
   wardsData: any[] = [];
   audSrc: any;
-  currentTime: any;
 
   constructor(
-    private formBuilder: FormBuilder,
-    private locationsService$: LocationsService,
     public dialogRef: MatDialogRef<RadioManagerContentComponent>,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
-
-    this.currentTime = currentTime;
-
+    this.data.start = new Date();
+    this.data.end = new Date()
   }
 
   save() {

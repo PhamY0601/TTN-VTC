@@ -5,7 +5,7 @@
   </button>
 </div>
 <form [formGroup]="formData">
-  <div mat-dialog-content  fxLayout="column" fxLayoutGap="30px">
+  <div mat-dialog-content>
 
       <div class="full-width">
         <mat-label>Ngày</mat-label>
@@ -83,7 +83,7 @@
       </div>
       <ng-container *ngFor="let item of value.controls; let i = index;">
         <div [formGroupName]="i" fxLayout="row" fxLayoutAlign="space-between start" fxLayoutGap="10">
-          <div fxFlex="95"  fxLayout="column" fxLayoutGap="30px">
+          <div fxFlex="95">
             <div fxLayout="row" fxLayoutGap="30">
               <div fxLayout="column" class="full-width">
                 <mat-label>Bắt đầu</mat-label>

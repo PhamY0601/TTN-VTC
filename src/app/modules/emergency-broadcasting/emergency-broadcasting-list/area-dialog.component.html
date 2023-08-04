@@ -6,14 +6,39 @@
 </div>
 
 <mat-divider></mat-divider>
-<div mat-dialog-content fxLayout="column" fxLayoutGap="30">
-  <div *ngFor="let item of data">
-    <span class="fw-500">{{item.district_display}}</span>
 
-    <ul *ngFor="let ward of item.value">
-      <li>{{ward.ward_display}}</li>
-    </ul>
+<div mat-dialog-content fxLayout="column">
+
+  <div *ngFor="let item of data">
+    <div fxLayout="row">
+      <div (click)="item.display = !item.display"
+           *ngIf="item.value.length > 0"
+           class="cursor">
+        <mat-icon *ngIf="data.length > 1">{{(item.display && data.length >1)? 'expand_more' : 'chevron_right'}}</mat-icon>
+        <mat-icon *ngIf="data.length === 1">expand_more</mat-icon>
+      </div>
+      <p class="fw-500">{{ item.district_display }}</p>
+    </div>
+
+
+    <div *ngIf="data.length === 1 then displayData; else hiddenData"> </div>
+
+    <ng-template #displayData>
+      <ul class="ms-2 mt--1" style="line-height: 180%">
+        <li *ngFor="let ward of item.value; let i = index">
+          {{ward.ward_display}}
+        </li>
+      </ul>
+    </ng-template>
+
+    <ng-template #hiddenData>
+      <div [class.hiddenItem]="!item.display">
+        <ul class="ms-2 mt--1" style="line-height: 180%">
+          <li *ngFor="let ward of item.value; let i = index">
+            {{ward.ward_display}}
+          </li>
+        </ul>
+      </div>
+    </ng-template>
   </div>
 </div>
-
-

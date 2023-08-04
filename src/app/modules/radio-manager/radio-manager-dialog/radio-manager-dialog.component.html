@@ -6,20 +6,15 @@
 </div>
 <form (ngSubmit)="save()" novalidate #form="ngForm">
   <div mat-dialog-content>
-    <div fxLayout="column" fxLayoutGap="30">
       <div>
         <mat-label>Tiêu đề</mat-label>
         <mat-form-field appearance="outline" class="full-width">
           <input #title="ngModel" [(ngModel)]="data.title" matInput
                  name="title" placeholder="Tiêu đề bản tin"
-                 required
-          >
-          <div *ngIf="title.invalid && (title.dirty || title.touched)">
-            <mat-error *ngIf="title.errors">Tiêu đề không được để trống</mat-error>
-          </div>
+                 required>
+          <mat-error *ngIf="title.errors">Tiêu đề không được để trống</mat-error>
         </mat-form-field>
       </div>
-
 
       <!--      chọn khu vực phát-->
       <div>
@@ -35,7 +30,6 @@
             {{cityData[0]?.Name}}
           </mat-checkbox>
         </div>
-
         <div [class.hiddenItem]="!displayDistrict">
           <ul>
             <li *ngFor="let district of cityData[0]?.children; let i = index">
@@ -73,7 +67,8 @@
       </div>
 
       <!--    Chọn nguồn phát-->
-      <div [fxLayout]="selected===4 ? 'column' : 'row'" class="mt-2" fxLayoutGap="30">
+      <div class="mt-2" [fxLayout]="selected !==4 ? 'row' : 'column'"
+      [fxLayoutGap] = "selected !==4 ? '30' : 0">
         <!--      Nguồn phát-->
         <div class="full-width" fxLayout="column">
           <mat-label>Chọn nguồn phát</mat-label>
@@ -126,11 +121,12 @@
                 <mat-label>Văn bản</mat-label>
                 <mat-form-field appearance="outline" style="height: 200px">
               <textarea style="height: 160px"
-                        [(ngModel)]="data.src_param"
                         matInput name="text"
+                        [(ngModel)]="data.src_param"
+                        #text="ngModel"
                         placeholder="Nội dung văn bản"
                         required></textarea>
-
+                  <mat-error *ngIf="text.errors">Tiêu đề không được để trống</mat-error>
                 </mat-form-field>
               </div>
 
@@ -168,7 +164,8 @@
         <div class="full-width">
           <mat-label>Từ ngày</mat-label>
           <mat-form-field class="full-width" appearance="outline">
-            <input matInput name="date_from" [matDatepicker]="pickerFrom" [(ngModel)]="data.start">
+            <input matInput name="date_from" [matDatepicker]="pickerFrom"
+                  [(ngModel)]="data.start">
             <mat-datepicker-toggle matIconSuffix [for]="pickerFrom"></mat-datepicker-toggle>
             <mat-datepicker #pickerFrom></mat-datepicker>
           </mat-form-field>
@@ -183,6 +180,8 @@
           </mat-form-field>
         </div>
       </div>
+
+    <div fxLayout="column" fxLayoutGap="30">
       <mat-expansion-panel class="py-2" [expanded] = "data.h1_start !==''">
         <mat-expansion-panel-header>
           <mat-panel-title class="text-blue fz-2 fw-400 my-2">
@@ -300,8 +299,8 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div fxLayout="row wrap" fxLayoutAlign=" center">
-          <div *ngFor="let item of days">
-            <mat-checkbox [checked]="item.checked" name="week_day">{{item.value}}</mat-checkbox>
+          <div *ngFor="let item of days" style="width: 70px">
+            <mat-checkbox [checked]="item.checked" name="week_day">{{item.display}}</mat-checkbox>
           </div>
         </div>
       </mat-expansion-panel>
@@ -313,15 +312,16 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div fxLayout="row wrap" fxLayoutGap="20">
-          <div *ngFor="let item of months">
+          <div *ngFor="let item of months" style="width: 120px">
             <mat-checkbox [checked]="item.checked" name="month">{{item.name}}</mat-checkbox>
           </div>
 
         </div>
       </mat-expansion-panel>
+    </div>
 
     </div>
-  </div>
+
   <div mat-dialog-actions class="mt-1 px-4 py-3">
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>
     <span fxFlex></span>

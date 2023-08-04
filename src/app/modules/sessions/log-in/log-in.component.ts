@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 import {AuthService} from "../../../shared/auth/auth.service";
 import {Router} from "@angular/router";
+import {ErrorStateMatcher} from '@angular/material/core';
 
 @Component({
   selector: 'app-log-in',
@@ -11,12 +12,14 @@ import {Router} from "@angular/router";
 export class LogInComponent implements OnInit {
   showPassword: boolean = false;
   loginError = false;
-  logInForm!: FormGroup;
+  logInForm!: FormGroup ;
 
   constructor(private fb: FormBuilder,
               private authService: AuthService,
               private router: Router) {
   }
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+
 
   ngOnInit() {
     this.logInForm = this.fb.group(

@@ -1,8 +1,6 @@
-import {AfterViewInit, Component, Inject, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {CitiesService} from "../../../shared/services/cities.service";
+import {AfterViewInit, Component, Inject, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
-import {Subscription} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {COUNTRY} from "../../../app.constants";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -94,8 +92,7 @@ export class AreaDialogComponent implements OnInit {
   constructor(
     public dialogRef: MatDialogRef<RadioManagerListComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {
-  }
+  ) {}
 
   closeDialog(): void {
     this.dialogRef.close();

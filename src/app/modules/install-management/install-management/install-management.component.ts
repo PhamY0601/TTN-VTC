@@ -1,4 +1,13 @@
-import {AfterViewInit, Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+  ViewEncapsulation
+} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from "@angular/material/paginator";
@@ -17,7 +26,8 @@ import 'leaflet.markercluster';
 @Component({
   selector: 'app-install',
   templateUrl: './install-management.component.html',
-  styleUrls: ['./install-management.component.scss']
+  styleUrls: ['./install-management.component.scss'],
+
 })
 export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewInit {
 
@@ -40,12 +50,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   private map: any;
 
-  constructor(private citiesService$: CitiesService,
-              private districtService$: DistrictService,
-              private installationService$: InstallationService,
-              private activatedRoute: ActivatedRoute,
-              private spinner: NgxSpinnerService,
-              private elementRef: ElementRef) {
+  constructor(private citiesService$: CitiesService, private districtService$: DistrictService, private installationService$: InstallationService, private activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService, private elementRef: ElementRef) {
     this.dataSourceFirst = new MatTableDataSource([]);
     this.dataSourceSecond = new MatTableDataSource([]);
   }
@@ -53,13 +58,6 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   ngOnInit() {
     this.loadData(COUNTRY());
 
-    this.citiesService$.getDistricts('Bến Tre_2').subscribe((data:any) => {
-      data.forEach((item:any) => {
-        this.citiesService$.getWards(item.nameId).subscribe((res:any) => {
-          console.log(res)
-        })
-      })
-    })
   }
 
   ngAfterViewInit() {
@@ -81,6 +79,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
   onSearch(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSourceSecond.filter = filterValue.trim().toLowerCase();
+
   }
 
   loadData(_COUNTRY: any): void {
@@ -115,34 +114,22 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
     let htmlRefChart = this.elementRef.nativeElement.querySelector(`#install-chart`);
 
     this.chart = new Chart(htmlRefChart, {
-      type: 'pie',
-      data: {
-        labels: title,
-        datasets: [
-          {
-            data: value,
-            backgroundColor: this.backgroundColor,
-          },
-        ],
-      },
-      options: {
+      type: 'pie', data: {
+        labels: title, datasets: [{
+          data: value, backgroundColor: this.backgroundColor,
+        },],
+      }, options: {
         plugins: {
           legend: {
-            position: 'bottom',
-            labels: {
-              boxWidth: 15,
-              boxHeight: 15,
-              padding: 50,
-              font: {
+            position: 'bottom', labels: {
+              boxWidth: 15, boxHeight: 15, padding: 50, font: {
                 size: 14
               }
             }
-          },
-          datalabels: {
+          }, datalabels: {
             font: {
               size: 20,
-            },
-            color: 'white',
+            }, color: 'white',
 
             formatter: (value, context) => {
               const datapoint = context.dataset.data
@@ -158,17 +145,19 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
           },
 
         },
-      },
-      plugins: [ChartDataLabels]
+      }, plugins: [ChartDataLabels]
     })
 
   }
 
   initMap(): void {
     let htmlRefMap = this.elementRef.nativeElement.querySelector(`#map`);
-    this.map = L.map( htmlRefMap).setView([10.769444, 106.681944], 10);
+    this.map = L.map(htmlRefMap).setView([10.769444, 106.681944], 10);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(this.map);
+    L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      maxZoom: 19,
+      attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(this.map);
 
     var markers = L.markerClusterGroup();
 
@@ -176,8 +165,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
       data.forEach((item: any) => {
         const marker = L.marker([item.Lat, item.Lng])
-          .bindPopup(
-            `<table>
+          .bindPopup(`<table>
                       <tr>
                         <th>Thiết bị</th>
                         <th>Trạm phát</th>
@@ -194,8 +182,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
                         <td> ${item.ward}</td>
                         <td>${item.status_display}</td>
                       </tr>
-                    </table>`
-          )
+                    </table>`)
 
         markers.addLayer(marker)
       })
@@ -206,7 +193,9 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   invalidateSize() {
     if (this.map) {
-      setTimeout(() => {this.map.invalidateSize(true)},100);
+      setTimeout(() => {
+        this.map.invalidateSize(true)
+      }, 100);
     }
   }
 }

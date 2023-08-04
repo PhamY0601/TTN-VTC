@@ -6,17 +6,15 @@
 </div>
 
 <form #form="ngForm" novalidate>
-  <div fxLayout="column" fxLayoutGap="30" mat-dialog-content>
+  <div mat-dialog-content>
     <div>
       <mat-label>Tiêu đề</mat-label>
       <mat-form-field appearance="outline" class="full-width">
         <input #title="ngModel" [(ngModel)]="data.title" matInput
                name="title" placeholder="Tiêu đề bản tin"
-               required
-        >
-        <div *ngIf="title.invalid && (title.dirty || title.touched)">
+               required>
           <mat-error *ngIf="title.errors">Tiêu đề không được để trống</mat-error>
-        </div>
+
       </mat-form-field>
     </div>
     <div>
@@ -25,9 +23,9 @@
         <input #content="ngModel" [(ngModel)]="data.content" matInput
                name="content" placeholder="Ghi chú"
                required>
-        <div *ngIf="content.invalid && (content.dirty || content.touched)">
+
           <mat-error *ngIf="content.errors">Ghi chú không được để trống</mat-error>
-        </div>
+
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutGap="100">
@@ -99,7 +97,9 @@
     </div>
 
     <!--    Chọn nguồn phát-->
-    <div [fxLayout]="selected===4 ? 'column' : 'row'" class="mt-2" fxLayoutGap="30">
+
+    <div class="mt-2" [fxLayout]="selected !==4 ? 'row' : 'column'"
+         [fxLayoutGap] = "selected !==4 ? '30' : 0">
       <!--      Nguồn phát-->
       <div class="full-width" fxLayout="column">
         <mat-label>Chọn nguồn phát</mat-label>
@@ -127,18 +127,6 @@
           </mat-form-field>
         </ng-container>
 
-        <!--         Thư viện-->
-<!--        <ng-container *ngSwitchCase="2">-->
-<!--          <mat-label>Thư viện</mat-label>-->
-<!--          <mat-form-field appearance="outline">-->
-<!--            <mat-select placeholder="Thư viện">-->
-<!--              <mat-option *ngFor="let item of libraryData" [value]="item">-->
-<!--                {{item}}-->
-<!--              </mat-option>-->
-<!--            </mat-select>-->
-<!--          </mat-form-field>-->
-<!--        </ng-container>-->
-
         <ng-container *ngSwitchCase="3">
           <div class="text-gray">File âm thanh</div>
           <div fxLayout="row" fxLayoutGap="10">
@@ -162,23 +150,22 @@
           <div fxLayout="column" fxLayoutGap="20">
             <div fxLayout="column">
               <mat-label>Văn bản</mat-label>
-              <mat-form-field appearance="outline" style="height: 100px">
-              <textarea #text="ngModel"
-                        [(ngModel)]="textToSpeechData.text"
+              <mat-form-field appearance="outline" style="height: 200px">
+              <textarea style="height: 160px"
                         matInput name="text"
+                        [(ngModel)]="textToSpeechData.text"
+                        #text="ngModel"
                         placeholder="Nội dung văn bản"
                         required></textarea>
-                <div *ngIf="text.invalid && (text.dirty || text.touched)" class="mt-2">
-                  <mat-error *ngIf="text.errors">Văn bản không được để trống</mat-error>
-                </div>
+                <mat-error *ngIf="text.errors">Tiêu đề không được để trống</mat-error>
               </mat-form-field>
             </div>
 
             <div class="full-width" fxLayout="column">
               <mat-label>Chất giọng</mat-label>
               <mat-form-field appearance="outline" class="full-width">
-                <mat-select [(ngModel)]="textToSpeechData.region" name="voice"
-                            placeholder=" Chọn chất giọng">
+                <mat-select  name="voice"
+                             placeholder=" Chọn chất giọng">
                   <mat-option *ngFor="let item of voiceData"
                               [value]="item.value">{{item.name}}</mat-option>
                 </mat-select>
@@ -189,19 +176,18 @@
 
         </ng-container>
 
-<!--        <ng-container *ngSwitchCase="5">-->
-<!--          <mat-label> Tiếp âm</mat-label>-->
-<!--          <mat-form-field appearance="outline">-->
-<!--            <mat-select placeholder="Chọn tiếp âm">-->
-<!--              <mat-option *ngFor="let item of relayData" [value]="item">-->
-<!--                {{item}}-->
-<!--              </mat-option>-->
-<!--            </mat-select>-->
-<!--          </mat-form-field>-->
-<!--        </ng-container>-->
+        <!--        <ng-container *ngSwitchCase="5">-->
+        <!--          <mat-label> Tiếp âm</mat-label>-->
+        <!--          <mat-form-field appearance="outline">-->
+        <!--            <mat-select placeholder="Chọn tiếp âm">-->
+        <!--              <mat-option *ngFor="let item of relayData" [value]="item">-->
+        <!--                {{item}}-->
+        <!--              </mat-option>-->
+        <!--            </mat-select>-->
+        <!--          </mat-form-field>-->
+        <!--        </ng-container>-->
       </div>
     </div>
-
   </div>
   <div class="mt-1 px-4 py-3" mat-dialog-actions>
     <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Hủy</button>

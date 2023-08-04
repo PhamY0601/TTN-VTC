@@ -20,6 +20,7 @@ import {
 import {
   GeographicSourceContentComponent, GeographicSourceDialogComponent
 } from "./source-info-management/geographic-source/geographic-source-dialog/geographic-source-dialog.component";
+import {ClipboardModule} from "@angular/cdk/clipboard";
 
 
 
@@ -43,7 +44,7 @@ export const MY_FORMATS = {
     SharedMaterialModule,
     FormsModule,
     ReactiveFormsModule,
-
+    ClipboardModule,
 
   ],
   declarations: [

@@ -81,7 +81,6 @@ export class DashboardService {
 
         let content = item.content ? JSON.parse(item.content) : ''
 
-
         recordData.push({
           id: item.Id,
           title: item.Title,
@@ -96,7 +95,6 @@ export class DashboardService {
           content: item.content ? content.text : content
         })
       })
-
 
       this.getData(array, 'record_field').forEach((item: any) => {
         fieldData.push({

@@ -43,8 +43,8 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
   }
 
   loadData(): void {
-    const groupedData = this.newsData.reduce((result:any, current:any) => {
-      const { id, province, district, ward, ...rest } = current;
+    let groupedData = this.newsData.reduce((result:any, current:any) => {
+      let { id, province, district, ward, ...rest } = current;
       if (!result[id]) {
         result[id] = { id, items: [rest] };
       } else {
@@ -55,7 +55,6 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
 
     this.dataSource.data = Object.values(groupedData);
 
-
   }
 
 
@@ -64,8 +63,7 @@ export class NewsCardComponent implements OnInit, AfterViewInit, OnChanges {
     // lọc những bản tin cùng ID
     let news = this.newsData.filter((item: any) => item.id === id)
 
-
-    const groupedData = news.reduce((acc: any, curr: any) => {
+    let groupedData = news.reduce((acc: any, curr: any) => {
       if (!acc[curr.district]) {
         acc[curr.district] = [];
       }

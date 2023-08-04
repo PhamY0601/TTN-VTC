@@ -5,7 +5,7 @@ import {MatSort} from "@angular/material/sort";
 import {NgxSpinnerService} from "ngx-spinner";
 import {SourceInfoManagementService} from "../../../../../shared/services/source-info-management.service";
 import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog";
-
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-field-source',
@@ -23,7 +23,8 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
 
   constructor( private spinner: NgxSpinnerService,
                public dialog: MatDialog,
-               private sourceInfoService$: SourceInfoManagementService) {
+               private sourceInfoService$: SourceInfoManagementService,
+               private clipboard: Clipboard) {
     this.dataSource = new MatTableDataSource([]);
   }
 
@@ -59,6 +60,9 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
       });
     })
   }
+
+
+
 
 }
 

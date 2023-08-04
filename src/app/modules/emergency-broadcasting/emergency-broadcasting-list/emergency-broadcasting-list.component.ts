@@ -87,9 +87,10 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
       let area: any[] = []
       for (let i in groupedData) {
-        area.push({district: i, district_display: groupedData[i][0].district_display, value: groupedData[i]})
+        area.push({display: false, district: i, district_display: groupedData[i][0].district_display, value: groupedData[i]})
       }
 
+      console.log(area)
       this.dataDialog = area;
 
       let dialogRef = this.dialog.open(AreaDialogComponent, {
