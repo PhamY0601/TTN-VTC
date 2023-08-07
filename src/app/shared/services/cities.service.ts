@@ -14,7 +14,7 @@ export class CitiesService {
   loudspeaker = this.http.post(`${API.IPPBXEXTEN_URL}`, this.formData) //loa
   inforboard = this.http.post(`${API.INFORBOARD_URL}`, this.formData); //bản tin điện tử
   radioStream = this.http.post(`${API.RADIOSTREAM_URL}`, this.formData); //bản tin phát hành
-  radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //Trạm phát
+  radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //Nhà cung cấp
   playStream = this.http.post(`${API.PLAYSTREAM_URL}`, this.formData); //bản tin đang phát
   radioStreaming = this.http.post(`${API.RADIO_MANAGEMENT_URL}`, this.formData); //phát thanh
   playSchedule = this.http.post(`${API.PLAYSCHEDULE_URL}`, this.formData);
@@ -59,7 +59,7 @@ export class CitiesService {
             },
             {
               "id": 4,
-              "title": "Trạm phát",
+              "title": "Nhà cung cấp",
               "count": res3.length,
               "icon": "supplier"
             }

@@ -83,7 +83,7 @@ export class BroadcastingDetailDialogComponent implements OnInit, OnDestroy {
       this.detailData = data;
 
       this.dialogRef = this.dialog.open(BroadcastingDetailContentComponent, {
-        width: '900px',
+        width: '1100px',
       });
 
       let devicesData: any[] = [];

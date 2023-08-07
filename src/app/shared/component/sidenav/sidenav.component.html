@@ -6,22 +6,22 @@
   <perfect-scrollbar [config]="config">
     <div>
       <mat-nav-list>
-        <a mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./dashboard']">
+        <a [routerLinkActive]="['is-active']" [routerLink]="['./dashboard']" mat-list-item>
           <mat-icon matListItemIcon svgIcon="dashboard"></mat-icon>
           <div matListItemTitle>Tổng quan</div>
         </a>
 
-        <a mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./install-management']">
+        <a [routerLinkActive]="['is-active']" [routerLink]="['./install-management']" mat-list-item>
           <mat-icon matListItemIcon svgIcon="exclude"></mat-icon>
           <div matListItemTitle>Quản lý lắp đặt</div>
         </a>
 
-        <a mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./radio-management']">
+        <a [routerLinkActive]="['is-active']" [routerLink]="['./radio-management']" mat-list-item>
           <mat-icon class="text-gray" matListItemIcon>event</mat-icon>
           <div matListItemTitle>Quản lý lịch phát thanh</div>
         </a>
 
-        <a mat-list-item [routerLinkActive]="['is-active']" [routerLink]="['./emergency-broadcasting']">
+        <a [routerLinkActive]="['is-active']" [routerLink]="['./emergency-broadcasting']" mat-list-item>
           <mat-icon matListItemIcon svgIcon="speaker_gray"></mat-icon>
           <div matListItemTitle>Phát thanh khẩn cấp</div>
         </a>
@@ -32,23 +32,16 @@
           </mat-expansion-panel-header>
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./source-info-management/field-source-info']"
-                   >
-                  TTN theo lĩnh vực
-                </a>
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./source-info-management/field-source-info']">
+                TTN theo lĩnh vực
               </li>
             </ul>
           </mat-list-item>
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./source-info-management/geographic-source-info']"
-                   >
-                  TTN theo cấp địa lý
-                </a>
+              <li [routerLinkActive]="['active']" [routerLink]="['./source-info-management/geographic-source-info']">
+                TTN theo cấp địa lý
               </li>
             </ul>
           </mat-list-item>
@@ -61,35 +54,27 @@
           </mat-expansion-panel-header>
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./content-management/editorial-content']"
-                   >
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./content-management/editorial-content']">
+
                   Nội dung biên tập
-                </a>
               </li>
             </ul>
           </mat-list-item>
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./content-management/registration-content']"
-                  >
+              <li  [routerLinkActive]="['active']"
+                   [routerLink]="['./content-management/registration-content']">
                   Lịch phát đã đăng ký
-                </a>
               </li>
             </ul>
           </mat-list-item>
 
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./content-management/warning-content']"
-                   >
-                Cảnh báo từ khóa
-              </a>
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./content-management/warning-content']">
+                  Cảnh báo từ khóa
               </li>
             </ul>
           </mat-list-item>
@@ -97,17 +82,14 @@
 
         <mat-expansion-panel>
           <mat-expansion-panel-header class="fz-2 fw-400">
-            <mat-icon matListItemIcon color="warn" svgIcon="document_text"></mat-icon>
+            <mat-icon color="warn" matListItemIcon svgIcon="document_text"></mat-icon>
             <div>Báo cáo</div>
           </mat-expansion-panel-header>
           <mat-list-item>
             <ul>
-              <li>
-                <a [routerLinkActive]="['active']"
-                   [routerLink]="['./report/broadcast-time']"
-                   >
+              <li [routerLinkActive]="['active']"
+                  [routerLink]="['./report/broadcast-time']">
                   Thời lượng phát
-                </a>
               </li>
             </ul>
           </mat-list-item>
@@ -120,37 +102,27 @@
             </mat-expansion-panel-header>
             <mat-list-item class="ps-4">
               <ul style="list-style-type: circle">
-                <li>
-                  <a [routerLinkActive]="['active']" [routerLink]="['./report/date']">Theo ngày</a>
-                </li>
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/date']">Theo ngày</li>
               </ul>
             </mat-list-item>
             <mat-list-item class="ps-4">
               <ul style="list-style-type: circle">
-                <li>
-                  <a [routerLinkActive]="['active']" [routerLink]="['./report/daily']">Hằng ngày</a>
-                </li>
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/daily']">Hằng ngày</li>
               </ul>
             </mat-list-item>
             <mat-list-item class="ps-4">
               <ul style="list-style-type: circle">
-                <li>
-                  <a [routerLinkActive]="['active']" [routerLink]="['./report/weekly']">Hằng tuần</a>
-                </li>
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/weekly']">Hằng tuần</li>
               </ul>
             </mat-list-item>
             <mat-list-item class="ps-4">
               <ul style="list-style-type: circle">
-                <li>
-                  <a [routerLinkActive]="['active']" [routerLink]="['./report/monthly']">Hằng tháng</a>
-                </li>
+                <li [routerLinkActive]="['active']" [routerLink]="['./report/monthly']">Hằng tháng</li>
               </ul>
             </mat-list-item>
             <mat-list-item class="ps-4">
               <ul style="list-style-type: circle">
-                <li>
-                  <a [routerLinkActive]="['active']" [routerLink]="['./report/yearly']">Hằng năm</a>
-                </li>
+                <li  [routerLinkActive]="['active']" [routerLink]="['./report/yearly']">Hằng năm </li>
               </ul>
             </mat-list-item>
           </mat-expansion-panel>

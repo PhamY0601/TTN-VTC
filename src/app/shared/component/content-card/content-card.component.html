@@ -13,19 +13,19 @@
   </ng-template>
 
   <mat-card-content fxLayout="column" fxLayoutGap="10px">
-    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="speaker_gray"></mat-icon>
-      <div [matMenuTriggerFor]="speakerOnline"
-           class="status-text text-green fw-500"
-           matTooltip="Kết nối">
-        <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{contentCardItem.speaker_on}}</div>
-      </div>
       <div [matMenuTriggerFor]="speakerEstablish"
            class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_establish}}</div>
+      </div>
+      <div [matMenuTriggerFor]="speakerOnline"
+           class="status-text text-green fw-500"
+           matTooltip="Kết nối">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{contentCardItem.speaker_on}}</div>
       </div>
       <div [matMenuTriggerFor]="speakerOffline"
            class="status-text text-gray fw-500"
@@ -34,19 +34,19 @@
         <div>{{contentCardItem.speaker_off}}</div>
       </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="youtube_gray"></mat-icon>
+      <div [matMenuTriggerFor]="videoEstablish"
+           class="status-text text-dark-blue fw-500"
+           matTooltip="Đang phát">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{contentCardItem.video_establish}}</div>
+      </div>
       <div [matMenuTriggerFor]="videoOnline"
            class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_onl}}</div>
-      </div>
-      <div [matMenuTriggerFor]="videoEstablish"
-          class="status-text text-dark-blue fw-500"
-           matTooltip="Đang phát">
-        <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{contentCardItem.video_establish}}</div>
       </div>
       <div [matMenuTriggerFor]="videoOffline"
            class="status-text fw-500 text-gray"
@@ -55,20 +55,20 @@
         <div>{{contentCardItem.video_off}}</div>
       </div>
     </div>
-    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="20px">
+    <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="transmitter"></mat-icon>
+      <div [matMenuTriggerFor]="transmitterEstablish"
+           class="status-text text-dark-blue fw-500"
+           matTooltip="Đang phát">
+        <mat-icon class="icon-status">circle</mat-icon>
+        <div>{{contentCardItem.transmitter_establish}}</div>
+      </div>
+
       <div [matMenuTriggerFor]="transmitterOnline"
           class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_onl}}</div>
-      </div>
-
-      <div [matMenuTriggerFor]="transmitterEstablish"
-          class="status-text text-dark-blue fw-500"
-           matTooltip="Đang phát">
-        <mat-icon class="icon-status">circle</mat-icon>
-        <div>{{contentCardItem.transmitter_establish}}</div>
       </div>
 
       <div [matMenuTriggerFor]="transmitterOffline"

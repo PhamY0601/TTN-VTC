@@ -13,7 +13,7 @@ export class DistrictService {
   loudspeaker = this.http.post(`${API.IPPBXEXTEN_URL}`, this.formData) //loa
   inforboard = this.http.post(`${API.INFORBOARD_URL}`, this.formData); //bản tin điện tử
   radioStream = this.http.post(`${API.RADIOSTREAM_URL}`, this.formData); //bản tin phát hành
-  radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //Trạm phát
+  radionode = this.http.post(`${API.RADIONODE_URL}`, this.formData); //Nhà cung cấp
   playStream = this.http.post(`${API.PLAYSTREAM_URL}`, this.formData) //bản tin đang phát
 
   constructor(private http: HttpClient) {
@@ -53,7 +53,7 @@ export class DistrictService {
             },
             {
               "id": 4,
-              "title": "Trạm phát",
+              "title": "Nhà cung cấp",
               "count": res3.length,
               "icon": "supplier"
             }

@@ -1,9 +1,7 @@
 <router-outlet></router-outlet>
-<div class="px-5 pb-5">
-  <div fxLayout="row" fxLayoutAlign="space-between center">
-    <div>
-      <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
-    </div>
+<div class="p-5">
+  <div fxLayout="row"  fxLayoutAlign="space-between start">
+    <button mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </button>
     <mat-form-field class="text-blue" appearance="outline">
       <input matInput (keyup)="onSearch($event)" placeholder="Từ khóa">
       <mat-icon matSuffix>search</mat-icon>
@@ -89,7 +87,7 @@
           [ngClass]="{'bg-table': even}"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+        <td class="mat-cell text-center pt-5" [attr.colspan]="displayedColumns.length">Không tìm thấy dữ liệu</td>
       </tr>
     </table>
     <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">

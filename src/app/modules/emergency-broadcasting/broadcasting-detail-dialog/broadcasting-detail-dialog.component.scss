@@ -10,9 +10,9 @@
 }
 
 .mat-column-time, .mat-column-time_request,
-.mat-column-speaker, .mat-column-ratio {
+.mat-column-speaker,.mat-column-name_device {
   text-align: center;
 }
-.mat-column-name_device{
-  width: 200px;
-}
+//.mat-column-name_device{
+//  width: 200px;
+//}

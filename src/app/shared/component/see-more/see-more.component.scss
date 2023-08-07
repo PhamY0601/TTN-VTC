@@ -1,5 +1,9 @@
 .display-text{
-  height: 20px;
+  max-height: 20px;
   overflow: hidden;
+ // text-overflow: ellipsis;
+ //white-space: nowrap;
+ // width: 450px;
 }
+
 

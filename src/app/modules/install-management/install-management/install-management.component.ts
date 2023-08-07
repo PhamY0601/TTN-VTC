@@ -168,7 +168,7 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
           .bindPopup(`<table>
                       <tr>
                         <th>Thiết bị</th>
-                        <th>Trạm phát</th>
+                        <th>Nhà cung cấp</th>
                         <th>Tỉnh/Thành</th>
                         <th>Quận/Huyện</th>
                         <th>Xã/Phường</th>

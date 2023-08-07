@@ -1,15 +1,13 @@
 <router-outlet></router-outlet>
 <div class="p-5" fxLayout="column" fxLayoutGap="30px">
   <div fxLayout="row wrap" fxLayoutAlign="space-around stretch" fxLayoutGap="30px"
-       fxLayout.xs="column"
-  >
+       fxLayout.xs="column">
     <div *ngFor="let item of overviewData"
          fxFlex="23"
          class="full-width">
       <app-overview-card [title]="item.name_display"
                          [count]="item.total"
-                         [icon]="item.icon"
-      >
+                         [icon]="item.icon">
       </app-overview-card>
     </div>
   </div>

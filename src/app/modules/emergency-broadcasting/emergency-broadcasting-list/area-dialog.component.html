@@ -1,27 +1,19 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Chi tiết Khu vực</h1>
-  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
-
+<h1 class="text-blue" matDialogTitle>Chi tiết Khu vực</h1>
 <mat-divider></mat-divider>
 
-<div mat-dialog-content fxLayout="column">
+<div fxLayout="column" mat-dialog-content>
 
   <div *ngFor="let item of data">
-    <div fxLayout="row">
-      <div (click)="item.display = !item.display"
-           *ngIf="item.value.length > 0"
-           class="cursor">
-        <mat-icon *ngIf="data.length > 1">{{(item.display && data.length >1)? 'expand_more' : 'chevron_right'}}</mat-icon>
-        <mat-icon *ngIf="data.length === 1">expand_more</mat-icon>
-      </div>
+    <div (click)="item.display = !item.display" *ngIf="item.value.length > 0"
+         class="cursor"
+         fxLayout="row">
+      <mat-icon
+        *ngIf="data.length > 1">{{(item.display && data.length > 1) ? 'expand_more' : 'chevron_right'}}</mat-icon>
+      <mat-icon *ngIf="data.length === 1">expand_more</mat-icon>
       <p class="fw-500">{{ item.district_display }}</p>
     </div>
 
-
-    <div *ngIf="data.length === 1 then displayData; else hiddenData"> </div>
+    <div *ngIf="data.length === 1 then displayData; else hiddenData"></div>
 
     <ng-template #displayData>
       <ul class="ms-2 mt--1" style="line-height: 180%">
@@ -41,4 +33,7 @@
       </div>
     </ng-template>
   </div>
+</div>
+<div mat-dialog-actions class="mt-1" align="end">
+  <button mat-button color="warn" type="button" (click)="dialogRef.close(false)">Đóng</button>
 </div>

@@ -19,8 +19,4 @@ export class ContentCardComponent implements OnInit{
     });
   }
 
-  // getItem() {
-  //
-  //   this.itemSelected.emit(this.contentCardItem);
-  // }
 }

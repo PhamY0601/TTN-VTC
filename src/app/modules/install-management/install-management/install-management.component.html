@@ -6,7 +6,6 @@
         <mat-card-title class="text-blue fz-3">Số lượng thiết bị</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <!--        <app-install-management-chart [installData]="installDataChart"></app-install-management-chart>-->
         <div style="height: 400px; width: 400px">
           <canvas id="install-chart">{{chart}}</canvas>
         </div>
@@ -62,7 +61,7 @@
   </div>
   <mat-card class="px-4 py-5" fxLayout="column" fxLayoutGap="30px">
     <div fxLayout="column" fxLayoutGap="10px">
-      <div class="text-blue fz-3 fw-500">Vị trí cụm loa</div>
+      <div class="text-blue fz-3 fw-500">Danh sách cụm loa</div>
       <div fxLayout="row" fxLayoutAlign="space-between center" style="height: 50px">
         <div class="text-gray" fxLayout="row">
           <button [ngClass]="display ?  'text-blue':'text-gray'"
@@ -119,7 +118,7 @@
           </ng-container>
 
           <ng-container matColumnDef="agencies">
-            <th mat-header-cell *matHeaderCellDef>Trạm phát</th>
+            <th mat-header-cell *matHeaderCellDef>Nhà cung cấp</th>
             <td mat-cell *matCellDef="let element">{{element.agencies_name}}</td>
           </ng-container>
 
@@ -154,7 +153,7 @@
               [ngClass]="{'bg-table': even}"></tr>
 
           <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+            <td class="mat-cell text-center pt-5" [attr.colspan]="displayedColumn2.length">Không tìm thấy dữ liệu</td>
           </tr>
         </table>
 

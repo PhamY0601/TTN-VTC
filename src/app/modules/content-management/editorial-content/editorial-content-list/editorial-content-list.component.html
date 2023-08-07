@@ -48,8 +48,9 @@
       <button mat-raised-button class="btn-blue">Xem</button>
     </div>
     <div>
-      <a mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </a>
+      <button mat-raised-button class="btn-blue" routerLink="./add"> Tạo mới </button>
     </div>
+
   </div>
 
   <div class="mat-elevation-z2 bg-white full-width"
@@ -116,7 +117,7 @@
           [ngClass]="{'bg-table': even}"></tr>
 
       <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center" colspan="6">Không tìm thấy dữ liệu</td>
+        <td class="mat-cell text-center pt-5" [attr.colspan]="displayedColumns.length">Không tìm thấy dữ liệu</td>
       </tr>
     </table>
 

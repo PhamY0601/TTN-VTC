@@ -30,6 +30,7 @@ export class EmergencyBroadcastingListComponent implements OnInit, AfterViewInit
 
   ngOnInit() {
     this.loadData();
+    console.log(this.displayedColumns.length)
   }
 
   ngAfterViewInit() {

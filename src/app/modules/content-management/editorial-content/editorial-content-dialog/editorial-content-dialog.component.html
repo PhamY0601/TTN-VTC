@@ -1,9 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Tạo mới</h1>
-  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+<h1 matDialogTitle class="text-blue">Tạo mới</h1>
+
 <form (ngSubmit)="save()" novalidate #form="ngForm">
   <div mat-dialog-content>
     <div fxLayout="row" fxLayoutGap="30">

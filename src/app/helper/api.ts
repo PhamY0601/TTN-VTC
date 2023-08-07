@@ -4,7 +4,7 @@ export class API {
   public static IPPBXEXTEN_URL = `${environment.apiUrl}lookups/model/Ippbxextenlocation`;  //loa
   public static INFORBOARD_URL = `${environment.apiUrl}lookups/model/Inforboard`; //bản tin điện tử
   public static RADIOSTREAM_URL = `${environment.apiUrl}lookups/model/Radiostreamingactivity`; //bản tin phát hành
-  public static RADIONODE_URL = `${environment.apiUrl}lookups/model/Radionode`; //Trạm phát
+  public static RADIONODE_URL = `${environment.apiUrl}lookups/model/Radionode`; //Nhà cung cấp
   public static PLAYSTREAM_URL = `${environment.apiUrl}lookups/model/Playstreams`; //loại bản tin
   public static RADIO_MANAGEMENT_URL = `${environment.apiUrl}api/common/get?action=danhsachlichphat`; //quản lý lịch phát thanh
   public static PLAYSCHEDULE_URL = `${environment.apiUrl}lookups/model/Playschedule`; //lập lịch làm việc

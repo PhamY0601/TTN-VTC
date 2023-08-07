@@ -42,7 +42,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     this.overviewData = [
       {
-        "title": "Trạm phát",
+        "title": "Nhà cung cấp",
         "count": 0,
         "icon": "supplier"
       },
@@ -95,7 +95,6 @@ export class DashboardComponent implements OnInit, AfterViewInit {
         return date2 - date1;
       });
       this.newsData = arrayRecordActive[0];
-      console.log(arrayRecordActive[0])
 
       //Loại bản tin
       let arrayRecordField = res.filter((item: any) => item.name === 'record_field').map((item: any) => item.value)
@@ -112,6 +111,7 @@ export class DashboardComponent implements OnInit, AfterViewInit {
       } else {
         let arrayDeviceStatus = res.filter((item: any) => item.name === 'device_status').map((item: any) => item.value)
         this.installData = arrayDeviceStatus[0];
+        console.log(this.installData)
 
       }
     })

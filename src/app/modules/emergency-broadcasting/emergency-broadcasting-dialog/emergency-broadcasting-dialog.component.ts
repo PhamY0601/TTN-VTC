@@ -189,7 +189,7 @@ export class EmergencyBroadcastingDialogComponent implements OnInit, OnDestroy {
         this.spinner.hide();
       }, 500);
       this.dialogRef = this.dialog.open(EmergencyBroadcastingContentComponent, {
-        width: '800px',
+        width: '900px',
       });
       this.dialogRef.afterClosed().subscribe(
         () => this.previousState(),

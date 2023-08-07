@@ -51,7 +51,7 @@ export class DashboardService {
             totalData.push({
               name: item.name,
               total: item.total,
-              name_display: 'Bản tin phát hành',
+              name_display: 'Bản tin âm thanh',
               icon: "document",
               id: 3
             })
@@ -60,7 +60,7 @@ export class DashboardService {
             totalData.push({
               name: item.name,
               total: item.total,
-              name_display: 'Trạm phát',
+              name_display: 'Nhà cung cấp',
               icon: "supplier",
               id: 4
             })
@@ -165,7 +165,6 @@ export class DashboardService {
     return result
   }
 
-
   countDevice(data:any[]):any {
     let province: any = '';
     let district: any = '';
@@ -216,6 +215,7 @@ export class DashboardService {
             speaker_off += device.total;
             speaker_off_devices.push(device.deviceId)
         }
+
       }
 
       if (device.type === "Transmiter") {
@@ -269,15 +269,15 @@ export class DashboardService {
       provinceCode: provinceCode,
       districtCode: districtCode,
       wardCode: wardCode,
-      speaker_off: speaker_off,
-      speaker_establish: speaker_establish,
-      speaker_on: speaker_on,
-      video_onl: video_onl,
-      video_establish: video_establish,
-      video_off: video_off,
-      transmitter_onl: transmitter_onl,
-      transmitter_off: transmitter_off,
-      transmitter_establish: transmitter_establish,
+      speaker_off: (speaker_off >= 1 && speaker_off <=9) ? '0' + speaker_off : speaker_off,
+      speaker_establish: (speaker_establish >= 1 && speaker_establish <=9) ? '0' + speaker_establish : speaker_establish,
+      speaker_on: (speaker_on >= 1 && speaker_on <=9) ? '0' + speaker_on : speaker_on,
+      video_onl: (video_onl  >= 1 && video_onl<=9) ? '0' + video_onl : video_onl,
+      video_establish: (video_establish >= 1 && video_establish<=9) ? '0' +video_establish : video_establish,
+      video_off: (video_off>= 1 && video_off<=9) ? '0' + video_off: video_off,
+      transmitter_onl: (transmitter_onl>= 1 && transmitter_onl<=9) ? '0' + transmitter_onl : transmitter_onl,
+      transmitter_off: (transmitter_off>= 1 && transmitter_off<=9) ? '0' + transmitter_off : transmitter_off,
+      transmitter_establish: (transmitter_establish>= 1 && transmitter_establish<=9) ? '0' + transmitter_establish : transmitter_establish,
 
       speaker_off_devices: speaker_off_devices,
       speaker_establish_devices: speaker_establish_devices,

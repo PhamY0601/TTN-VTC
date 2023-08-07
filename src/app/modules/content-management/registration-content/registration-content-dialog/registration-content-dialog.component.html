@@ -1,9 +1,5 @@
-<div fxLayout="row" fxLayoutAlign="space-between center">
-  <h1 matDialogTitle class="text-blue">Tạo mới</h1>
-  <button class="me-2" mat-icon-button color="warn" (click)="dialogRef.close(false)">
-    <mat-icon>close</mat-icon>
-  </button>
-</div>
+<h1 matDialogTitle class="text-blue">Tạo mới</h1>
+
 <form [formGroup]="formData">
   <div mat-dialog-content>
     <div fxLayout="row" fxLayoutGap="30">
@@ -17,9 +13,9 @@
         </mat-form-field>
       </div>
       <div fxLayout="column" class="full-width">
-        <mat-label>Trạm phát</mat-label>
+        <mat-label>Nhà cung cấp</mat-label>
         <mat-form-field class="full-width" appearance="outline">
-          <mat-select formArrayName="station" placeholder="Chọn trạm phát">
+          <mat-select formArrayName="station" placeholder="Chọn Nhà cung cấp">
             <mat-option [value]="0">Tỉnh</mat-option>
             <mat-option [value]="1">Huyện</mat-option>
             <mat-option [value]="2">Xã</mat-option>
