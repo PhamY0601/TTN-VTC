@@ -191,6 +191,8 @@ export class DashboardService {
     let transmitter_onl_devices : any[] = [];
     let transmitter_off_devices: any[] = [];
     let transmitter_establish_devices: any[] = [];
+    let agencyName;
+    let createDate;
 
     data.forEach((device: any) => {
 
@@ -261,6 +263,8 @@ export class DashboardService {
       provinceCode = device.provinceCode;
       districtCode = device.districtCode;
       wardCode = device.wardCode;
+      agencyName = device.agencyName;
+      createDate = device.createDate;
     });
     return  {
       province: province,
@@ -287,7 +291,9 @@ export class DashboardService {
       video_off_devices: video_off_devices,
       transmitter_onl_devices: transmitter_onl_devices,
       transmitter_off_devices: transmitter_off_devices,
-      transmitter_establish_devices: transmitter_establish_devices
+      transmitter_establish_devices: transmitter_establish_devices,
+      agencyName: agencyName,
+      createDate: createDate
     }
   }
 

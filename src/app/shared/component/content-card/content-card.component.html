@@ -89,7 +89,8 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'kết nối'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_on_devices">
+                    [device]="contentCardItem.speaker_on_devices"
+                    [data]="contentCardItem">
   </app-devices-menu>
 </mat-menu>
 
@@ -99,7 +100,8 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'đang phát'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_establish_devices">
+                    [device]="contentCardItem.speaker_establish_devices"
+                    [data]="contentCardItem">
   </app-devices-menu>
 </mat-menu>
 
@@ -109,7 +111,8 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'tạm dừng'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_off_devices">
+                    [device]="contentCardItem.speaker_off_devices"
+                    [data]="contentCardItem">
   </app-devices-menu>
 </mat-menu>
 
@@ -120,7 +123,8 @@
                     [title_device]="'bản tin điện tử'"
                     [title]="'kết nối'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.video_onl_devices">
+                    [device]="contentCardItem.video_onl_devices"
+                    [data]="contentCardItem">
   </app-devices-menu>
 </mat-menu>
 

@@ -17,12 +17,12 @@ import {MAT_DIALOG_DATA, MatDialog, MatDialogRef} from "@angular/material/dialog
 })
 export class RadioManagerListComponent implements OnInit, AfterViewInit {
 
-  dataSource: any;
   dataDialog: any[] = [];
+  dataSource: any;
   @ViewChild(MatPaginator, {static: true}) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  displayedColumn: string[] = ['stt', 'title', 'type', 'start_date', 'end_date', 'url', 'agency', 'location', 'actions'];
+  displayedColumn: string[] = ['stt', 'title', 'type', 'start_date', 'end_date', 'url',  'location', 'actions'];
 
   constructor(private radioManagementService$: RadioManagementService,
               private confirmService: AppConfirmService,

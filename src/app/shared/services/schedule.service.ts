@@ -32,16 +32,16 @@ export class ScheduleService {
       let schedule: any[] = [];
 
       Object.values(scheduleGroup).forEach((item:any) => {
-        let agencies: any[] = [];
-
-        item.forEach((value:any) => {
-          agencies.push(value.agency)
-        })
+        // let agencies: any[] = [];
+        //
+        // item.forEach((value:any) => {
+        //   agencies.push(value.agency)
+        // })
 
         schedule.push({
           id: item[0].Id,
           title: item[0].Title,
-          agency: agencies,
+          // agency: agencies,
           type: item[0].type_display,
           start: item[0].Start,
           end: item[0].End,

@@ -45,4 +45,11 @@ export class ContentManagementService {
     }))
   }
 
+  getBroadcastSchedule(): Observable<HttpResponse<any>> {
+    const headers = header;
+    return this.http.get(`${API.DS_LICHPHAT_URL}`, {headers}).pipe(map((res: any) => {
+      return res.data
+    }))
+  }
+
 }

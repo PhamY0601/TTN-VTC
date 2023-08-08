@@ -48,7 +48,7 @@
 
         <tr mat-header-row *matHeaderRowDef="displayedColumn1"></tr>
         <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn1;"
-            [ngClass]="{'bg-table': even, 'link-active': true}"></tr>
+            [ngClass]="{'bg-table': even}"></tr>
       </table>
 
       <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">

@@ -44,12 +44,13 @@ export class RegistrationContentListComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
       this.spinner.hide();
     }, 1000);
-    this.contentManagementService$.getRegistrationContent().subscribe((data) => {
-      data.sort((item1: any, item2: any) => {
-        let date1: any = new Date(item1.date);
-        let date2: any = new Date(item2.date);
-        return date2 - date1;
-      });
+    this.contentManagementService$.getBroadcastSchedule().subscribe((data) => {
+      // data.sort((item1: any, item2: any) => {
+      //   let date1: any = new Date(item1.date);
+      //   let date2: any = new Date(item2.date);
+      //   return date2 - date1;
+      // });
+      console.log(data)
       this.dataSource.data = data
 
     });

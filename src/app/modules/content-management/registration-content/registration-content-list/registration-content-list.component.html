@@ -54,7 +54,7 @@
 
       <ng-container matColumnDef="date">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Ngày</th>
-        <td mat-cell *matCellDef="let element"> {{element.date  | date:'dd-MM-yyyy'}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.activeDate  | date:'dd-MM-yyyy'}} </td>
       </ng-container>
 
       <ng-container matColumnDef="time">
@@ -64,31 +64,29 @@
 
       <ng-container matColumnDef="type">
         <th mat-header-cell *matHeaderCellDef>Loại bản tin</th>
-        <td mat-cell *matCellDef="let element">{{element.field}}</td>
+        <td mat-cell *matCellDef="let element">{{element.type}}</td>
       </ng-container>
 
       <ng-container matColumnDef="url">
         <th mat-header-cell *matHeaderCellDef>URL</th>
         <td mat-cell *matCellDef="let element">
-          <a href="{{element.content[0].ContentUri}}" target="_blank">
-            {{element.content[0].ContentUri}}
+          <a href="{{element.url}}" target="_blank">
+            {{element.url}}
           </a>
         </td>
       </ng-container>
 
       <ng-container matColumnDef="content">
         <th mat-header-cell *matHeaderCellDef>Nội dung tóm tắt</th>
-        <td mat-cell *matCellDef="let element" class="py-2">
-          <app-see-more [content]="element.content[0].contentData"></app-see-more>
-        </td>
+        <td mat-cell *matCellDef="let element" class="py-2">{{element.description}}</td>
       </ng-container>
 
       <ng-container matColumnDef="area">
         <th mat-header-cell *matHeaderCellDef>Nơi nhận</th>
         <td mat-cell *matCellDef="let element">
-          {{element.destination[0].district_name}}
-          <span *ngIf="element.destination[0].district_name && element.destination[0].ward_name"> &gt; </span>
-          {{element.destination[0].ward_name}}
+          {{element.district}}
+          <span *ngIf="element.district && element.ward"> &gt; </span>
+          {{element.ward}}
         </td>
       </ng-container>
 
