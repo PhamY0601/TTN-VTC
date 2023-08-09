@@ -191,8 +191,6 @@ export class DashboardService {
     let transmitter_onl_devices : any[] = [];
     let transmitter_off_devices: any[] = [];
     let transmitter_establish_devices: any[] = [];
-    let agencyName;
-    let createDate;
 
     data.forEach((device: any) => {
 
@@ -200,22 +198,22 @@ export class DashboardService {
         switch (device.STATUS) {
           case "0":
             speaker_off += device.total;
-            speaker_off_devices.push(device.deviceId)
+            speaker_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "1":
             speaker_on += device.total;
-            speaker_on_devices.push(device.deviceId)
+            speaker_on_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "2":
             speaker_establish += device.total;
-            speaker_establish_devices.push(device.deviceId)
+            speaker_establish_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case null:
             speaker_off += device.total;
-            speaker_off_devices.push(device.deviceId)
+            speaker_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
         }
 
       }
@@ -224,17 +222,17 @@ export class DashboardService {
         switch (device.STATUS) {
           case "0":
             transmitter_off += device.total;
-            transmitter_off_devices.push(device.deviceId)
+            transmitter_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "1":
             transmitter_onl += device.total
-            transmitter_onl_devices.push(device.deviceId)
+            transmitter_onl_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "2":
             transmitter_establish += device.total;
-            transmitter_establish_devices.push(device.deviceId)
+            transmitter_establish_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
         }
       }
@@ -242,17 +240,17 @@ export class DashboardService {
         switch (device.STATUS) {
           case "0":
             video_off += device.total;
-            video_off_devices.push(device.deviceId)
+            video_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "1":
             video_onl += device.total
-            video_onl_devices.push(device.deviceId)
+            video_onl_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
 
           case "2":
             video_establish += device.total;
-            video_establish_devices.push(device.deviceId)
+            video_establish_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
         }
       }
@@ -263,8 +261,7 @@ export class DashboardService {
       provinceCode = device.provinceCode;
       districtCode = device.districtCode;
       wardCode = device.wardCode;
-      agencyName = device.agencyName;
-      createDate = device.createDate;
+
     });
     return  {
       province: province,
@@ -292,8 +289,7 @@ export class DashboardService {
       transmitter_onl_devices: transmitter_onl_devices,
       transmitter_off_devices: transmitter_off_devices,
       transmitter_establish_devices: transmitter_establish_devices,
-      agencyName: agencyName,
-      createDate: createDate
+
     }
   }
 

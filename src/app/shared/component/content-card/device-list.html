@@ -1,0 +1,54 @@
+<div class="p-5" fxLayout="column" fxLayoutGap="30">
+<!--  <div class="text-blue fw-500">Danh sách {{title_device}} {{title}} tại {{district}}</div>-->
+
+  <div class="mat-elevation-z2" fxLayout="column" fxLayoutAlign="space-between stretch">
+    <table mat-table [dataSource]="dataSource">
+      <ng-container matColumnDef="stt">
+        <th mat-header-cell *matHeaderCellDef> STT</th>
+        <td mat-cell
+            *matCellDef="let element; let i = index;"> {{ (paginatorRef.pageIndex * paginatorRef.pageSize) + (i + 1) }} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="deviceId">
+        <th mat-header-cell *matHeaderCellDef style="text-align: center">Mã thiết bị</th>
+        <td mat-cell
+            *matCellDef="let element" class="py-2 line-height-25">{{element.device}}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="agency">
+        <th mat-header-cell *matHeaderCellDef>Nhà cung cấp</th>
+        <td mat-cell *matCellDef="let element"> {{element.agency}} </td>
+      </ng-container>
+
+
+
+      <ng-container matColumnDef="create_date">
+        <th mat-header-cell *matHeaderCellDef>Ngày lắp đặt</th>
+        <td mat-cell *matCellDef="let element"> {{element.date | date:"dd/MM/yyyy"}} </td>
+      </ng-container>
+
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumn"></tr>
+      <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn;"
+          [ngClass]="{'bg-table': even}"></tr>
+
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell text-center pt-5" [attr.colspan]="displayedColumn.length">Không tìm thấy dữ liệu</td>
+      </tr>
+
+    </table>
+
+    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+      <div class="fz-1">Số bản ghi của bảng là: {{dataSource.data.length}}</div>
+      <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[9]"
+                     #paginatorRef></mat-paginator>
+    </div>
+
+  </div>
+
+  <div fxLayout="row" fxLayoutAlign="end center">
+    <button color="warn" mat-button type="button" (click)="dialogRef.close(false)">Đóng</button>
+  </div>
+</div>
+

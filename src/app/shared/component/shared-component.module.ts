@@ -10,7 +10,7 @@ import { HeaderComponent } from "./header/header.component";
 import { SidenavComponent } from "./sidenav/sidenav.component";
 import { OverviewCardComponent } from "./overview-card/overview-card.component";
 import { AvatarComponent } from "./avatar/avatar.component";
-import {ContentCardComponent } from "./content-card/content-card.component";
+import {ContentCardComponent, DeviceListComponent} from "./content-card/content-card.component";
 import { FooterComponent } from "./footer/footer.component";
 import { AdminLayoutComponent } from "./admin-layout/admin-layout.component";
 import { MapComponent } from "./map/map.component";
@@ -43,13 +43,14 @@ const components = [
   ChangePasswordFormDialogComponent,
   AppComfirmComponent,
   SeeMoreComponent,
-
+  DevicesMenuComponent,
+  DeviceListComponent
 ];
 
 @NgModule({
   declarations: [
     ...components,
-    DevicesMenuComponent,
+
   ],
   imports: [
     CommonModule,

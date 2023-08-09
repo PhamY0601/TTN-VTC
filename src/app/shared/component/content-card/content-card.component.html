@@ -15,19 +15,19 @@
   <mat-card-content fxLayout="column" fxLayoutGap="10px">
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="speaker_gray"></mat-icon>
-      <div [matMenuTriggerFor]="speakerEstablish"
+      <div (click)="openDialog(contentCardItem.speaker_establish_devices)"
            class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_establish}}</div>
       </div>
-      <div [matMenuTriggerFor]="speakerOnline"
+      <div (click)="openDialog(contentCardItem.speaker_on_devices)"
            class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.speaker_on}}</div>
       </div>
-      <div [matMenuTriggerFor]="speakerOffline"
+      <div (click)="openDialog(contentCardItem.speaker_off_devices)"
            class="status-text text-gray fw-500"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
@@ -36,19 +36,19 @@
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="youtube_gray"></mat-icon>
-      <div [matMenuTriggerFor]="videoEstablish"
+      <div (click)="openDialog(contentCardItem.video_establish_devices)"
            class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_establish}}</div>
       </div>
-      <div [matMenuTriggerFor]="videoOnline"
+      <div (click)="openDialog(contentCardItem.video_onl_devices)"
            class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.video_onl}}</div>
       </div>
-      <div [matMenuTriggerFor]="videoOffline"
+      <div (click)="openDialog(contentCardItem.video_off_devices)"
            class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
@@ -57,21 +57,21 @@
     </div>
     <div fxLayout="row" fxLayoutAlign=" end" fxLayoutGap="40px">
       <mat-icon svgIcon="transmitter"></mat-icon>
-      <div [matMenuTriggerFor]="transmitterEstablish"
+      <div (click)="openDialog(contentCardItem.transmitter_establish_devices)"
            class="status-text text-dark-blue fw-500"
            matTooltip="Đang phát">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_establish}}</div>
       </div>
 
-      <div [matMenuTriggerFor]="transmitterOnline"
+      <div (click)="openDialog(contentCardItem.transmitter_onl_devices)"
           class="status-text text-green fw-500"
            matTooltip="Kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
         <div>{{contentCardItem.transmitter_onl}}</div>
       </div>
 
-      <div [matMenuTriggerFor]="transmitterOffline"
+      <div (click)="openDialog(contentCardItem.transmitter_off_devices)"
            class="status-text fw-500 text-gray"
            matTooltip="Mất kết nối">
         <mat-icon class="icon-status">circle</mat-icon>
@@ -89,8 +89,7 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'kết nối'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_on_devices"
-                    [data]="contentCardItem">
+                    [data]="contentCardItem.speaker_on_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -100,8 +99,7 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'đang phát'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_establish_devices"
-                    [data]="contentCardItem">
+                    [data]="contentCardItem.speaker_establish_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -111,8 +109,7 @@
                     [title_device]="'thiết bị loa'"
                     [title]="'tạm dừng'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.speaker_off_devices"
-                    [data]="contentCardItem">
+                    [data]="contentCardItem.speaker_off_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -123,8 +120,7 @@
                     [title_device]="'bản tin điện tử'"
                     [title]="'kết nối'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.video_onl_devices"
-                    [data]="contentCardItem">
+                    [data]="contentCardItem.video_onl_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -134,7 +130,7 @@
                     [title_device]="'bản tin điện tử'"
                     [title]="'đang phát'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.video_establish_devices">
+                    [data]="contentCardItem.video_establish_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -144,7 +140,7 @@
                     [title_device]="'bản tin điện tử'"
                     [title]="'tạm dừng'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.video_off_devices">
+                    [data]="contentCardItem.video_off_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -155,7 +151,7 @@
                     [title_device]="'transmitter'"
                     [title]="'kết nối'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.transmitter_onl_devices">
+                    [data]="contentCardItem.transmitter_onl_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -165,7 +161,7 @@
                     [title_device]="'transmitter'"
                     [title]="'đang phát'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.transmitter_establish_devices">
+                    [data]="contentCardItem.transmitter_establish_devices">
   </app-devices-menu>
 </mat-menu>
 
@@ -175,6 +171,6 @@
                     [title_device]="'transmitter'"
                     [title]="'tạm dừng'"
                     [district]="param !== contentCardItem.districtCode ? contentCardItem.district : contentCardItem.ward"
-                    [device]="contentCardItem.transmitter_off_devices">
+                    [data]="contentCardItem.transmitter_off_devices">
   </app-devices-menu>
 </mat-menu>

@@ -25,8 +25,7 @@ export class ScheduleContentComponent implements OnInit {
 
   constructor(
     public dialogRef: MatDialogRef<ScheduleContentComponent>,
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {}
 
