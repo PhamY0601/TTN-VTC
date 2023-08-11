@@ -2,10 +2,12 @@
 .mat-column-createDate, .mat-column-status, .mat-column-position, .mat-column-agencies{
   text-align: center;
 }
- .mat-column-district, .mat-column-ward {
+ .mat-column-ward, .mat-column-city{
   width: 160px;
 }
-
+.mat-column-district {
+  width: 180px;
+}
 
 #map {
   height: 700px;

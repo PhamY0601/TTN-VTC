@@ -23,7 +23,6 @@ import { ReactiveFormsModule } from "@angular/forms";
 import { AppComfirmComponent } from "../services/app-confirm/app-confirm.component";
 import { AppConfirmService } from "../services/app-confirm/app-confirm.service";
 import { SeeMoreComponent } from './see-more/see-more.component';
-import { DevicesMenuComponent } from './devices-menu/devices-menu.component';
 import { NewsCardComponent, NewsCardDialogComponent } from "./news-card/news-card.component";
 
 
@@ -43,7 +42,6 @@ const components = [
   ChangePasswordFormDialogComponent,
   AppComfirmComponent,
   SeeMoreComponent,
-  DevicesMenuComponent,
   DeviceListComponent
 ];
 

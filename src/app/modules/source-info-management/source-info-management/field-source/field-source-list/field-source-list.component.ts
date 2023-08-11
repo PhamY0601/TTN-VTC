@@ -52,6 +52,7 @@ export class FieldSourceListComponent implements OnInit, AfterViewInit {
   openDialog(id: any): void {
     this.sourceInfoService$.getFieldSource().subscribe((data) => {
       this.dataDialog = data.filter((item: any) => item.id === id);
+      console.log( this.dataDialog[0].url)
       let dialogRef = this.dialog.open(AudioDialogComponent, {
         width: '500px',
         data: this.dataDialog[0].url,

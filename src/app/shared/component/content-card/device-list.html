@@ -1,5 +1,5 @@
 <div class="p-5" fxLayout="column" fxLayoutGap="30">
-<!--  <div class="text-blue fw-500">Danh sách {{title_device}} {{title}} tại {{district}}</div>-->
+  <div class="text-blue fw-500 fz-3">Danh sách {{title_device}} {{title}} tại {{area}}</div>
 
   <div class="mat-elevation-z2" fxLayout="column" fxLayoutAlign="space-between stretch">
     <table mat-table [dataSource]="dataSource">
@@ -33,13 +33,13 @@
       <tr mat-row *matRowDef="let row; let even = even; columns: displayedColumn;"
           [ngClass]="{'bg-table': even}"></tr>
 
-      <tr class="mat-row" *matNoDataRow>
-        <td class="mat-cell text-center pt-5" [attr.colspan]="displayedColumn.length">Không tìm thấy dữ liệu</td>
+      <tr *matNoDataRow>
+        <td class="mat-cell text-center p-5" [attr.colspan]="displayedColumn.length">Không tìm thấy dữ liệu</td>
       </tr>
 
     </table>
 
-    <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
+    <div [ngClass]="{'hiddenItem': dataSource.data.length === 0}" fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="30">
       <div class="fz-1">Số bản ghi của bảng là: {{dataSource.data.length}}</div>
       <mat-paginator [hidePageSize]="true" [pageSizeOptions]="[9]"
                      #paginatorRef></mat-paginator>

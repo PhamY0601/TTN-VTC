@@ -111,6 +111,7 @@ export class DashboardService {
 
       //nhóm theo district
       let groupedByDistrict = this.groupByProperty(arrayDevice, 'districtCode')
+      console.log(groupedByDistrict)
 
       //tạo mảng mới chứa mã district và tat cả ward
       let groupedByDistrictArray = Object.entries(groupedByDistrict).map(([district, wards]) => ({district, wards}));
@@ -157,6 +158,7 @@ export class DashboardService {
 
     let wards = dataByDistrict[0].wards
     let groupByWard = this.groupByProperty(wards, 'wardCode')
+
     let groupByWardArray = Object.entries(groupByWard).map(([wardCode, wardData]) => ({wardCode, wardData}));
 
     groupByWardArray.forEach((wards:any) => {
@@ -214,6 +216,7 @@ export class DashboardService {
           case null:
             speaker_off += device.total;
             speaker_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
+            break;
         }
 
       }
@@ -234,6 +237,11 @@ export class DashboardService {
             transmitter_establish += device.total;
             transmitter_establish_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
+
+          case null:
+            transmitter_off += device.total;
+            transmitter_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
+            break;
         }
       }
       if (device.type === "MediaBox") {
@@ -252,12 +260,17 @@ export class DashboardService {
             video_establish += device.total;
             video_establish_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
             break;
+
+          case null:
+            video_off += device.total;
+            video_off_devices.push({device: device.deviceId, agency: device.agencyName, date: device.CreatedDate})
+            break;
         }
       }
 
       province = device.provinceName;
-      district = device.districtName;
-      ward = device.wardName;
+      district = (device.districtName === null || device.districtName === '') ? 'Huyện khác' : device.districtName
+      ward = (device.wardName === null || device.wardName === '') ? 'Xã khác' : device.wardName;
       provinceCode = device.provinceCode;
       districtCode = device.districtCode;
       wardCode = device.wardCode;

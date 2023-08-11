@@ -1,13 +1,4 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-  ViewEncapsulation
-} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from '@angular/material/sort';
 import {MatPaginator} from "@angular/material/paginator";
@@ -50,7 +41,12 @@ export class InstallManagementComponent implements OnInit, OnDestroy, AfterViewI
 
   private map: any;
 
-  constructor(private citiesService$: CitiesService, private districtService$: DistrictService, private installationService$: InstallationService, private activatedRoute: ActivatedRoute, private spinner: NgxSpinnerService, private elementRef: ElementRef) {
+  constructor(private citiesService$: CitiesService,
+              private districtService$: DistrictService,
+              private installationService$: InstallationService,
+              private activatedRoute: ActivatedRoute,
+              private spinner: NgxSpinnerService,
+              private elementRef: ElementRef) {
     this.dataSourceFirst = new MatTableDataSource([]);
     this.dataSourceSecond = new MatTableDataSource([]);
   }
